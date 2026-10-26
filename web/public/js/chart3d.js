@@ -688,48 +688,6 @@ export function surface3d(canvas, data, opt = {}) {
   }
 
   /**
-   * 刚性旋转投影
-   * ------------------------------------------------------------------
-   * 用标准的两步旋转（不做任何轴向补偿）：
-   *   ① 绕 Y 轴转 yaw  →  水平面内旋转，x/z 混合
-   *   ② 绕 X 轴转 pitch →  俯仰，y 与 z 混合
-   * 相机固定在 +z 方向朝原点看，所以最终屏幕坐标就是旋转后的 (X, Y)，
-   * 透视只按旋转后的深度 Z 缩放。
-   *
-   * wy 已经预先归一化到 [0, 1]（柱高），这里把它居中到 [-0.5, 0.5]，
-   * 让旋转围绕形体中心发生 —— 否则俯视时整块图会往上跑出画面。
-   */
-  function proj(wx, wy, wz) {
-    const cy = Math.cos(cam.yaw), sy = Math.sin(cam.yaw);
-    const cp = Math.cos(cam.pitch), sp = Math.sin(cam.pitch);
-
-    // y 居中：柱高 0~HMAX → -0.5~0.5（HMAX 是柱体最高值，与 draw 里一致）
-    const y0 = wy / 1.35 - 0.5;
-
-    // ① 绕 Y 轴
-    const X1 = wx * cy + wz * sy;
-    const Z1 = -wx * sy + wz * cy;
-
-    // ② 绕 X 轴（y 与世界深度混合）
-    const Y2 = y0 * cp - Z1 * sp;
-    const Z2 = y0 * sp + Z1 * cp;
-
-    // 透视：只按旋转后的深度缩放
-    const persp = 1 / (1 + Z2 * 0.26);
-    const base = Math.min(W, H * 1.9);
-    // 注意：cam.fit 已经把「按视角自适应」的缩放算进去了，
-    // 这里只保留相对比例（0.44 / 0.52）与其相乘
-    const k = base * cam.zoom * (cam.fit || 1) * persp;
-
-    return {
-      x: W * 0.5 + X1 * 0.44 * k,
-      y: H * 0.52 - Y2 * 0.52 * k,
-      depth: Z2,
-      persp,
-    };
-  }
-
-  /**
    * 按当前视角计算所有顶点的屏幕包围盒，返回需要的缩放系数。
    * 视角自由旋转后，同一个形体在不同角度下的投影范围差别很大，
    * 用固定系数必然在某些角度溢出 → 每次重绘都按包围盒自适应。
@@ -757,6 +715,15 @@ export function surface3d(canvas, data, opt = {}) {
    */
   function measure() {
     let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+    // 地面（wy=0）的跨度：决定水平方向需要多宽
+    let gMinX = 1e9, gMaxX = -1e9;
+    for (const wx of [-1, 1]) {
+      for (const wz of [-1, 1]) {
+        const r = rot(wx, 0, wz);
+        if (r.X < gMinX) gMinX = r.X;
+        if (r.X > gMaxX) gMaxX = r.X;
+      }
+    }
     for (const wx of [-1, 1]) {
       for (const wy of [0, HMAX]) {
         for (const wz of [-1, 1]) {
@@ -768,9 +735,14 @@ export function surface3d(canvas, data, opt = {}) {
         }
       }
     }
+    // 透视会让近端（Z<0）放大到 1/(1-0.22) ≈ 1.28 倍，
+    // 这里按最大放大倍数预留，避免近端溢出
+    const PERSP_MAX = 1 / (1 - 0.22);
     return {
-      spanX: (maxX - minX) || 1,
-      spanY: (maxY - minY) || 1,
+      spanX: ((maxX - minX) || 1) * PERSP_MAX,
+      spanY: ((maxY - minY) || 1) * PERSP_MAX,
+      // 地面宽度：用它决定水平占满，避免被柱高"抢占"缩放
+      groundX: ((gMaxX - gMinX) || 1) * PERSP_MAX,
       cx: (maxX + minX) / 2,
       cy: (maxY + minY) / 2,
     };
@@ -783,7 +755,11 @@ export function surface3d(canvas, data, opt = {}) {
     // 自适应缩放：把旋转后的跨度映射到画布的 86% / 80%
     const m = cam.m;
     const persp = 1 / (1 + r.Z * 0.22);      // 轻微透视，仅增强立体感
-    const k = Math.min(W * 0.86 / m.spanX, H * 0.80 / m.spanY);
+    // 水平方向：让「地面宽度」占满 94% 画布（柱高不参与，否则会被压得很小）
+    // 垂直方向：只做不溢出保护
+    const kW = W * 0.94 / m.groundX;
+    const kH = H * 0.92 / m.spanY;
+    const k = Math.min(kW, kH);
 
     return {
       x: W * 0.5 + (r.X - m.cx) * k * cam.zoom * persp,
