@@ -46,14 +46,14 @@ sys.stdout.reconfigure(encoding="utf-8")
 ROOT = r"D:\学校事务\大数据原理与应用\红楼智问"
 WEB = os.path.join(ROOT, "web")
 OUT = os.path.join(WEB, "data", "main_relations.json")
-AVATAR_DIR = os.path.join(WEB, "public", "img", "avatars")
+AVATAR_DIR = os.path.join(WEB, "public", "img", "avatars87")
 
-# ---- 主要人物（14 人，全部有改琦《红楼梦图咏》画像）----
+# ---- 主要人物（15 人，全部有 87 版剧照）----
 # 选取依据：
 #   ① 主角必选：宝玉、黛玉、宝钗
-#   ② 从核心做「与已选连接数最多」的贪心扩展（只在有改琦画像的人里选）
-#   ③ 补入桥梁人物——否则王熙凤/秦可卿的边全指向非主角，会成孤岛
-#   实测：16 人 / 内部边连通 / 无孤立点
+#   ② 「与已选连接数最多」贪心扩展（只在有 87 版剧照的人里选）
+#   ③ 补入桥梁人物——否则王熙凤的边全指向贾琏/王夫人等，会成孤岛
+#   实测：15 个有效节点 / 连通 / 无孤立点
 MAIN = [
     "贾宝玉", "林黛玉", "薛宝钗", "王熙凤",
     "史湘云", "贾探春", "贾迎春", "贾惜春",
@@ -99,7 +99,7 @@ def main():
     # ---- 1) 筛选主要人物，且必须有画像 ----
     have_avatar = set(
         f[:-4] for f in os.listdir(AVATAR_DIR)
-        if f.endswith(".jpg") and not f.startswith("_")
+        if f.endswith(".png") and not f.startswith("_")
     )
     nodes = []
     for name in MAIN:
@@ -116,7 +116,7 @@ def main():
             "family": n.get("family") or "其他",
             "degree": n.get("degree", 0),
             "mention": n.get("mention", 0),
-            "avatar": (f"img/avatars/{name}_200.png" if has_av else ""),
+            "avatar": (f"img/avatars87/{name}.png" if has_av else ""),
             "role": (n.get("role") or "")[:40],
         })
     ids = {n["id"] for n in nodes}

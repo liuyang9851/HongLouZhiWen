@@ -41,8 +41,8 @@ export function avatarGraph(canvas, data, opt = {}) {
   let raf = 0;
   let alive = true;
 
-  const NODE_R = 34;          // 头像圆半径（CSS px）
-  const NODE_R_SEL = 41;      // 选中时放大
+  const NODE_R = 31;          // 头像圆半径（CSS px）
+  const NODE_R_SEL = 38;      // 选中时放大
 
   /* ---------------- 数据准备 ---------------- */
   const nodes = data.nodes.map((n, i) => ({
@@ -87,14 +87,14 @@ export function avatarGraph(canvas, data, opt = {}) {
     const cy = H / 2 + 22;   // 视觉中心下移，避开顶部按钮栏
     // 度数最高的放中心
     const sorted = [...nodes].sort((a, b) => (b.degree || 0) - (a.degree || 0));
-    const R = Math.min(W, H) * 0.40;
+    const R = Math.min(W, H) * 0.35;
     sorted.forEach((n, i) => {
       if (i === 0) {
         n.x = cx; n.y = cy;
       } else {
         const a = ((i - 1) / (sorted.length - 1)) * Math.PI * 2 - Math.PI / 2;
         // 两层：前 6 个内圈，其余外圈
-        const rr = i <= 6 ? R * 0.62 : R;
+        const rr = i <= 5 ? R * 0.58 : R;
         n.x = cx + Math.cos(a) * rr;
         n.y = cy + Math.sin(a) * rr;
       }
@@ -102,9 +102,9 @@ export function avatarGraph(canvas, data, opt = {}) {
   }
 
   /* ---------------- 力导向参数（小规模，收敛快） ---------------- */
-  const REPULSION = 220000;
+  const REPULSION = 380000;
   const SPRING = 0.035;
-  const REST = Math.min(W, H) * 0.46;
+  const REST = Math.min(W, H) * 0.44;
   const DAMP = 0.80;
   const CENTER_PULL = 0.0012;
 
@@ -162,12 +162,12 @@ export function avatarGraph(canvas, data, opt = {}) {
       // 边界保护：顶部要给「2D/3D/和弦图/人物头像图」按钮栏让位
       const padX = n.r + 10;
       const padTop = n.r + 52;
-      const padBottom = n.r + 16;
+      const padBottom = n.r + 26;
       n.x = Math.max(padX, Math.min(W - padX, n.x));
       n.y = Math.max(padTop, Math.min(H - padBottom, n.y));
     }
 
-    alpha *= 0.978;
+    alpha *= 0.990;
   }
 
   /* ---------------- 转换与命中 ---------------- */
