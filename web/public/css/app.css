@@ -1,3 +1,4 @@
+/* S36-FONT-SCALED */
 /* =====================================================================
    红楼智问 · 设计系统
    配色取自《红楼梦》意象：脂批朱砂红 + 宣纸米白 + 黛青 + 金
@@ -44,7 +45,7 @@
   --font-sans:  "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:  "Cascadia Code", "JetBrains Mono", Consolas, "Courier New", monospace;
 
-  --topbar-h: 68px;
+  --topbar-h: 76px;
   --rail-w:   168px;
 }
 
@@ -55,7 +56,7 @@ html, body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 17.5px;
+  font-size: 19.5px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -73,7 +74,7 @@ body::before {
   position: relative; z-index: 20;
   height: var(--topbar-h);
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 14px;
   background: rgba(250,247,242,.92);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
@@ -96,11 +97,13 @@ body::before {
   letter-spacing: .06em; font-weight: 700;
 }
 .brand-text p {
-  margin: 0; font-size: 15.5px; color: var(--ink-3);
+  margin: 0; font-size: 16.5px; color: var(--ink-3);
   letter-spacing: .02em;
 }
 
-.topbar-right { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 1 auto; }
+.topbar-right { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 0 1 auto; }
+/* S36：字号放大后，顶栏按钮必须禁止换行，否则「配置」会被挤成竖排 */
+.topbar-right .btn, .topbar-right button { white-space: nowrap; flex: none; }
 
 .model-picker {
   display: flex; align-items: center; gap: 8px;
@@ -110,17 +113,21 @@ body::before {
 .model-picker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--jade); flex: none; }
 .model-picker select {
   border: 0; background: transparent; font-family: var(--font-sans);
-  font-size: 17.5px; color: var(--ink-2); outline: none; cursor: pointer;
-  max-width: 268px;   /* 加了背景音乐按钮后收窄；再小会截断下拉箭头 */
+  font-size: 19.5px; color: var(--ink-2); outline: none; cursor: pointer;
+  max-width: 300px;   /* S36：字号 19.5px 下需容纳 "deepseek-flash"，210 会截断 */
 }
 
 .status-pill {
   display: flex; align-items: center; gap: 6px;
-  white-space: nowrap; overflow: hidden; min-width: 0; flex: 0 1 auto;
+  white-space: nowrap; overflow: hidden; min-width: 0;
+  /* S36：字号放大后顶栏吃紧 —— 状态胶囊是可压缩项，优先让它收缩 */
+  flex: 1 1 auto; max-width: 340px;
   padding: 5px 10px; border-radius: 999px;
   background: var(--paper-2); border: 1px solid var(--line);
-  font-size: 17px; color: var(--ink-3);
+  font-size: 16px; color: var(--ink-3);
+  text-overflow: ellipsis;
 }
+.status-pill .txt { overflow: hidden; text-overflow: ellipsis; }
 .status-pill .dot { width: 7px; height: 7px; border-radius: 50%; }
 .status-pill .dot.ok   { background: var(--jade); box-shadow: 0 0 0 3px rgba(63,106,85,.15); }
 .status-pill .dot.warn { background: var(--amber); box-shadow: 0 0 0 3px rgba(176,115,15,.15); }
@@ -141,11 +148,11 @@ body::before {
   min-height: 0;}
 
 .rail-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 6px 10px; border-radius: var(--radius-sm);
-  line-height: 1.25;   /* 收紧：emoji 会撑高行盒 */
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; border-radius: var(--radius-sm);
+  line-height: 1.33;   /* 收紧：emoji 会撑高行盒 */
   color: var(--ink-2); text-decoration: none;
-  font-size: 13.5px; position: relative;
+  font-size: 15.5px; position: relative;
   transition: background .15s, color .15s;
 }
 .rail-item:hover { background: rgba(255,255,255,.7); }
@@ -158,10 +165,10 @@ body::before {
   content: ''; position: absolute; left: -10px; top: 8px; bottom: 8px;
   width: 3px; border-radius: 0 3px 3px 0; background: var(--cinnabar);
 }
-.rail-item .ico { width: 22px; flex: none; text-align: center; font-size: 15px; }
+.rail-item .ico { width: 18px; flex: none; text-align: center; font-size: 15px; line-height: 1; }
 .rail-item .lbl { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rail-item .badge {
-  font-size: 9.5px; padding: 1px 5px; border-radius: 4px;
+  font-size: 10.5px; padding: 1px 5px; border-radius: 4px;
   background: var(--cinnabar-bg); color: var(--cinnabar); font-weight: 600;
 }
 
@@ -169,8 +176,8 @@ body::before {
   margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line);
   display: flex; justify-content: space-around; text-align: center;
 }
-.mini-stat b { display: block; font-family: var(--font-serif); font-size: 15px; color: var(--ink); }
-.mini-stat span { font-size: 10px; color: var(--ink-3); }
+.mini-stat b { display: block; font-family: var(--font-serif); font-size: 16.5px; color: var(--ink); }
+.mini-stat span { font-size: 11.5px; color: var(--ink-3); }
 
 .stage { overflow: hidden; position: relative; }
 .loading { padding: 60px; text-align: center; color: var(--ink-3); }
@@ -184,14 +191,14 @@ body::before {
   display: flex; align-items: center; justify-content: space-between;
   padding: 12px 16px; border-bottom: 1px solid var(--line);
 }
-.card-h h3 { margin: 0; font-size: 17.5px; font-weight: 600; }
+.card-h h3 { margin: 0; font-size: 19.5px; font-weight: 600; }
 .card-b { padding: 16px; }
 
 .btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 7px 14px; border-radius: var(--radius-sm);
   border: 1px solid var(--line); background: #fff; color: var(--ink-2);
-  font-family: var(--font-sans); font-size: 18px; cursor: pointer;
+  font-family: var(--font-sans); font-size: 20.0px; cursor: pointer;
   transition: all .15s;
 }
 .btn:hover { border-color: var(--ink-3); color: var(--ink); }
@@ -204,11 +211,11 @@ body::before {
 .btn.ghost { background: transparent; border-color: transparent; color: var(--ink-3); }
 .btn.ghost:hover { background: var(--paper-2); color: var(--ink); }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
-.btn.sm { padding: 4px 9px; font-size: 17px; }
+.btn.sm { padding: 4px 9px; font-size: 19.0px; }
 
 .tag {
   display: inline-block; padding: 1px 7px; border-radius: 4px;
-  font-size: 15.5px; background: var(--paper-2); color: var(--ink-3);
+  font-size: 17.6px; background: var(--paper-2); color: var(--ink-3);
 }
 .tag.red   { background: var(--cinnabar-bg); color: var(--cinnabar); }
 .tag.blue  { background: var(--dai-bg); color: var(--dai); }
@@ -216,7 +223,7 @@ body::before {
 .tag.green { background: #e8f0ea; color: var(--jade); }
 
 .kbd {
-  font-family: var(--font-mono); font-size: 15.5px;
+  font-family: var(--font-mono); font-size: 17.6px;
   padding: 1px 5px; border: 1px solid var(--line); border-bottom-width: 2px;
   border-radius: 4px; background: var(--paper-2); color: var(--ink-2);
 }
@@ -239,7 +246,7 @@ body::before {
 .toast {
   padding: 9px 18px; border-radius: 999px;
   background: var(--ink); color: var(--paper);
-  font-size: 18px; box-shadow: var(--shadow-lg);
+  font-size: 20.0px; box-shadow: var(--shadow-lg);
   animation: toastIn .24s ease both;
 }
 .toast.red { background: var(--cinnabar); }
@@ -256,7 +263,7 @@ body::before {
 .sel-pop[hidden] { display: none; }
 .sel-pop button {
   border: 0; background: transparent; color: var(--paper);
-  font-family: var(--font-sans); font-size: 17.5px;
+  font-family: var(--font-sans); font-size: 19.5px;
   padding: 5px 10px; border-radius: 5px; cursor: pointer;
 }
 .sel-pop button:hover { background: rgba(255,255,255,.14); }
