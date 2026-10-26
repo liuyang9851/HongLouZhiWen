@@ -40,7 +40,7 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) =>
 
 // ---- 供 page_*.js 使用的共享工具（避免模块循环依赖）----
 window.__HLM__ = {
-  esc, el, api,
+  esc, el, api, $,
   get STARTERS() { return STARTERS; },
   get state() { return state; },
   get autoGrow() { return autoGrow; },

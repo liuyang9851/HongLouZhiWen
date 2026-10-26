@@ -353,17 +353,34 @@ export async function renderHome(stage) {
   </div>`;
 
   // 点击示例 → 跳到问答并自动发送
+  // 注意：本模块不能直接引用 app.js 的 $ / autoGrow / send（未导入），
+  // 必须通过 window.__HLM__ 在**点击时**延迟取，否则会 ReferenceError。
   stage.querySelectorAll('.hp-starter').forEach((b) => {
     b.onclick = () => {
+      const q = b.dataset.q || '';
       location.hash = '#/chat';
-      setTimeout(() => {
-        const ta = $('#chatTextarea');
-        if (ta) {
-          ta.value = b.dataset.q;
-          autoGrow(ta);
-          send();
+
+      // 等比路由切换渲染完成再填值，最多重试 ~1.2s
+      let tries = 0;
+      const trySend = () => {
+        const H = window.__HLM__ || {};
+        const $ = H.$;
+        const ta = $ ? $('#chatTextarea') : document.querySelector('#chatTextarea');
+        const autoGrow = H.autoGrow;
+        const send = H.send;
+
+        if (!ta || !send) {
+          if (++tries < 12) return setTimeout(trySend, 100);
+          console.warn('[home] 无法进入问答框，放弃自动发送');
+          return;
         }
-      }, 260);
+        ta.value = q;
+        if (typeof autoGrow === 'function') autoGrow(ta);
+        // 让 input 事件也触发一次（有些逻辑监听它）
+        ta.dispatchEvent(new Event('input', { bubbles: true }));
+        try { send(); } catch (e) { console.warn('[home] 自动发送失败:', e); }
+      };
+      setTimeout(trySend, 60);
     };
   });
 }
