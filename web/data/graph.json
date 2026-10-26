@@ -1,8 +1,8 @@
 {
  "n_nodes": 350,
- "n_nodes_total": 399,
- "n_edges": 675,
- "n_edges_total": 723,
+ "n_nodes_total": 398,
+ "n_edges": 673,
+ "n_edges_total": 721,
  "relations": [
   "丈夫",
   "丫头",
@@ -138,8 +138,8 @@
   "林": 7,
   "史": 7,
   "王": 21,
-  "薛": 14,
-  "其他": 230
+  "薛": 13,
+  "其他": 231
  },
  "nodes": [
   {
@@ -147,7 +147,7 @@
    "name": "贾宝玉",
    "family": "贾",
    "role": "荣国府嫡孙，神瑛侍者转世",
-   "degree": 85,
+   "degree": 83,
    "mention": 2720,
    "in_alias_table": true,
    "aliases": [
@@ -696,9 +696,9 @@
    "aliases": []
   },
   {
-   "id": "柳五儿",
-   "name": "柳五儿",
-   "family": "其他",
+   "id": "贾代化",
+   "name": "贾代化",
+   "family": "贾",
    "role": "",
    "degree": 7,
    "mention": 2,
@@ -706,9 +706,9 @@
    "aliases": []
   },
   {
-   "id": "贾代化",
-   "name": "贾代化",
-   "family": "贾",
+   "id": "柳五儿",
+   "name": "柳五儿",
+   "family": "其他",
    "role": "",
    "degree": 7,
    "mention": 2,
@@ -873,19 +873,6 @@
    "aliases": []
   },
   {
-   "id": "金钏",
-   "name": "金钏",
-   "family": "贾",
-   "role": "",
-   "degree": 5,
-   "mention": 92,
-   "in_alias_table": true,
-   "aliases": [
-    "白金钏",
-    "金钏儿"
-   ]
-  },
-  {
    "id": "玉钏",
    "name": "玉钏",
    "family": "贾",
@@ -896,6 +883,19 @@
    "aliases": [
     "玉钏儿",
     "白玉钏"
+   ]
+  },
+  {
+   "id": "金钏",
+   "name": "金钏",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 92,
+   "in_alias_table": true,
+   "aliases": [
+    "白金钏",
+    "金钏儿"
    ]
   },
   {
@@ -962,6 +962,16 @@
    "aliases": []
   },
   {
+   "id": "薛公之孙",
+   "name": "薛公之孙",
+   "family": "薛",
+   "role": "",
+   "degree": 5,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "甄宝玉",
    "name": "甄宝玉",
    "family": "其他",
@@ -974,16 +984,6 @@
   {
    "id": "薛宝琴父",
    "name": "薛宝琴父",
-   "family": "薛",
-   "role": "",
-   "degree": 5,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "薛公之孙",
-   "name": "薛公之孙",
    "family": "薛",
    "role": "",
    "degree": 5,
@@ -1067,8 +1067,8 @@
    "aliases": []
   },
   {
-   "id": "金文翔",
-   "name": "金文翔",
+   "id": "孙绍祖",
+   "name": "孙绍祖",
    "family": "其他",
    "role": "",
    "degree": 4,
@@ -1077,8 +1077,8 @@
    "aliases": []
   },
   {
-   "id": "孙绍祖",
-   "name": "孙绍祖",
+   "id": "金文翔",
+   "name": "金文翔",
    "family": "其他",
    "role": "",
    "degree": 4,
@@ -1097,8 +1097,28 @@
    "aliases": []
   },
   {
-   "id": "周贵人",
-   "name": "周贵人",
+   "id": "王子腾之女",
+   "name": "王子腾之女",
+   "family": "王",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "牛清",
+   "name": "牛清",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "梅翰林之子",
+   "name": "梅翰林之子",
    "family": "其他",
    "role": "",
    "degree": 4,
@@ -1117,38 +1137,8 @@
    "aliases": []
   },
   {
-   "id": "王子腾之女",
-   "name": "王子腾之女",
-   "family": "王",
-   "role": "",
-   "degree": 4,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "梅翰林之子",
-   "name": "梅翰林之子",
-   "family": "其他",
-   "role": "",
-   "degree": 4,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "多官",
    "name": "多官",
-   "family": "其他",
-   "role": "",
-   "degree": 4,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "牛清",
-   "name": "牛清",
    "family": "其他",
    "role": "",
    "degree": 4,
@@ -1167,6 +1157,26 @@
    "aliases": []
   },
   {
+   "id": "周贵人",
+   "name": "周贵人",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "秦思祺",
+   "name": "秦思祺",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "花芳官",
    "name": "花芳官",
    "family": "其他",
@@ -1177,19 +1187,9 @@
    "aliases": []
   },
   {
-   "id": "周秀才",
-   "name": "周秀才",
-   "family": "其他",
-   "role": "",
-   "degree": 4,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "秦思祺",
-   "name": "秦思祺",
-   "family": "其他",
+   "id": "王夫人之大兄凤姐之父",
+   "name": "王夫人之大兄凤姐之父",
+   "family": "王",
    "role": "",
    "degree": 4,
    "mention": 0,
@@ -1207,9 +1207,9 @@
    "aliases": []
   },
   {
-   "id": "贾瑞之父",
-   "name": "贾瑞之父",
-   "family": "贾",
+   "id": "周秀才",
+   "name": "周秀才",
+   "family": "其他",
    "role": "",
    "degree": 4,
    "mention": 0,
@@ -1217,9 +1217,9 @@
    "aliases": []
   },
   {
-   "id": "王夫人之大兄凤姐之父",
-   "name": "王夫人之大兄凤姐之父",
-   "family": "王",
+   "id": "贾瑞之父",
+   "name": "贾瑞之父",
+   "family": "贾",
    "role": "",
    "degree": 4,
    "mention": 0,
@@ -1391,8 +1391,8 @@
    "aliases": []
   },
   {
-   "id": "智通",
-   "name": "智通",
+   "id": "小蝉",
+   "name": "小蝉",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1403,16 +1403,6 @@
   {
    "id": "钱槐",
    "name": "钱槐",
-   "family": "其他",
-   "role": "",
-   "degree": 3,
-   "mention": 3,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "小蝉",
-   "name": "小蝉",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1441,12 +1431,12 @@
    "aliases": []
   },
   {
-   "id": "史鼎",
-   "name": "史鼎",
-   "family": "史",
+   "id": "智通",
+   "name": "智通",
+   "family": "其他",
    "role": "",
    "degree": 3,
-   "mention": 2,
+   "mention": 3,
    "in_alias_table": false,
    "aliases": []
   },
@@ -1471,8 +1461,8 @@
    "aliases": []
   },
   {
-   "id": "李守中",
-   "name": "李守中",
+   "id": "缮国公",
+   "name": "缮国公",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1491,8 +1481,18 @@
    "aliases": []
   },
   {
-   "id": "缮国公",
-   "name": "缮国公",
+   "id": "史鼎",
+   "name": "史鼎",
+   "family": "史",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李守中",
+   "name": "李守中",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1511,16 +1511,6 @@
    "aliases": []
   },
   {
-   "id": "马贩子王短腿",
-   "name": "马贩子王短腿",
-   "family": "其他",
-   "role": "",
-   "degree": 3,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "迎春乳母",
    "name": "迎春乳母",
    "family": "其他",
@@ -1531,18 +1521,8 @@
    "aliases": []
   },
   {
-   "id": "何婆",
-   "name": "何婆",
-   "family": "其他",
-   "role": "",
-   "degree": 3,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "卫若兰",
-   "name": "卫若兰",
+   "id": "马贩子王短腿",
+   "name": "马贩子王短腿",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1561,8 +1541,8 @@
    "aliases": []
   },
   {
-   "id": "通判傅试",
-   "name": "通判傅试",
+   "id": "吴贵",
+   "name": "吴贵",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1571,8 +1551,28 @@
    "aliases": []
   },
   {
-   "id": "吴贵",
-   "name": "吴贵",
+   "id": "卫若兰",
+   "name": "卫若兰",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "何婆",
+   "name": "何婆",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "通判傅试",
+   "name": "通判傅试",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1591,48 +1591,18 @@
    "aliases": []
   },
   {
+   "id": "周琼之子",
+   "name": "周琼之子",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "宝钗祖父",
    "name": "宝钗祖父",
-   "family": "其他",
-   "role": "",
-   "degree": 3,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "张大老爷",
-   "name": "张大老爷",
-   "family": "其他",
-   "role": "",
-   "degree": 3,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "许氏",
-   "name": "许氏",
-   "family": "其他",
-   "role": "",
-   "degree": 3,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "王成父",
-   "name": "王成父",
-   "family": "王",
-   "role": "",
-   "degree": 3,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "圆心",
-   "name": "圆心",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1651,6 +1621,16 @@
    "aliases": []
   },
   {
+   "id": "王成父",
+   "name": "王成父",
+   "family": "王",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "地藏庵的圆心",
    "name": "地藏庵的圆心",
    "family": "其他",
@@ -1661,8 +1641,28 @@
    "aliases": []
   },
   {
-   "id": "周琼之子",
-   "name": "周琼之子",
+   "id": "圆心",
+   "name": "圆心",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "许氏",
+   "name": "许氏",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张大老爷",
+   "name": "张大老爷",
    "family": "其他",
    "role": "",
    "degree": 3,
@@ -1877,8 +1877,8 @@
    "aliases": []
   },
   {
-   "id": "宝珠",
-   "name": "宝珠",
+   "id": "喜儿",
+   "name": "喜儿",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -1887,8 +1887,8 @@
    "aliases": []
   },
   {
-   "id": "喜儿",
-   "name": "喜儿",
+   "id": "宝珠",
+   "name": "宝珠",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -1947,8 +1947,8 @@
    "aliases": []
   },
   {
-   "id": "贾璜",
-   "name": "贾璜",
+   "id": "偕鸾",
+   "name": "偕鸾",
    "family": "贾",
    "role": "",
    "degree": 2,
@@ -1957,8 +1957,18 @@
    "aliases": []
   },
   {
-   "id": "偕鸾",
-   "name": "偕鸾",
+   "id": "夏守忠",
+   "name": "夏守忠",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾璜",
+   "name": "贾璜",
    "family": "贾",
    "role": "",
    "degree": 2,
@@ -1977,19 +1987,19 @@
    "aliases": []
   },
   {
-   "id": "夏守忠",
-   "name": "夏守忠",
-   "family": "其他",
+   "id": "娄氏",
+   "name": "娄氏",
+   "family": "贾",
    "role": "",
    "degree": 2,
-   "mention": 4,
+   "mention": 3,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "王嬷嬷",
-   "name": "王嬷嬷",
-   "family": "林",
+   "id": "王仁",
+   "name": "王仁",
+   "family": "王",
    "role": "",
    "degree": 2,
    "mention": 3,
@@ -2000,16 +2010,6 @@
    "id": "篆儿",
    "name": "篆儿",
    "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 3,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "娄氏",
-   "name": "娄氏",
-   "family": "贾",
    "role": "",
    "degree": 2,
    "mention": 3,
@@ -2047,12 +2047,42 @@
    "aliases": []
   },
   {
-   "id": "王仁",
-   "name": "王仁",
-   "family": "王",
+   "id": "王嬷嬷",
+   "name": "王嬷嬷",
+   "family": "林",
    "role": "",
    "degree": 2,
    "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李衙内",
+   "name": "李衙内",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "多姑娘儿",
+   "name": "多姑娘儿",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王成",
+   "name": "王成",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
    "in_alias_table": false,
    "aliases": []
   },
@@ -2097,36 +2127,6 @@
    "aliases": []
   },
   {
-   "id": "王成",
-   "name": "王成",
-   "family": "王",
-   "role": "",
-   "degree": 2,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "李衙内",
-   "name": "李衙内",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "多姑娘儿",
-   "name": "多姑娘儿",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "缮国公诰命",
    "name": "缮国公诰命",
    "family": "其他",
@@ -2137,58 +2137,8 @@
    "aliases": []
   },
   {
-   "id": "李公子",
-   "name": "李公子",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "南安王太妃",
-   "name": "南安王太妃",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "翠云",
-   "name": "翠云",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "贾琼之母",
-   "name": "贾琼之母",
-   "family": "贾",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "白老媳妇",
-   "name": "白老媳妇",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "新进来的奶子",
-   "name": "新进来的奶子",
+   "id": "锦乡侯诰命",
+   "name": "锦乡侯诰命",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2227,39 +2177,9 @@
    "aliases": []
   },
   {
-   "id": "锦乡侯诰命",
-   "name": "锦乡侯诰命",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "小霞",
-   "name": "小霞",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "史鼎的夫人",
    "name": "史鼎的夫人",
    "family": "史",
-   "role": "",
-   "degree": 2,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "李婶之弟",
-   "name": "李婶之弟",
-   "family": "其他",
    "role": "",
    "degree": 2,
    "mention": 1,
@@ -2277,8 +2197,8 @@
    "aliases": []
   },
   {
-   "id": "小鸠儿",
-   "name": "小鸠儿",
+   "id": "南安王太妃",
+   "name": "南安王太妃",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2287,8 +2207,8 @@
    "aliases": []
   },
   {
-   "id": "长安府府太爷",
-   "name": "长安府府太爷",
+   "id": "李婶之弟",
+   "name": "李婶之弟",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2297,8 +2217,8 @@
    "aliases": []
   },
   {
-   "id": "老苍头",
-   "name": "老苍头",
+   "id": "白老媳妇",
+   "name": "白老媳妇",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2307,8 +2227,8 @@
    "aliases": []
   },
   {
-   "id": "夏奶奶",
-   "name": "夏奶奶",
+   "id": "翠云",
+   "name": "翠云",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2327,89 +2247,109 @@
    "aliases": []
   },
   {
-   "id": "柳二媳妇的妹子",
-   "name": "柳二媳妇的妹子",
+   "id": "夏奶奶",
+   "name": "夏奶奶",
    "family": "其他",
    "role": "",
    "degree": 2,
-   "mention": 0,
+   "mention": 1,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "张大财主",
-   "name": "张大财主",
+   "id": "李公子",
+   "name": "李公子",
    "family": "其他",
    "role": "",
    "degree": 2,
-   "mention": 0,
+   "mention": 1,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "何三",
-   "name": "何三",
+   "id": "新进来的奶子",
+   "name": "新进来的奶子",
    "family": "其他",
    "role": "",
    "degree": 2,
-   "mention": 0,
+   "mention": 1,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "多浑虫父亲",
-   "name": "多浑虫父亲",
+   "id": "老苍头",
+   "name": "老苍头",
    "family": "其他",
    "role": "",
    "degree": 2,
-   "mention": 0,
+   "mention": 1,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "卜世仁店里伙计",
-   "name": "卜世仁店里伙计",
+   "id": "小霞",
+   "name": "小霞",
    "family": "其他",
    "role": "",
    "degree": 2,
-   "mention": 0,
+   "mention": 1,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "卜世仁娘子",
-   "name": "卜世仁娘子",
+   "id": "长安府府太爷",
+   "name": "长安府府太爷",
    "family": "其他",
    "role": "",
    "degree": 2,
-   "mention": 0,
+   "mention": 1,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "五嫂子卜氏",
-   "name": "五嫂子卜氏",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "薛宝衩",
-   "name": "薛宝衩",
-   "family": "薛",
-   "role": "",
-   "degree": 2,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "贾瑞之母",
-   "name": "贾瑞之母",
+   "id": "贾琼之母",
+   "name": "贾琼之母",
    "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小鸠儿",
+   "name": "小鸠儿",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "刑秞烟",
+   "name": "刑秞烟",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "叶茗烟",
+   "name": "叶茗烟",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛宝琴母",
+   "name": "薛宝琴母",
+   "family": "薛",
    "role": "",
    "degree": 2,
    "mention": 0,
@@ -2427,8 +2367,8 @@
    "aliases": []
   },
   {
-   "id": "北静王少妃",
-   "name": "北静王少妃",
+   "id": "柳二媳妇的妹子",
+   "name": "柳二媳妇的妹子",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2437,9 +2377,9 @@
    "aliases": []
   },
   {
-   "id": "湘云母",
-   "name": "湘云母",
-   "family": "其他",
+   "id": "王子胜",
+   "name": "王子胜",
+   "family": "王",
    "role": "",
    "degree": 2,
    "mention": 0,
@@ -2457,9 +2397,9 @@
    "aliases": []
   },
   {
-   "id": "薛宝琴母",
-   "name": "薛宝琴母",
-   "family": "薛",
+   "id": "多浑虫父亲",
+   "name": "多浑虫父亲",
+   "family": "其他",
    "role": "",
    "degree": 2,
    "mention": 0,
@@ -2487,8 +2427,58 @@
    "aliases": []
   },
   {
+   "id": "湘云母",
+   "name": "湘云母",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "倪儿娘子",
    "name": "倪儿娘子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张大财主",
+   "name": "张大财主",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾王扁之母",
+   "name": "贾王扁之母",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张金哥",
+   "name": "张金哥",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "五嫂子卜氏",
+   "name": "五嫂子卜氏",
    "family": "其他",
    "role": "",
    "degree": 2,
@@ -2507,38 +2497,48 @@
    "aliases": []
   },
   {
-   "id": "叶茗烟",
-   "name": "叶茗烟",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "刑秞烟",
-   "name": "刑秞烟",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "张金哥",
-   "name": "张金哥",
-   "family": "其他",
-   "role": "",
-   "degree": 2,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "文花",
    "name": "文花",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "北静王少妃",
+   "name": "北静王少妃",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "何三",
+   "name": "何三",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "卜世仁娘子",
+   "name": "卜世仁娘子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾瑞之母",
+   "name": "贾瑞之母",
    "family": "贾",
    "role": "",
    "degree": 2,
@@ -2557,19 +2557,9 @@
    "aliases": []
   },
   {
-   "id": "王子胜",
-   "name": "王子胜",
-   "family": "王",
-   "role": "",
-   "degree": 2,
-   "mention": 0,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "贾王扁之母",
-   "name": "贾王扁之母",
-   "family": "贾",
+   "id": "卜世仁店里伙计",
+   "name": "卜世仁店里伙计",
+   "family": "其他",
    "role": "",
    "degree": 2,
    "mention": 0,
@@ -2742,16 +2732,6 @@
    "aliases": []
   },
   {
-   "id": "翠墨",
-   "name": "翠墨",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 17,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "侍书",
    "name": "侍书",
    "family": "贾",
@@ -2762,6 +2742,16 @@
    "aliases": [
     "待书"
    ]
+  },
+  {
+   "id": "翠墨",
+   "name": "翠墨",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 17,
+   "in_alias_table": false,
+   "aliases": []
   },
   {
    "id": "碧痕",
@@ -2794,29 +2784,9 @@
    "aliases": []
   },
   {
-   "id": "封肃",
-   "name": "封肃",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 13,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "贾芹",
    "name": "贾芹",
    "family": "贾",
-   "role": "",
-   "degree": 1,
-   "mention": 13,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "荳官",
-   "name": "荳官",
-   "family": "其他",
    "role": "",
    "degree": 1,
    "mention": 13,
@@ -2834,12 +2804,22 @@
    "aliases": []
   },
   {
-   "id": "佳蕙",
-   "name": "佳蕙",
+   "id": "封肃",
+   "name": "封肃",
    "family": "其他",
    "role": "",
    "degree": 1,
-   "mention": 12,
+   "mention": 13,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "荳官",
+   "name": "荳官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 13,
    "in_alias_table": false,
    "aliases": []
   },
@@ -2857,6 +2837,16 @@
    "id": "贾菌",
    "name": "贾菌",
    "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 12,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "佳蕙",
+   "name": "佳蕙",
+   "family": "其他",
    "role": "",
    "degree": 1,
    "mention": 12,
@@ -2884,8 +2874,8 @@
    "aliases": []
   },
   {
-   "id": "莲花儿",
-   "name": "莲花儿",
+   "id": "隆儿",
+   "name": "隆儿",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -2904,12 +2894,22 @@
    "aliases": []
   },
   {
-   "id": "隆儿",
-   "name": "隆儿",
+   "id": "莲花儿",
+   "name": "莲花儿",
    "family": "其他",
    "role": "",
    "degree": 1,
    "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "银蝶",
+   "name": "银蝶",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 7,
    "in_alias_table": false,
    "aliases": []
   },
@@ -2934,16 +2934,6 @@
    "aliases": []
   },
   {
-   "id": "银蝶",
-   "name": "银蝶",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 7,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "葵官",
    "name": "葵官",
    "family": "其他",
@@ -2960,6 +2950,16 @@
    "role": "",
    "degree": 1,
    "mention": 6,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "翡翠",
+   "name": "翡翠",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
    "in_alias_table": false,
    "aliases": []
   },
@@ -3004,16 +3004,6 @@
    "aliases": []
   },
   {
-   "id": "翡翠",
-   "name": "翡翠",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 5,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
    "id": "薛公",
    "name": "薛公",
    "family": "薛",
@@ -3024,8 +3014,8 @@
    "aliases": []
   },
   {
-   "id": "鹦鹉",
-   "name": "鹦鹉",
+   "id": "紫绡",
+   "name": "紫绡",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3054,28 +3044,8 @@
    "aliases": []
   },
   {
-   "id": "紫绡",
-   "name": "紫绡",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 4,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "贾代儒",
-   "name": "贾代儒",
-   "family": "贾",
-   "role": "",
-   "degree": 1,
-   "mention": 4,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "艾官",
-   "name": "艾官",
+   "id": "同喜",
+   "name": "同喜",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3094,8 +3064,18 @@
    "aliases": []
   },
   {
-   "id": "同喜",
-   "name": "同喜",
+   "id": "贾代儒",
+   "name": "贾代儒",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "鹦鹉",
+   "name": "鹦鹉",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3104,28 +3084,18 @@
    "aliases": []
   },
   {
-   "id": "扫红",
-   "name": "扫红",
+   "id": "艾官",
+   "name": "艾官",
    "family": "其他",
    "role": "",
    "degree": 1,
-   "mention": 3,
+   "mention": 4,
    "in_alias_table": false,
    "aliases": []
   },
   {
-   "id": "李妈",
-   "name": "李妈",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 3,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "庆儿",
-   "name": "庆儿",
+   "id": "费婆子",
+   "name": "费婆子",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3144,8 +3114,8 @@
    "aliases": []
   },
   {
-   "id": "臻儿",
-   "name": "臻儿",
+   "id": "小舍儿",
+   "name": "小舍儿",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3154,8 +3124,28 @@
    "aliases": []
   },
   {
-   "id": "费婆子",
-   "name": "费婆子",
+   "id": "李妈",
+   "name": "李妈",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "扫红",
+   "name": "扫红",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "庆儿",
+   "name": "庆儿",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3174,8 +3164,18 @@
    "aliases": []
   },
   {
-   "id": "小舍儿",
-   "name": "小舍儿",
+   "id": "小鹊",
+   "name": "小鹊",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "臻儿",
+   "name": "臻儿",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3194,88 +3194,18 @@
    "aliases": []
   },
   {
-   "id": "小鹊",
-   "name": "小鹊",
+   "id": "墨雨",
+   "name": "墨雨",
    "family": "其他",
    "role": "",
    "degree": 1,
-   "mention": 3,
+   "mention": 2,
    "in_alias_table": false,
    "aliases": []
   },
   {
    "id": "春纤",
    "name": "春纤",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "绣鸾",
-   "name": "绣鸾",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "扫花",
-   "name": "扫花",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "赵亦华",
-   "name": "赵亦华",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "彩霞之母",
-   "name": "彩霞之母",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "襄阳侯",
-   "name": "襄阳侯",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "文杏",
-   "name": "文杏",
-   "family": "薛",
-   "role": "",
-   "degree": 1,
-   "mention": 2,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "彩屏",
-   "name": "彩屏",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3304,8 +3234,8 @@
    "aliases": []
   },
   {
-   "id": "来旺儿",
-   "name": "来旺儿",
+   "id": "彩霞之母",
+   "name": "彩霞之母",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3324,8 +3254,58 @@
    "aliases": []
   },
   {
-   "id": "周氏",
-   "name": "周氏",
+   "id": "襄阳侯",
+   "name": "襄阳侯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赵亦华",
+   "name": "赵亦华",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "扫花",
+   "name": "扫花",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "媚人",
+   "name": "媚人",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "绣鸾",
+   "name": "绣鸾",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "来旺儿",
+   "name": "来旺儿",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3354,8 +3334,8 @@
    "aliases": []
   },
   {
-   "id": "墨雨",
-   "name": "墨雨",
+   "id": "彩屏",
+   "name": "彩屏",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3364,8 +3344,8 @@
    "aliases": []
   },
   {
-   "id": "媚人",
-   "name": "媚人",
+   "id": "周氏",
+   "name": "周氏",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3374,8 +3354,18 @@
    "aliases": []
   },
   {
-   "id": "陈翼",
-   "name": "陈翼",
+   "id": "文杏",
+   "name": "文杏",
+   "family": "薛",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "平原侯",
+   "name": "平原侯",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3384,38 +3374,8 @@
    "aliases": []
   },
   {
-   "id": "老叶妈",
-   "name": "老叶妈",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "于老爷",
-   "name": "于老爷",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "彩儿",
-   "name": "彩儿",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "小吉祥",
-   "name": "小吉祥",
+   "id": "抱琴",
+   "name": "抱琴",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3434,208 +3394,8 @@
    "aliases": []
   },
   {
-   "id": "王奶奶",
-   "name": "王奶奶",
-   "family": "王",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "抱琴",
-   "name": "抱琴",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "平原侯",
-   "name": "平原侯",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "韩奇",
-   "name": "韩奇",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "吴天佑",
-   "name": "吴天佑",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "林如海之祖",
-   "name": "林如海之祖",
-   "family": "林",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "谢鲸",
-   "name": "谢鲸",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "史鼐",
-   "name": "史鼐",
-   "family": "史",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "蒋子宁",
-   "name": "蒋子宁",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "定城侯",
-   "name": "定城侯",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "胡老爷",
-   "name": "胡老爷",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "双寿",
-   "name": "双寿",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "金鸳鸯",
-   "name": "金鸳鸯",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "良儿",
-   "name": "良儿",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "傻大姐的娘",
-   "name": "傻大姐的娘",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "贾敷",
-   "name": "贾敷",
-   "family": "贾",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "牛继宗",
-   "name": "牛继宗",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "赵天梁",
-   "name": "赵天梁",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "马尚",
-   "name": "马尚",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "杏奴",
-   "name": "杏奴",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "裘良",
-   "name": "裘良",
+   "id": "马魁",
+   "name": "马魁",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3654,18 +3414,8 @@
    "aliases": []
   },
   {
-   "id": "茄官",
-   "name": "茄官",
-   "family": "其他",
-   "role": "",
-   "degree": 1,
-   "mention": 1,
-   "in_alias_table": false,
-   "aliases": []
-  },
-  {
-   "id": "景田侯",
-   "name": "景田侯",
+   "id": "裘良",
+   "name": "裘良",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3684,6 +3434,26 @@
    "aliases": []
   },
   {
+   "id": "陈翼",
+   "name": "陈翼",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "定城侯",
+   "name": "定城侯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "戚建辉",
    "name": "戚建辉",
    "family": "其他",
@@ -3694,8 +3464,8 @@
    "aliases": []
   },
   {
-   "id": "周奶妈",
-   "name": "周奶妈",
+   "id": "同贵",
+   "name": "同贵",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3704,8 +3474,68 @@
    "aliases": []
   },
   {
-   "id": "南安郡王之孙",
-   "name": "南安郡王之孙",
+   "id": "茄官",
+   "name": "茄官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾敷",
+   "name": "贾敷",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "谢鲸",
+   "name": "谢鲸",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "韩奇",
+   "name": "韩奇",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "胡老爷",
+   "name": "胡老爷",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "傻大姐的娘",
+   "name": "傻大姐的娘",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "景田侯",
+   "name": "景田侯",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3724,8 +3554,148 @@
    "aliases": []
   },
   {
+   "id": "南安郡王之孙",
+   "name": "南安郡王之孙",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "杏奴",
+   "name": "杏奴",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "彩鸾",
+   "name": "彩鸾",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
    "id": "东平郡王",
    "name": "东平郡王",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王奶奶",
+   "name": "王奶奶",
+   "family": "王",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "西宁郡王之孙",
+   "name": "西宁郡王之孙",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "石光珠",
+   "name": "石光珠",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "双寿",
+   "name": "双寿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "侯孝康",
+   "name": "侯孝康",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "牛继宗",
+   "name": "牛继宗",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "良儿",
+   "name": "良儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "吴天佑",
+   "name": "吴天佑",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周奶妈",
+   "name": "周奶妈",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "蒋子宁",
+   "name": "蒋子宁",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "太祖皇帝",
+   "name": "太祖皇帝",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3744,8 +3714,38 @@
    "aliases": []
   },
   {
-   "id": "西宁郡王之孙",
-   "name": "西宁郡王之孙",
+   "id": "林如海之祖",
+   "name": "林如海之祖",
+   "family": "林",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "彩儿",
+   "name": "彩儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史鼐",
+   "name": "史鼐",
+   "family": "史",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "于老爷",
+   "name": "于老爷",
    "family": "其他",
    "role": "",
    "degree": 1,
@@ -3861,7 +3861,7 @@
    "src": "kg-hongloumeng"
   },
   {
-   "source": "薛宝衩",
+   "source": "薛宝钗",
    "target": "贾宝玉",
    "relation": "妻",
    "family": "",
@@ -4046,13 +4046,6 @@
    "source": "赵嬷嬷",
    "target": "贾琏",
    "relation": "乳母",
-   "family": "",
-   "src": "kg-hongloumeng"
-  },
-  {
-   "source": "赵天梁",
-   "target": "赵嬷嬷",
-   "relation": "子",
    "family": "",
    "src": "kg-hongloumeng"
   },
@@ -4246,13 +4239,6 @@
    "src": "kg-hongloumeng"
   },
   {
-   "source": "老叶妈",
-   "target": "叶茗烟",
-   "relation": "母亲",
-   "family": "",
-   "src": "kg-hongloumeng"
-  },
-  {
    "source": "李贵",
    "target": "李嬷嬷",
    "relation": "子",
@@ -4323,6 +4309,13 @@
    "src": "kg-hongloumeng"
   },
   {
+   "source": "彩鸾",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
    "source": "绣鸾",
    "target": "王夫人",
    "relation": "丫鬟",
@@ -4366,13 +4359,6 @@
   },
   {
    "source": "小鹊",
-   "target": "赵姨娘",
-   "relation": "丫鬟",
-   "family": "",
-   "src": "kg-hongloumeng"
-  },
-  {
-   "source": "小吉祥",
    "target": "赵姨娘",
    "relation": "丫鬟",
    "family": "",
@@ -4500,13 +4486,6 @@
   {
    "source": "费婆子",
    "target": "邢夫人",
-   "relation": "丫鬟",
-   "family": "",
-   "src": "kg-hongloumeng"
-  },
-  {
-   "source": "金鸳鸯",
-   "target": "贾母",
    "relation": "丫鬟",
    "family": "",
    "src": "kg-hongloumeng"
@@ -4788,6 +4767,13 @@
    "source": "傅秋芳",
    "target": "傅试",
    "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "太祖皇帝",
+   "target": "先皇",
+   "relation": "父亲",
    "family": "",
    "src": "kg-hongloumeng"
   },
@@ -5135,6 +5121,13 @@
    "src": "kg-hongloumeng"
   },
   {
+   "source": "同贵",
+   "target": "薛姨妈",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
    "source": "莺儿",
    "target": "薛宝钗",
    "relation": "丫鬟",
@@ -5467,6 +5460,13 @@
    "source": "缮国公诰命",
    "target": "缮国公",
    "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "石光珠",
+   "target": "缮国公",
+   "relation": "孙子",
    "family": "",
    "src": "kg-hongloumeng"
   },
@@ -6648,13 +6648,6 @@
   },
   {
    "source": "薛宝钗",
-   "target": "贾宝玉",
-   "relation": "妻",
-   "family": "",
-   "src": "KGQA_HLM"
-  },
-  {
-   "source": "薛宝钗",
    "target": "薛姨妈",
    "relation": "女儿",
    "family": "",
@@ -7496,13 +7489,6 @@
   {
    "source": "贾琏",
    "target": "平儿",
-   "relation": "丈夫",
-   "family": "",
-   "src": "DotRC-edges"
-  },
-  {
-   "source": "贾宝玉",
-   "target": "薛宝衩",
    "relation": "丈夫",
    "family": "",
    "src": "DotRC-edges"
@@ -8493,6 +8479,6 @@
   "The-Dream-of-the-Red-Chamber__data_triples.csv": 400,
   "DotRC__stone_story_edges.csv": 495
  },
- "generated_at": "2026-10-26 13:27",
+ "generated_at": "2026-10-26 13:43",
  "note": "四源合并，节点上限 350。提及频次已含别名（如「贾探春」计入「探春」）。"
 }

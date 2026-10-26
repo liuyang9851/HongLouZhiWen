@@ -138,10 +138,35 @@ for _full, _shorts in ALIAS_GROUPS.items():
         ALIAS2CANON[_s2] = _full
 
 
+# ============================================================
+# 1b. 形近字纠错（上游数据源自带错别字）
+# ------------------------------------------------------------
+# 实测问题：kg-hongloumeng / DotRC 等源里把「薛宝钗」写成「薛宝衩」
+# （钗 U+9497 vs 衩 U+8869，只差一笔），导致图谱出现两个"薛宝钗"：
+#   薛宝钗 度16 提及798   ← 正确
+#   薛宝衩 度2  提及0     ← 错字孤点
+# 这里做一次性纠正，避免同一人物被拆成两格。
+TYPO_FIX = {
+    "薛宝衩": "薛宝钗",   # 钗/衩 形近
+    "贾寳玉": "贾宝玉",   # 宝/寳 异体
+    "林黛王": "林黛玉",   # 玉/王 形近
+    "王熙风": "王熙凤",   # 凤/风 形近
+    "史湘雲": "史湘云",   # 云/雲 繁简
+    "薛寶釵": "薛宝钗",   # 繁体
+    "賈寶玉": "贾宝玉",
+}
+
+
+def fix_typo(name: str) -> str:
+    """修正常见形近字错别字"""
+    return TYPO_FIX.get(name, name)
+
+
 def canonical(name: str) -> str:
     """把任意称呼映射到规范名（无法匹配的保持原样）"""
     if not name:
         return name
+    name = fix_typo(name)          # ★ 先纠错字
     if name in ALIAS2CANON:
         return ALIAS2CANON[name]
     # 去掉「家的」「之妻」等后缀再试
@@ -502,6 +527,11 @@ def main():
 
     # 家族统计
     fam_cnt = collections.Counter(n["family"] for n in gnodes)
+
+    # ★ 错字残留检查
+    _typo_left = [n["name"] for n in gnodes if n["name"] in TYPO_FIX]
+    if _typo_left:
+        log(f"  ⚠️ 仍有错字节点未纠正: {_typo_left}")
 
     # ★ 唯一性断言：同名/同 id 节点会让前端画出「同一个人两个点」
     _ids = [n["id"] for n in gnodes]
