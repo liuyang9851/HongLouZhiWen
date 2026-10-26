@@ -14,6 +14,7 @@
  */
 import { bar, hbar, line, pie, heat, force, PALETTE } from './chart.js';
 import { force3d, surface3d, chord } from './chart3d.js';
+import { avatarGraph } from './chart_avatar.js';
 import {
   probeBackend, backendStatus, fetchModels, streamChat, plainChat, statsAsk,
   getProviders, saveProvider, deleteProvider, testProvider, VERSIONS,
@@ -1758,6 +1759,7 @@ async function renderGraph(stage) {
           <button class="gr-dim-btn active" data-dim="2d">2D 平面</button>
           <button class="gr-dim-btn" data-dim="3d">3D 立体</button>
           <button class="gr-dim-btn" data-dim="chord">和弦图</button>
+          <button class="gr-dim-btn" data-dim="avatar">人物头像图</button>
         </div>
         <canvas id="graphCanvas"></canvas>
         <div class="gr-tip" id="gTip">
@@ -1877,6 +1879,33 @@ async function renderGraph(stage) {
     const fresh = cv.cloneNode(false);
     cv.parentNode.replaceChild(fresh, cv);
 
+    if (dim === 'avatar') {
+      // 主要人物头像关系图：用 scripts/s37_1 生成的精简数据
+      // （已双向去重 + 关系词归一化，否则 15 个节点会画出几倍粗的重叠线）
+      fetch('/data/main_relations.json?v=' + Date.now())
+        .then((r) => r.ok ? r.json() : null)
+        .then((d) => {
+          if (!d || !d.nodes || !d.nodes.length) {
+            const tip = $('#gTip');
+            if (tip) tip.textContent = '⚠ 主要人物数据未生成（运行 scripts/s37_1_build_main_relations.py）';
+            return;
+          }
+          // 头像图节点自带姓名与头像，不需要底部图例；隐藏以免遮挡
+      const lg = $('#gLegend');
+      if (lg) lg.style.display = 'none';
+      const tp = $('#gTip');
+      if (tp) tp.style.display = 'none';
+      inst = avatarGraph(fresh, d, { onSelect: showDetail });
+          currentForce = inst;
+        })
+        .catch((e) => console.warn('头像关系图失败:', e));
+      return;
+    }
+
+    // 非头像模式恢复图例
+    { const lg = $('#gLegend'); if (lg) lg.style.display = ''; }
+    { const tp = $('#gTip'); if (tp) tp.style.display = ''; }
+
     if (dim === 'chord') {
       // 家族 × 家族 关系矩阵
       const fams = g.families.filter((f) => activeFams.has(f));
@@ -1928,6 +1957,7 @@ async function renderGraph(stage) {
       if (tip) {
         tip.textContent =
           dim === '3d' ? '拖拽旋转 · 滚轮缩放 · 点击看详情 · 节点按家族着色，大小=关系数'
+          : dim === 'avatar' ? '拖动节点整理布局 · 滚轮缩放 · 点人物看详情 · 连线上标注关系'
           : dim === 'chord' ? '悬停扇区看该家族 · 弦宽=两家关系条数 · 环内为同族关系'
           : '拖拽空白处平移 · 拖拽节点移动 · 滚轮缩放 · 点击看详情 · 双击空白重置';
       }

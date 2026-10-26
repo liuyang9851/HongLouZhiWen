@@ -53,3 +53,6 @@ desktop.ini
 
 # ===== 运行时状态 =====
 web/data/.bgm.pid
+
+# ===== 人物头像：只入库圆形成品，原图 3.2MB 不入库（可用 scripts 重新下载） =====
+web/public/img/avatars/*.jpg
