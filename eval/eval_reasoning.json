@@ -1,0 +1,122 @@
+[
+  {
+    "id": "r001",
+    "type": "reasoning",
+    "question": "林黛玉为什么进贾府？",
+    "reference_answer": "母亲去世、外祖母念及，接来抚养；贾母疼爱",
+    "scoring_hint": "需结合第3回与第2回冷子兴演说",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r002",
+    "type": "reasoning",
+    "question": "「千红一窟」「万艳同杯」有什么隐喻？",
+    "reference_answer": "谐音千红一哭、万艳同悲；预示众女儿悲剧命运",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r003",
+    "type": "reasoning",
+    "question": "宝玉和黛玉是什么关系？",
+    "reference_answer": "姑表兄妹；黛玉之母贾敏是宝玉之父贾政的妹妹",
+    "scoring_hint": "若语料未明写，应主动说明依据不足",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r004",
+    "type": "reasoning",
+    "question": "王熙凤为什么能管家？",
+    "reference_answer": "王夫人内侄女；贾琏之妻；精明强干；贾母支持",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r005",
+    "type": "reasoning",
+    "question": "薛宝钗为什么最终嫁给宝玉？",
+    "reference_answer": "金玉良缘；家族安排；黛玉病亡",
+    "scoring_hint": "需综合多回",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r006",
+    "type": "reasoning",
+    "question": "晴雯之死说明了什么？",
+    "reference_answer": "封建压迫；宝玉无力；性格与命运的冲突",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r007",
+    "type": "reasoning",
+    "question": "贾府的衰败有哪些征兆？",
+    "reference_answer": "经济亏空；内部倾轧；元春失势；抄检大观园",
+    "scoring_hint": "散见多回",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r008",
+    "type": "reasoning",
+    "question": "黛玉葬花这一情节有什么作用？",
+    "reference_answer": "塑造黛玉性格；预示其命运；以花喻人；悲剧氛围",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r009",
+    "type": "reasoning",
+    "question": "「金陵十二钗」判词的作用是什么？",
+    "reference_answer": "谶语；预叙人物命运；结构性伏笔",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r010",
+    "type": "reasoning",
+    "question": "为什么说《红楼梦》是「大旨谈情」？",
+    "reference_answer": "第1回原文即言大旨谈情；全书以宝黛爱情为主线",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r011",
+    "type": "reasoning",
+    "question": "刘姥姥三进荣国府分别有什么作用？",
+    "reference_answer": "一进引出贾府气象；二进对照贫富；三进见证败落",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r012",
+    "type": "reasoning",
+    "question": "探春理家为什么失败？",
+    "reference_answer": "庶出身份；家族积弊已深；改革触犯既得利益",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r013",
+    "type": "reasoning",
+    "question": "「好了歌」表达了什么思想？",
+    "reference_answer": "世事无常；功名富贵皆空；出世思想",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r014",
+    "type": "reasoning",
+    "question": "贾宝玉的「痴」体现在哪些方面？",
+    "reference_answer": "对女儿的尊重；对仕途经济的厌弃；对黛玉的痴情",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  },
+  {
+    "id": "r015",
+    "type": "reasoning",
+    "question": "脂批对理解《红楼梦》有什么价值？",
+    "reference_answer": "创作背景；人物原型；伏笔线索；红学材料",
+    "scoring_hint": "",
+    "scoring": "人工 5 分制：1=完全错误 3=部分正确 5=完整准确"
+  }
+]

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>拖拽自测</title>
+<style>
+  body { font-family: Consolas, monospace; margin: 0; padding: 10px; background: #faf7f2; font-size: 12.5px; }
+  #wrap { position: relative; width: 640px; height: 340px; background: #fff; border: 1px solid #ddd; }
+  canvas { display: block; width: 100%; height: 100%; }
+  #log { margin-top: 8px; background: #fff; padding: 10px; border: 1px solid #ddd;
+         white-space: pre-wrap; line-height: 1.75; }
+  .ok { color: #1b5e20; font-weight: 700; }
+  .fail { color: #b71c1c; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="c"></canvas></div>
+<div id="log">运行中…</div>
+
+<script type="module">
+import { force } from '/js/chart.js';
+
+const RESULT = [];
+function R(msg, cls) { RESULT.push(cls ? '<span class="' + cls + '">' + msg + '</span>' : msg); }
+
+function flush() {
+  document.getElementById('log').innerHTML = RESULT.join('<br>');
+  const ok = RESULT.filter((x) => x.includes('✅')).length;
+  const bad = RESULT.filter((x) => x.includes('❌')).length;
+  document.title = ok + 'OK_' + bad + 'FAIL';
+  // 顶部大字摘要（截图可见，不受滚动影响）
+  const sum = document.createElement('div');
+  sum.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;'
+    + 'background:' + (bad===0?'#c8e6c9':'#ffcdd2') + ';padding:8px 12px;'
+    + 'font:bold 15px Consolas;color:' + (bad===0?'#1b5e20':'#b71c1c');
+  const fails = RESULT.filter((x) => x.includes('❌')).map((x)=>x.replace(/<[^>]+>/g,''));
+  sum.textContent = '通过 ' + ok + ' / 失败 ' + bad
+    + (bad ? '  →  ' + fails.join(' | ') : '  ✓ 全部通过');
+  document.body.appendChild(sum);
+  window.scrollTo(0, 0);
+}
+
+try {
+  const nodes = [
+    { id: 'A', name: '贾宝玉', family: '贾', degree: 8 },
+    { id: 'B', name: '林黛玉', family: '林', degree: 6 },
+    { id: 'C', name: '薛宝钗', family: '薛', degree: 5 },
+    { id: 'D', name: '王熙凤', family: '王', degree: 4 },
+    { id: 'E', name: '贾母',   family: '史', degree: 5 },
+  ];
+  const edges = [
+    { source: 'A', target: 'B', relation: 'x' },
+    { source: 'A', target: 'C', relation: 'x' },
+    { source: 'D', target: 'E', relation: 'x' },
+    { source: 'B', target: 'E', relation: 'x' },
+  ];
+  const cv = document.getElementById('c');
+  const inst = force(cv, { nodes, edges }, {});
+  R('force() OK，节点=' + inst.nodes.length);
+
+  setTimeout(() => {
+    try { run(inst, cv); } catch (e) { R('异常: ' + e.message, 'fail'); }
+    flush();
+  }, 1200);
+} catch (e) {
+  R('初始化失败: ' + e.message + '<br>' + e.stack, 'fail');
+  flush();
+}
+
+function run(inst, cv) {
+  const rect = cv.getBoundingClientRect();
+  const st = () => window.__forceDiag();
+  const ev = (type, x, y) => {
+    const e = new PointerEvent(type, {
+      clientX: x, clientY: y, bubbles: true, cancelable: true,
+      pointerId: 1, pointerType: 'mouse', button: 0,
+      buttons: type === 'pointerup' ? 0 : 1,
+    });
+    ((type === 'pointermove' || type === 'pointerup') ? window : cv).dispatchEvent(e);
+  };
+
+  if (!window.__forceDiag) { R('❌ __forceDiag 缺失', 'fail'); return; }
+  R('diag.view=' + JSON.stringify(st().view));
+
+  // ---------- 测1：拖空白平移 ----------
+  R('');
+  R('【测1】拖拽空白平移');
+  const v0 = { ...st().view };
+  const bx = rect.left + 24, by = rect.top + 24;
+  ev('pointerdown', bx, by);
+  R('  pan=' + JSON.stringify(st().pan));
+  for (let i = 1; i <= 5; i++) ev('pointermove', bx + i * 20, by + i * 20);
+  ev('pointerup', bx + 100, by + 100);
+  const v1 = st().view;
+  const dx = Math.round(v1.x - v0.x), dy = Math.round(v1.y - v0.y);
+  R('  位移=(' + dx + ',' + dy + ') 期望(100,100)');
+  R((Math.abs(dx - 100) <= 2 && Math.abs(dy - 100) <= 2)
+    ? '  ✅ 平移正确' : '  ❌ 平移异常', (Math.abs(dx - 100) <= 2 && Math.abs(dy - 100) <= 2) ? 'ok' : 'fail');
+
+  inst.resetView();
+
+  // ---------- 测2：拖节点 ----------
+  R('');
+  R('【测2】拖拽节点');
+  const tgt = inst.nodes.find((n) => n.id === 'A');
+  const gx = rect.left + tgt.x, gy = rect.top + tgt.y;
+  R('  节点屏幕坐标=(' + gx.toFixed(0) + ',' + gy.toFixed(0) + ') 图坐标=(' + tgt.x.toFixed(0) + ',' + tgt.y.toFixed(0) + ')');
+  const b = { x: tgt.x, y: tgt.y };
+  ev('pointerdown', gx, gy);
+  R('  按下后 drag=' + st().drag);
+  for (let i = 1; i <= 5; i++) ev('pointermove', gx - i * 12, gy - i * 8);
+  ev('pointerup', gx - 60, gy - 40);
+  const ndx = Math.round(tgt.x - b.x), ndy = Math.round(tgt.y - b.y);
+  R('  节点位移=(' + ndx + ',' + ndy + ') 期望(-60,-40)');
+  R((Math.abs(ndx + 60) <= 15 && Math.abs(ndy + 40) <= 15)
+    ? '  ✅ 节点拖拽正确' : '  ❌ 节点拖拽异常', (Math.abs(ndx + 60) <= 15 && Math.abs(ndy + 40) <= 15) ? 'ok' : 'fail');
+
+  // ---------- 测3：点击选中 ----------
+  R('');
+  R('【测3】点击选中（无位移）');
+  const t2 = inst.nodes.find((n) => n.id === 'B');
+  const v = st().view;
+  const tx = rect.left + t2.x + v.x, ty = rect.top + t2.y + v.y;
+  ev('pointerdown', tx, ty);
+  ev('pointerup', tx, ty);
+  const sel = st().selected;
+  R('  selected=' + sel);
+  R(sel === 'B' ? '  ✅ 点击选中正确' : '  ❌ 点击选中失败', sel === 'B' ? 'ok' : 'fail');
+
+  // ---------- 测4：双击重置 ----------
+  R('');
+  R('【测4】双击空白重置');
+  const v3 = { ...st().view };
+  cv.dispatchEvent(new MouseEvent('dblclick', {
+    clientX: rect.left + 18, clientY: rect.top + 18, bubbles: true,
+  }));
+  const v4 = st().view;
+  R('  前=' + JSON.stringify(v3) + ' 后=' + JSON.stringify(v4));
+  R((v4.x === 0 && v4.y === 0 && v4.k === 1) ? '  ✅ 重置正确' : '  ❌ 重置异常',
+    (v4.x === 0 && v4.y === 0 && v4.k === 1) ? 'ok' : 'fail');
+
+  // ---------- 测5：滚轮缩放 ----------
+  R('');
+  R('【测5】滚轮缩放');
+  const k0 = st().view.k;
+  cv.dispatchEvent(new WheelEvent('wheel', {
+    deltaY: -120, clientX: rect.left + 300, clientY: rect.top + 170,
+    bubbles: true, cancelable: true,
+  }));
+  const k1 = st().view.k;
+  R('  k: ' + k0 + ' → ' + k1);
+  R(k1 > k0 ? '  ✅ 缩放正确' : '  ❌ 缩放异常', k1 > k0 ? 'ok' : 'fail');
+
+  R('');
+  const ok = RESULT.filter((x) => x.includes('✅')).length;
+  const bad = RESULT.filter((x) => x.includes('❌')).length;
+  R('════ 汇总：通过 ' + ok + ' 项 / 失败 ' + bad + ' 项 ════', bad === 0 ? 'ok' : 'fail');
+}
+</script>
+</body>
+</html>

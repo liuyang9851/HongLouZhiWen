@@ -1,0 +1,534 @@
+{
+ "贾琏": {
+  "乳母": [
+   {
+    "name": "赵嬷嬷",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "贾迎春": {
+  "乳母": [
+   {
+    "name": "迎春乳母",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ],
+  "丫鬟": [
+   {
+    "name": "司棋",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 10,
+    "first_hui": 7
+   },
+   {
+    "name": "秦思祺",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "刑秞烟": {
+  "丫鬟": [
+   {
+    "name": "篆儿",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "贾宝玉": {
+  "乳母": [
+   {
+    "name": "李嬷嬷",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "王嬷嬷",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "赵嬷嬷",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ],
+  "奴仆": [
+   {
+    "name": "叶茗烟",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ],
+  "丫鬟": [
+   {
+    "name": "何春燕",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "四儿",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 7,
+    "first_hui": 21
+   },
+   {
+    "name": "春燕",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 4,
+    "first_hui": 59
+   },
+   {
+    "name": "晴雯",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 57,
+    "first_hui": 5
+   },
+   {
+    "name": "柳五儿",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "秋纹",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 12,
+    "first_hui": 35
+   },
+   {
+    "name": "篆儿",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "芳官",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 29,
+    "first_hui": 58
+   },
+   {
+    "name": "茜雪",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 3,
+    "first_hui": 8
+   },
+   {
+    "name": "袭人",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 152,
+    "first_hui": 3
+   },
+   {
+    "name": "麝月",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 37,
+    "first_hui": 5
+   }
+  ]
+ },
+ "王夫人": {
+  "奴仆": [
+   {
+    "name": "周瑞",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ],
+  "丫鬟": [
+   {
+    "name": "彩云",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 6,
+    "first_hui": 23
+   },
+   {
+    "name": "彩霞",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 8,
+    "first_hui": 23
+   },
+   {
+    "name": "玉钏",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 9,
+    "first_hui": 30
+   },
+   {
+    "name": "玉钏儿",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "白玉钏",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "白金钏",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "贾环": {
+  "奴仆": [
+   {
+    "name": "钱槐",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "林黛玉": {
+  "丫鬟": [
+   {
+    "name": "紫鹃",
+    "conf": "high",
+    "sources": [
+     "text",
+     "cooccur"
+    ],
+    "evidence_hui": 29,
+    "cooccur_sent": 20,
+    "first_hui": 21
+   },
+   {
+    "name": "藕官",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   },
+   {
+    "name": "雪雁",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 6,
+    "first_hui": 3
+   },
+   {
+    "name": "鹦哥",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 6,
+    "first_hui": 3
+   }
+  ],
+  "乳母": [
+   {
+    "name": "王嬷嬷",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "王熙凤": {
+  "丫鬟": [
+   {
+    "name": "丰儿",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 5,
+    "first_hui": 7
+   },
+   {
+    "name": "平儿",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 85,
+    "first_hui": 6
+   },
+   {
+    "name": "林红玉",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "贾演": {
+  "奴仆": [
+   {
+    "name": "焦大",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "贾母": {
+  "丫鬟": [
+   {
+    "name": "傻大姐",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 3,
+    "first_hui": 73
+   },
+   {
+    "name": "鸳鸯",
+    "conf": "high",
+    "sources": [
+     "graph",
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 42,
+    "first_hui": 24
+   }
+  ]
+ },
+ "贾赦": {
+  "丫鬟": [
+   {
+    "name": "秋桐",
+    "conf": "high",
+    "sources": [
+     "graph"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": null,
+    "first_hui": null
+   }
+  ]
+ },
+ "薛宝钗": {
+  "丫鬟": [
+   {
+    "name": "莺儿",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 15,
+    "first_hui": 7
+   },
+   {
+    "name": "香菱",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 22,
+    "first_hui": 20
+   }
+  ]
+ },
+ "贾探春": {
+  "丫鬟": [
+   {
+    "name": "待书",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 5,
+    "first_hui": 7
+   },
+   {
+    "name": "翠墨",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 3,
+    "first_hui": 29
+   }
+  ]
+ },
+ "贾惜春": {
+  "丫鬟": [
+   {
+    "name": "入画",
+    "conf": "high",
+    "sources": [
+     "cooccur"
+    ],
+    "evidence_hui": null,
+    "cooccur_sent": 5,
+    "first_hui": 7
+   }
+  ]
+ }
+}

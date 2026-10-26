@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>红楼智问 · 可追溯的知识检索与智能问答</title>
+<link rel="stylesheet" href="/css/app.css?v=1792992715">
+<link rel="stylesheet" href="/css/views.css?v=1792992715">
+  <link rel="stylesheet" href="/css/pages.css?v=1792992715">
+  <link rel="stylesheet" href="/css/principle.css?v=1792992715">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏮</text></svg>">
+</head>
+<body>
+
+<!-- ============ 顶部：品牌 + 全局状态 ============ -->
+<header class="topbar">
+  <div class="brand">
+    <span class="seal">紅</span>
+    <div class="brand-text">
+      <h1>红楼智问</h1>
+      <p>HongLouMeng-QA · 可追溯的 RAG 知识问答</p>
+    </div>
+  </div>
+
+  <div class="topbar-right">
+    <div class="model-picker" id="modelPicker" title="选择模型">
+      <span class="dot"></span>
+      <select id="modelSelect" aria-label="选择模型">
+        <option value="deepseek-flash" selected>DeepSeek · deepseek-flash</option>
+      </select>
+      <button class="btn xs" id="btnModelCfg" title="配置 API 地址 / 密钥 / 模型名">
+        ⚙ 配置
+      </button>
+    </div>
+    <div class="status-pill" id="backendStatus" title="Python RAG 后端状态">
+      <span class="dot warn"></span><span class="txt">后端未连接</span>
+    </div>
+    <button class="btn xs" id="btnFullscreen" title="进入全屏（Esc 退出）">
+      <span class="fs-ico">⛶</span> <span class="fs-txt">全屏</span>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+  <!-- ============ 左侧导航 ============ -->
+  <nav class="rail" id="rail">
+    <a class="rail-item" href="#/home"     data-view="home">     <span class="ico">🏠</span><span class="lbl">欢迎页</span></a>
+    <a class="rail-item" href="#/principle" data-view="principle"><span class="ico">🧭</span><span class="lbl">项目原理</span></a>
+    <a class="rail-item" href="#/chat"     data-view="chat">     <span class="ico">💬</span><span class="lbl">AI 问答</span><span class="badge">核心</span></a>
+    <a class="rail-item" href="#/reader"   data-view="reader">   <span class="ico">📖</span><span class="lbl">原文阅读</span></a>
+    <a class="rail-item" href="#/stats"    data-view="stats">    <span class="ico">📊</span><span class="lbl">统计信息</span></a>
+    <a class="rail-item" href="#/graph"    data-view="graph">    <span class="ico">⚭</span><span class="lbl">人物关系</span></a>
+    <a class="rail-item" href="#/guiyou"   data-view="guiyou">   <span class="ico">🔬</span><span class="lbl">癸酉本探究</span></a>
+    <a class="rail-item" href="#/corpus"   data-view="corpus">   <span class="ico">🗂</span><span class="lbl">语料版本</span></a>
+    <a class="rail-item" href="#/ops"      data-view="ops">      <span class="ico">⚙</span><span class="lbl">系统运维</span></a>
+    <div class="rail-foot">
+      <div class="mini-stat"><b id="ms-chapters">—</b><span>回</span></div>
+      <div class="mini-stat"><b id="ms-pizhu">—</b><span>批语</span></div>
+      <div class="mini-stat"><b id="ms-nodes">—</b><span>人物</span></div>
+    </div>
+  </nav>
+
+  <!-- ============ 主内容区 ============ -->
+  <main class="stage" id="stage">
+    <div class="loading">正在载入语料…</div>
+  </main>
+</div>
+
+<!-- 划选提问浮层（R-108） -->
+<div class="sel-pop" id="selPop" hidden>
+  <button data-act="ask">🎯 就此提问</button>
+  <button data-act="copy">复制</button>
+</div>
+
+<!-- 全局 Toast -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script type="module" src="/js/app.js?v=1792992715"></script>
+</body>
+</html>

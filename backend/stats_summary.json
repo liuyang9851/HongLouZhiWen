@@ -1,0 +1,9 @@
+{
+ "source": "hlm_corpus/clean/chapters.jsonl（抚琴居校本，前80回）",
+ "total_chars": 599196,
+ "han_chars": 526673,
+ "with_punct": 591499,
+ "n_hui": 80,
+ "n_para": 2501,
+ "note": "三个字数口径：段落合计/仅汉字/含标点，报告时须说明"
+}

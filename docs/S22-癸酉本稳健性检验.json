@@ -1,0 +1,67 @@
+{
+ "base_diff_C": 0.8529,
+ "base_diff_D": 3.1182,
+ "test1_leave_one_out": {
+  "n_flip": 0,
+  "flipped_features": [],
+  "robust": true,
+  "top_effects": [
+   {
+    "feature": "period_r",
+    "diff_without": 0.688,
+    "change": -0.1648
+   },
+   {
+    "feature": "fw_被",
+    "diff_without": 1.0101,
+    "change": 0.1573
+   },
+   {
+    "feature": "fw_把",
+    "diff_without": 0.9751,
+    "change": 0.1223
+   },
+   {
+    "feature": "four_per10k",
+    "diff_without": 0.9741,
+    "change": 0.1213
+   },
+   {
+    "feature": "ttr",
+    "diff_without": 0.7478,
+    "change": -0.1051
+   },
+   {
+    "feature": "punct_per100",
+    "diff_without": 0.9568,
+    "change": 0.104
+   },
+   {
+    "feature": "fw_更",
+    "diff_without": 0.749,
+    "change": -0.1038
+   },
+   {
+    "feature": "fw_太",
+    "diff_without": 0.7495,
+    "change": -0.1033
+   }
+  ]
+ },
+ "test2_function_words_only": {
+  "n_features": 30,
+  "diff_C": 0.6828,
+  "diff_D": 2.9393
+ },
+ "test3_permutation": {
+  "observed": 0.8529,
+  "p_value": 0.018,
+  "perm_95pct": 0.7334,
+  "n_perm": 1000
+ },
+ "test4_confusion": {
+  "D_diff": 3.1182,
+  "C_diff": 0.8529,
+  "ratio_C_over_D": 0.274
+ }
+}

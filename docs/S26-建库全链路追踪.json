@@ -1,0 +1,364 @@
+{
+ "target": {
+  "chunk_id": "517c6120437ffe24",
+  "version": "chenggao",
+  "hui": 3,
+  "huimu": "第3回 贾雨村夤缘复旧职 林黛玉抛父进京都",
+  "para_start": 17,
+  "para_end": 25,
+  "chars": 660,
+  "n_bigrams": 527,
+  "text_head": "一语未了，只听外面一阵脚步响，丫鬟进来笑道：“宝玉来了！”黛玉心中正疑惑着：“这个宝玉，不知是怎生个惫赖心人物，懵懂顽童？”——倒不见那蠢物也罢了。心中想着，忽见丫鬟话未报完，已进来了一位年轻的公子：头上戴着束发嵌宝紫金冠，齐眉勒着二龙抢珠金抹额；穿一件二色金百蝶穿花大红箭袖，束着五彩丝攒花结长穗宫绦，外罩石青起花八团倭锻排穗褂；登着青缎粉底小朝靴。面若中秋之月，色如春晓之花，鬓若刀裁，眉如墨画，面如桃瓣，目若秋波。虽怒时而若笑，即瞋视而有情。项上金螭璎珞，又有一根五色丝绦，系着一块美玉。黛玉一见，便吃一大惊，心下想道：“好生奇怪，倒象在那里见过一般，何等眼熟到如此！“只见这宝玉向贾母请了安，"
+ },
+ "stages": [
+  {
+   "id": 1,
+   "name": "原始语料落盘",
+   "component": "本地文件 /tmp/hlm_corpus/chenggao/003.txt",
+   "input": "PDF 提取 / 人工校对的 txt",
+   "output": "8,564 字符",
+   "detail": {
+    "path": "/tmp/hlm_corpus/chenggao/003.txt",
+    "chars": 8564,
+    "head": "第3回 贾雨村夤缘复旧职 林黛玉抛父进京都\n\n却说雨村忙回头看时，不是别人，乃是当日同僚一案参革的号张如圭者。他本系此地人，革后家居，今打听得都中奏准起复旧员之信，他便四下里寻情找门路，忽遇见雨村，故忙道喜。二人见了礼，张如圭便将此信告诉雨村，雨村自是欢喜，忙忙的叙了两句，遂作别各自回家。冷子兴听得此言，便忙献计，令雨村央烦林如海，转向都中去央烦贾政。雨村领",
+    "source": "抚琴居本 / 程高本 / 癸酉本三个版本各自一个目录，按回次编号 001.txt ~ 120.txt"
+   },
+   "note": "建库的起点：每回一个纯文本文件。这一步是唯一和 PDF 打交道的环节，之后全部是结构化数据。"
+  },
+  {
+   "id": 2,
+   "name": "按段落结构化",
+   "component": "chapters_chenggao.jsonl",
+   "input": "第 3 回纯文本",
+   "output": "1 条记录 / 32 个段落",
+   "detail": {
+    "path": "/workspace/pipeline/out/chapters_chenggao.jsonl",
+    "hui": 3,
+    "huimu": "第3回 贾雨村夤缘复旧职 林黛玉抛父进京都",
+    "n_paragraphs": 32,
+    "para_lengths": [
+     176,
+     419,
+     156,
+     182,
+     601,
+     229,
+     275,
+     280,
+     776,
+     828,
+     275,
+     16,
+     29,
+     294,
+     352,
+     344,
+     669,
+     536,
+     14,
+     15,
+     14,
+     15,
+     14,
+     15,
+     14,
+     15,
+     896,
+     181,
+     206,
+     165,
+     336,
+     149
+    ],
+    "para_head": "却说雨村忙回头看时，不是别人，乃是当日同僚一案参革的号张如圭者。他本系此地人，革后家居，今打听得都中奏准起复旧员之信，他便四下里寻情找门路，忽遇见雨村，故忙道喜。二人见了礼，张如圭便将此信告诉雨村，雨"
+   },
+   "note": "把整回文本切成段落数组。段落是后续 chunk 切分的最小单位，也是「回次+段号」引用的基础。"
+  },
+  {
+   "id": 3,
+   "name": "Chunk 切分",
+   "component": "pipeline/s7_2_index_versions.py（策略 v2-3ver）",
+   "input": "段落 17~25",
+   "output": "1 个 chunk / 660 字",
+   "detail": {
+    "chunk_id": "517c6120437ffe24",
+    "hash_input": "chenggao|003|0017|0025|09|v2-3ver",
+    "hash_verify": true,
+    "char_count": 660,
+    "strategy": {
+     "TARGET_MIN": 300,
+     "TARGET_MAX": 800,
+     "STRATEGY_REV": "v2-3ver"
+    },
+    "text_head": "一语未了，只听外面一阵脚步响，丫鬟进来笑道：“宝玉来了！”黛玉心中正疑惑着：“这个宝玉，不知是怎生个惫赖心人物，懵懂顽童？”——倒不见那蠢物也罢了。心中想着，忽见丫鬟话未报完，已进来了一位年轻的公子：头上戴着束发嵌宝紫金冠，齐眉勒着二龙抢珠金抹额；穿一件二色金百蝶穿花大红箭袖，束着五彩丝攒花结长穗宫绦，外罩石青起花八团倭锻排穗褂；登着青缎粉底小朝靴。面若中秋之月，色如春晓之花，鬓若刀裁，眉如墨画，面如桃瓣，目若秋波。虽怒时而若笑，即瞋视而有情。项上金螭璎珞，又有一根五色丝绦，系着一块美玉。黛玉一见，便吃一大惊，心下"
+   },
+   "note": "chunk_id = sha1(版本|回次|起段|止段|段内序号|策略版本)[:16]。把**版本**放进 ID，保证三版本同位置的 chunk 天然不同 ID，不会串版本；把**策略版本**放进 ID，改了切分参数后新旧 ID 不会混。"
+  },
+  {
+   "id": 4,
+   "name": "上传 HDFS",
+   "component": "HDFS /hlm/warehouse/chunks/",
+   "input": "chunks.jsonl（全部版本）",
+   "output": "分布式存储，副本 2",
+   "detail": {
+    "hdfs_dir": "/hlm/warehouse/chunks/",
+    "layout": "/hlm/warehouse/chunks/<版本>/chunks.jsonl",
+    "replication": 2,
+    "block_size": "128 MB",
+    "derived_dir": "/hlm/derived/vectors/<版本>/",
+    "mr_out_dir": "/hlm/mrout/{wordfreq,personfreq,cooccur,chunkstat}"
+   },
+   "note": "chunks.jsonl 上传到 HDFS 后，MapReduce 作业直接从 HDFS 读，不需要再经过本地文件。副本数 2 意味着每条数据在两个 DataNode 上各有一份。"
+  },
+  {
+   "id": 5,
+   "name": "bigram 切分",
+   "component": "MapReduce Mapper 输入端",
+   "input": "一语未了，只听外面一阵脚步响，丫鬟进来笑道：“宝玉来了！”黛玉心中正疑惑着：“这个宝玉，不知是怎生个惫赖心人物，懵懂顽童…",
+   "output": "527 个不同 bigram / 共 545 次",
+   "detail": {
+    "han_chars": 552,
+    "n_bigrams": 527,
+    "total_occurrences": 545,
+    "stop_size": 22,
+    "stop_chars": "一上不个中为了人们到和国在大就我是有的说这都",
+    "top15": [
+     [
+      "宝玉",
+      6
+     ],
+     [
+      "丫鬟",
+      2
+     ],
+     [
+      "进来",
+      2
+     ],
+     [
+      "来了",
+      2
+     ],
+     [
+      "黛玉",
+      2
+     ],
+     [
+      "心中",
+      2
+     ],
+     [
+      "不知",
+      2
+     ],
+     [
+      "倒不",
+      2
+     ],
+     [
+      "头上",
+      2
+     ],
+     [
+      "大红",
+      2
+     ],
+     [
+      "面如",
+      2
+     ],
+     [
+      "一根",
+      2
+     ],
+     [
+      "贾母",
+      2
+     ],
+     [
+      "撒花",
+      2
+     ],
+     [
+      "一语",
+      1
+     ]
+    ]
+   },
+   "note": "只保留汉字，滑窗取相邻两字，跳过「两字都在停用字表」的组合（停用表共 22 字）。这是倒排索引的原子单位——用 bigram 而不是分词，是为了避免分词错误影响召回。"
+  },
+  {
+   "id": 6,
+   "name": "MapReduce 建倒排",
+   "component": "HBase hlm_terms（MapReduce Reducer 产物）",
+   "input": "527 个 bigram",
+   "output": "3 行倒排（抽样 3 个）",
+   "detail": {
+    "rowkey_format": "<版本>|text|<bigram>",
+    "cell_posting": "p:postings = [[chunk_id, tf], ...]",
+    "cell_df": "p:df = 含该 bigram 的 chunk 数",
+    "samples": [
+     {
+      "bigram": "宝玉",
+      "rowkey": "chenggao|text|宝玉",
+      "found": true,
+      "df": 908,
+      "n_postings": 908,
+      "tf_local": 6,
+      "self_in_postings": true,
+      "self_tf": 6,
+      "postings_head": [
+       [
+        "6b1f8076eecbbb3f",
+        1
+       ],
+       [
+        "5b60f7631ed4bd31",
+        1
+       ],
+       [
+        "c69a3be381d4c1ba",
+        1
+       ]
+      ],
+      "postings_bytes": 22778
+     },
+     {
+      "bigram": "丫鬟",
+      "rowkey": "chenggao|text|丫鬟",
+      "found": true,
+      "df": 163,
+      "n_postings": 163,
+      "tf_local": 2,
+      "self_in_postings": true,
+      "self_tf": 2,
+      "postings_head": [
+       [
+        "88b4edf8582d4b90",
+        3
+       ],
+       [
+        "647f78b025d7ad1d",
+        1
+       ],
+       [
+        "0c9755f441a2e2e1",
+        1
+       ]
+      ],
+      "postings_bytes": 4075
+     },
+     {
+      "bigram": "进来",
+      "rowkey": "chenggao|text|进来",
+      "found": true,
+      "df": 473,
+      "n_postings": 473,
+      "tf_local": 2,
+      "self_in_postings": true,
+      "self_tf": 2,
+      "postings_head": [
+       [
+        "6b1f8076eecbbb3f",
+        1
+       ],
+       [
+        "88b4edf8582d4b90",
+        1
+       ],
+       [
+        "c91804525e54c520",
+        2
+       ]
+      ],
+      "postings_bytes": 11825
+     }
+    ],
+    "total_table_rows": 448841
+   },
+   "note": "Reducer 把同一个 bigram 的所有 (chunk_id, tf) 归并成一行——这就是「倒排表」。在线检索时按 bigram 点查这一行，直接拿到所有包含它的 chunk，不用扫正文。"
+  },
+  {
+   "id": 7,
+   "name": "向量编码",
+   "component": "bge-small-zh-v1.5 ONNX → HBase hlm_vectors",
+   "input": "660 字符正文",
+   "output": "512 维 float32 = 2048 字节",
+   "detail": {
+    "rowkey": "chenggao|text|003|517c6120437ffe24",
+    "found": true,
+    "cells": {
+     "m:dim": 3,
+     "m:hui": 1,
+     "m:model_id": 17,
+     "m:source": 4,
+     "v:emb": 2048
+    },
+    "vec_dim": 512,
+    "vec_head": [
+     0.06157,
+     0.04851,
+     -0.01146,
+     0.04508,
+     -0.06666,
+     0.0044,
+     0.00856,
+     -0.02629
+    ],
+    "vec_norm": 1.0,
+    "bytes_per_row": 2048,
+    "total_rows": 11780
+   },
+   "note": "这条 chunk 的正文经 ONNX 模型编码成 512 维向量，存成 2048 字节的二进制。在线时加载成 11780×512 的矩阵，一次矩阵乘就能算出全部相似度。"
+  },
+  {
+   "id": 8,
+   "name": "写入 HBase 正排",
+   "component": "HBase hlm_chunks",
+   "input": "chunk 517c6120437ffe24",
+   "output": "11 个 cell",
+   "detail": {
+    "rowkey": "chenggao|text|003|517c6120437ffe24",
+    "found": true,
+    "cells": {
+     "d:char_count": "660",
+     "d:source": "text",
+     "d:text": "一语未了，只听外面一阵脚步响，丫鬟进来笑道：“宝玉来了！”黛玉心中正疑惑着：“这个宝玉，不知是怎生个惫赖心人物，懵懂顽童？”——倒不见那蠢物也罢了。心中想着，忽…",
+     "m:hui": "3",
+     "m:huimu": "第3回 贾雨村夤缘复旧职 林黛玉抛父进京都",
+     "m:para_end": "25",
+     "m:para_start": "17",
+     "m:partition": "hui_001_010",
+     "m:seg": "9",
+     "m:strategy_rev": "v2-3ver",
+     "m:version": "chenggao"
+    },
+    "total_rows": 11780
+   },
+   "note": "正排表按 rowkey 存「这一条 chunk 是什么」。检索只用到 chunk_id，取回正文时才回这张表。rowkey 里含版本+类型+回次，所以按回次范围扫描很快。"
+  },
+  {
+   "id": 9,
+   "name": "闭环：进入问答",
+   "component": "在线检索（见 S25 追踪）",
+   "input": "chunk 517c6120437ffe24",
+   "output": "问答回答的 [4] 号引用",
+   "detail": {
+    "question": "宝玉和黛玉是什么关系？",
+    "became_citation": 4,
+    "route": "L2 向量召回排第 2 → RRF 融合后进 Top-5 → 回表取正文 → 拼进 prompt 编号 [4]",
+    "chunk_id": "517c6120437ffe24"
+   },
+   "note": "建库阶段落下的这一条 chunk，在问答时被 L2 向量通道命中，最终成为回答里的 [4] 号引用，可点击跳转回第3回原文。**建库和检索在这里接上了。**"
+  }
+ ],
+ "meta": {
+  "pipeline": "run_all.sh（6 阶段）",
+  "strategy_rev": "v2-3ver",
+  "total_chunks": 11780,
+  "total_terms": 448841,
+  "total_vectors": 11780,
+  "corpus_versions": 3,
+  "corpus_chars": 1447000
+ }
+}

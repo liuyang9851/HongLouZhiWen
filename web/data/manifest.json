@@ -1,0 +1,50 @@
+{
+ "generated_by": "build_ui_data.py",
+ "generated_at": "2026-10-24",
+ "stage": "S1 界面设计数据准备",
+ "sources": [
+  {
+   "path": "hlm_corpus/clean/chapters.jsonl",
+   "n": 81,
+   "desc": "81 条章节（凡例+80 回）"
+  },
+  {
+   "path": "hlm_corpus/clean/huimu.json",
+   "desc": "回目对照表"
+  },
+  {
+   "path": "码点核对/pizhu_redecoded.jsonl",
+   "n": 3234,
+   "desc": "脂批版本重解码，唯一可信版本来源"
+  },
+  {
+   "path": "hadoop词频/hadoop_wordcount.tsv",
+   "desc": "MapReduce 词频作业真实产出"
+  },
+  {
+   "path": "查询示例/别名表.py",
+   "n": 41,
+   "desc": "41 人物 / 98 别名，用于频次归并"
+  },
+  {
+   "path": "红学数据源/kg-hongloumeng__hlm_triples.csv",
+   "n": 380,
+   "desc": "人物关系三元组"
+  },
+  {
+   "path": "红学数据源/KGQAHLM__relation.txt",
+   "n": 188,
+   "desc": "关系+家族归属"
+  }
+ ],
+ "note": "本目录所有数据均由真实语料生成，无编造 mock 数据",
+ "stats_summary": {
+  "chapters": 81,
+  "paragraphs": 2512,
+  "total_chars": 600163,
+  "pizhu": 3234,
+  "graph_nodes": 350,
+  "graph_edges": 253,
+  "word_freq_entries": 100
+ }
+}

@@ -1,0 +1,33 @@
+{
+  "built_at": "2026-10-24",
+  "stage": "S5-1",
+  "purpose": "事实型与推理型分开评测，不合成单一准确率",
+  "counts": {
+    "factual": 27,
+    "reasoning": 15,
+    "refuse": 10,
+    "total": 52
+  },
+  "metrics": {
+    "factual": [
+      "EM (exact match)",
+      "F1 (token overlap)",
+      "keyword_coverage",
+      "citation_hit@k (回次命中)",
+      "refuse_correctness"
+    ],
+    "reasoning": [
+      "human_score_1_5",
+      "kappa (2 人独立打分)"
+    ],
+    "refuse": [
+      "correct_refusal_rate",
+      "false_refusal_rate"
+    ]
+  },
+  "why_not_golden60": "实测检查：golden_eval_60 的 relevant_chunk_ids 指向 cai_note_*/qaSynthesisArticle_*/transfernotesArticle_* 等外部文档，不是本项目的 hlm_chunks 语料，无法用于检索指标对拍。故事实型评测集自建，全部从本项目语料抽取并校验证据位置。",
+  "sources": [
+    "hlm_corpus/clean/chapters.jsonl（80回正文）",
+    "HBase hlm_stats（MapReduce 统计，用于 f027-f030）"
+  ]
+}

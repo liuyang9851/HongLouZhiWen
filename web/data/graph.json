@@ -1,0 +1,8498 @@
+{
+ "n_nodes": 350,
+ "n_nodes_total": 399,
+ "n_edges": 675,
+ "n_edges_total": 723,
+ "relations": [
+  "丈夫",
+  "丫头",
+  "丫环",
+  "丫鬟",
+  "主人",
+  "主子",
+  "买办",
+  "乳母",
+  "乳父",
+  "乾娘",
+  "二夫人",
+  "二房",
+  "伙计",
+  "伯父",
+  "伴侣",
+  "侄",
+  "侄儿",
+  "侄女",
+  "儿媳",
+  "儿子",
+  "兄",
+  "兄妹",
+  "兄弟",
+  "养子",
+  "养母",
+  "养父",
+  "内侄女",
+  "友",
+  "友人",
+  "哥哥",
+  "外孙女",
+  "外祖母",
+  "大丫头",
+  "大丫环",
+  "大儿媳",
+  "夫",
+  "夫妻",
+  "女",
+  "女儿",
+  "女友",
+  "女婿",
+  "奴仆",
+  "奶奶",
+  "奶妈",
+  "好兄弟",
+  "好友",
+  "好朋友",
+  "妃",
+  "妃嫔",
+  "妹",
+  "妹妹",
+  "妻",
+  "妾",
+  "姐夫",
+  "姐妹",
+  "姐姐",
+  "姑嫂",
+  "姑母",
+  "姑舅哥哥",
+  "姨妈",
+  "姨母",
+  "姻亲兄弟",
+  "婆婆",
+  "嫂",
+  "嫂子",
+  "嫔妃",
+  "嬷嬷",
+  "子",
+  "子媳",
+  "孙女",
+  "孙子",
+  "学生",
+  "小儿媳",
+  "小厮",
+  "小舅子",
+  "岳母",
+  "岳父",
+  "师父",
+  "干儿子",
+  "干娘",
+  "弟",
+  "弟媳",
+  "弟弟",
+  "徒弟",
+  "施主",
+  "暧昧",
+  "朋友",
+  "母",
+  "母亲",
+  "父",
+  "父亲",
+  "爷爷",
+  "玄孙",
+  "王妃",
+  "男友",
+  "相好",
+  "祖母",
+  "祖父",
+  "继室",
+  "续弦",
+  "老亲",
+  "老奴",
+  "老师",
+  "胞妹",
+  "臣",
+  "臣属",
+  "舅",
+  "舅父",
+  "表兄",
+  "表兄妹",
+  "表兄弟",
+  "表哥",
+  "被抚养",
+  "远亲",
+  "邻居",
+  "重孙媳妇",
+  "门生",
+  "陪房",
+  "陪房丫头",
+  "雇主"
+ ],
+ "families": [
+  "贾",
+  "史",
+  "王",
+  "薛",
+  "林",
+  "其他"
+ ],
+ "family_counts": {
+  "贾": 71,
+  "林": 7,
+  "史": 7,
+  "王": 21,
+  "薛": 14,
+  "其他": 230
+ },
+ "nodes": [
+  {
+   "id": "贾宝玉",
+   "name": "贾宝玉",
+   "family": "贾",
+   "role": "荣国府嫡孙，神瑛侍者转世",
+   "degree": 85,
+   "mention": 2720,
+   "in_alias_table": true,
+   "aliases": [
+    "宝二爷",
+    "宝玉",
+    "怡红公子"
+   ]
+  },
+  {
+   "id": "林黛玉",
+   "name": "林黛玉",
+   "family": "林",
+   "role": "姑苏林家女，绛珠仙草转世",
+   "degree": 43,
+   "mention": 1297,
+   "in_alias_table": true,
+   "aliases": [
+    "林妹妹",
+    "潇湘妃子",
+    "颦儿",
+    "黛玉"
+   ]
+  },
+  {
+   "id": "贾政",
+   "name": "贾政",
+   "family": "贾",
+   "role": "",
+   "degree": 32,
+   "mention": 336,
+   "in_alias_table": true,
+   "aliases": [
+    "政老",
+    "政老爷"
+   ]
+  },
+  {
+   "id": "王夫人",
+   "name": "王夫人",
+   "family": "贾",
+   "role": "",
+   "degree": 29,
+   "mention": 584,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾母",
+   "name": "贾母",
+   "family": "史",
+   "role": "荣国府老祖宗，史太君",
+   "degree": 26,
+   "mention": 1715,
+   "in_alias_table": true,
+   "aliases": [
+    "史太君",
+    "老太太",
+    "老祖宗",
+    "贾母史太君"
+   ]
+  },
+  {
+   "id": "贾赦",
+   "name": "贾赦",
+   "family": "贾",
+   "role": "",
+   "degree": 24,
+   "mention": 120,
+   "in_alias_table": true,
+   "aliases": [
+    "大老爷"
+   ]
+  },
+  {
+   "id": "贾琏",
+   "name": "贾琏",
+   "family": "贾",
+   "role": "",
+   "degree": 23,
+   "mention": 451,
+   "in_alias_table": true,
+   "aliases": [
+    "琏二哥哥",
+    "琏二爷"
+   ]
+  },
+  {
+   "id": "贾珍",
+   "name": "贾珍",
+   "family": "贾",
+   "role": "",
+   "degree": 19,
+   "mention": 325,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "贾探春",
+   "name": "贾探春",
+   "family": "贾",
+   "role": "贾政与赵姨娘之女，三姑娘",
+   "degree": 18,
+   "mention": 360,
+   "in_alias_table": true,
+   "aliases": [
+    "三姑娘",
+    "探春"
+   ]
+  },
+  {
+   "id": "邢夫人",
+   "name": "邢夫人",
+   "family": "贾",
+   "role": "",
+   "degree": 18,
+   "mention": 184,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王熙凤",
+   "name": "王熙凤",
+   "family": "王",
+   "role": "荣国府管家奶奶，琏二奶奶",
+   "degree": 16,
+   "mention": 1737,
+   "in_alias_table": true,
+   "aliases": [
+    "凤姐",
+    "凤姐儿",
+    "琏二奶奶"
+   ]
+  },
+  {
+   "id": "薛宝钗",
+   "name": "薛宝钗",
+   "family": "薛",
+   "role": "金陵薛家女，蘅芜君",
+   "degree": 16,
+   "mention": 798,
+   "in_alias_table": true,
+   "aliases": [
+    "宝姐姐",
+    "宝钗",
+    "蘅芜君"
+   ]
+  },
+  {
+   "id": "贾迎春",
+   "name": "贾迎春",
+   "family": "贾",
+   "role": "贾赦之女，二姑娘",
+   "degree": 16,
+   "mention": 146,
+   "in_alias_table": true,
+   "aliases": [
+    "二姑娘",
+    "迎春"
+   ]
+  },
+  {
+   "id": "贾代善",
+   "name": "贾代善",
+   "family": "贾",
+   "role": "",
+   "degree": 16,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史湘云",
+   "name": "史湘云",
+   "family": "史",
+   "role": "保龄侯史家女，枕霞旧友",
+   "degree": 15,
+   "mention": 467,
+   "in_alias_table": true,
+   "aliases": [
+    "云儿",
+    "枕霞旧友",
+    "湘云"
+   ]
+  },
+  {
+   "id": "净虚",
+   "name": "净虚",
+   "family": "其他",
+   "role": "",
+   "degree": 15,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛姨妈",
+   "name": "薛姨妈",
+   "family": "薛",
+   "role": "",
+   "degree": 14,
+   "mention": 248,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "皇帝",
+   "name": "皇帝",
+   "family": "其他",
+   "role": "",
+   "degree": 14,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾雨村",
+   "name": "贾雨村",
+   "family": "其他",
+   "role": "应天府尹，黛玉蒙师",
+   "degree": 13,
+   "mention": 127,
+   "in_alias_table": true,
+   "aliases": [
+    "贾化",
+    "雨村"
+   ]
+  },
+  {
+   "id": "贾惜春",
+   "name": "贾惜春",
+   "family": "贾",
+   "role": "贾敬之女，四姑娘",
+   "degree": 13,
+   "mention": 91,
+   "in_alias_table": true,
+   "aliases": [
+    "四姑娘",
+    "惜春"
+   ]
+  },
+  {
+   "id": "赵姨娘",
+   "name": "赵姨娘",
+   "family": "贾",
+   "role": "",
+   "degree": 12,
+   "mention": 97,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "妙玉",
+   "name": "妙玉",
+   "family": "其他",
+   "role": "大观园栊翠庵尼姑",
+   "degree": 12,
+   "mention": 50,
+   "in_alias_table": true,
+   "aliases": [
+    "槛外人"
+   ]
+  },
+  {
+   "id": "贾蓉",
+   "name": "贾蓉",
+   "family": "贾",
+   "role": "",
+   "degree": 11,
+   "mention": 201,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "贾元春",
+   "name": "贾元春",
+   "family": "贾",
+   "role": "贾政长女，贤德妃",
+   "degree": 11,
+   "mention": 74,
+   "in_alias_table": true,
+   "aliases": [
+    "元妃",
+    "元春",
+    "贤德妃",
+    "贵妃"
+   ]
+  },
+  {
+   "id": "贾珠",
+   "name": "贾珠",
+   "family": "贾",
+   "role": "",
+   "degree": 11,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李纨",
+   "name": "李纨",
+   "family": "贾",
+   "role": "贾珠之妻，稻香老农",
+   "degree": 10,
+   "mention": 335,
+   "in_alias_table": true,
+   "aliases": [
+    "大奶奶",
+    "宫裁",
+    "稻香老农"
+   ]
+  },
+  {
+   "id": "薛蟠",
+   "name": "薛蟠",
+   "family": "薛",
+   "role": "",
+   "degree": 10,
+   "mention": 260,
+   "in_alias_table": true,
+   "aliases": [
+    "呆霸王",
+    "薛文龙"
+   ]
+  },
+  {
+   "id": "邢岫烟",
+   "name": "邢岫烟",
+   "family": "其他",
+   "role": "",
+   "degree": 10,
+   "mention": 12,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾敏",
+   "name": "贾敏",
+   "family": "贾",
+   "role": "",
+   "degree": 10,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "晴雯",
+   "name": "晴雯",
+   "family": "贾",
+   "role": "宝玉大丫鬟",
+   "degree": 9,
+   "mention": 306,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "秦钟",
+   "name": "秦钟",
+   "family": "其他",
+   "role": "",
+   "degree": 9,
+   "mention": 108,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "倪二",
+   "name": "倪二",
+   "family": "其他",
+   "role": "",
+   "degree": 9,
+   "mention": 16,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "林如海",
+   "name": "林如海",
+   "family": "林",
+   "role": "",
+   "degree": 9,
+   "mention": 10,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛宝琴",
+   "name": "薛宝琴",
+   "family": "薛",
+   "role": "",
+   "degree": 9,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾演",
+   "name": "贾演",
+   "family": "贾",
+   "role": "",
+   "degree": 9,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "袭人",
+   "name": "袭人",
+   "family": "贾",
+   "role": "宝玉大丫鬟，本名珍珠",
+   "degree": 8,
+   "mention": 785,
+   "in_alias_table": true,
+   "aliases": [
+    "珍珠",
+    "花袭人",
+    "袭人姐姐"
+   ]
+  },
+  {
+   "id": "尤氏",
+   "name": "尤氏",
+   "family": "贾",
+   "role": "",
+   "degree": 8,
+   "mention": 310,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "香菱",
+   "name": "香菱",
+   "family": "薛",
+   "role": "甄士隐之女，薛蟠之妾",
+   "degree": 8,
+   "mention": 207,
+   "in_alias_table": true,
+   "aliases": [
+    "甄英莲",
+    "秋菱",
+    "英莲"
+   ]
+  },
+  {
+   "id": "藕官",
+   "name": "藕官",
+   "family": "贾",
+   "role": "",
+   "degree": 8,
+   "mention": 34,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "水溶",
+   "name": "水溶",
+   "family": "其他",
+   "role": "",
+   "degree": 8,
+   "mention": 16,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "秦可卿",
+   "name": "秦可卿",
+   "family": "贾",
+   "role": "贾蓉之妻，蓉大奶奶",
+   "degree": 8,
+   "mention": 13,
+   "in_alias_table": true,
+   "aliases": [
+    "可卿",
+    "蓉大奶奶"
+   ]
+  },
+  {
+   "id": "甄应嘉",
+   "name": "甄应嘉",
+   "family": "其他",
+   "role": "",
+   "degree": 8,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "尤二姐",
+   "name": "尤二姐",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 89,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "柳湘莲",
+   "name": "柳湘莲",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 28,
+   "in_alias_table": true,
+   "aliases": [
+    "冷二郎"
+   ]
+  },
+  {
+   "id": "贾敬",
+   "name": "贾敬",
+   "family": "贾",
+   "role": "",
+   "degree": 7,
+   "mention": 20,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "智能儿",
+   "name": "智能儿",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 10,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "卜世仁",
+   "name": "卜世仁",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "太上皇",
+   "name": "太上皇",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "柳五儿",
+   "name": "柳五儿",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾代化",
+   "name": "贾代化",
+   "family": "贾",
+   "role": "",
+   "degree": 7,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王夫人之父",
+   "name": "王夫人之父",
+   "family": "王",
+   "role": "",
+   "degree": 7,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "凤姐之父",
+   "name": "凤姐之父",
+   "family": "王",
+   "role": "",
+   "degree": 7,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "凤姐之祖王夫人之父",
+   "name": "凤姐之祖王夫人之父",
+   "family": "其他",
+   "role": "",
+   "degree": 7,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "鸳鸯",
+   "name": "鸳鸯",
+   "family": "贾",
+   "role": "贾母大丫鬟",
+   "degree": 6,
+   "mention": 275,
+   "in_alias_table": true,
+   "aliases": [
+    "鸳鸯姐姐"
+   ]
+  },
+  {
+   "id": "周瑞",
+   "name": "周瑞",
+   "family": "其他",
+   "role": "",
+   "degree": 6,
+   "mention": 163,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾环",
+   "name": "贾环",
+   "family": "贾",
+   "role": "",
+   "degree": 6,
+   "mention": 94,
+   "in_alias_table": true,
+   "aliases": [
+    "环三爷",
+    "环儿"
+   ]
+  },
+  {
+   "id": "春燕",
+   "name": "春燕",
+   "family": "贾",
+   "role": "",
+   "degree": 6,
+   "mention": 33,
+   "in_alias_table": true,
+   "aliases": [
+    "何春燕"
+   ]
+  },
+  {
+   "id": "王子腾",
+   "name": "王子腾",
+   "family": "王",
+   "role": "",
+   "degree": 6,
+   "mention": 17,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李婶",
+   "name": "李婶",
+   "family": "其他",
+   "role": "",
+   "degree": 6,
+   "mention": 16,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "夏婆子",
+   "name": "夏婆子",
+   "family": "其他",
+   "role": "",
+   "degree": 6,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾源",
+   "name": "贾源",
+   "family": "贾",
+   "role": "",
+   "degree": 6,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "胡氏",
+   "name": "胡氏",
+   "family": "贾",
+   "role": "",
+   "degree": 6,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "夏金桂",
+   "name": "夏金桂",
+   "family": "贾",
+   "role": "",
+   "degree": 6,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王狗儿",
+   "name": "王狗儿",
+   "family": "王",
+   "role": "",
+   "degree": 6,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾芸",
+   "name": "贾芸",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 95,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "金钏",
+   "name": "金钏",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 92,
+   "in_alias_table": true,
+   "aliases": [
+    "白金钏",
+    "金钏儿"
+   ]
+  },
+  {
+   "id": "玉钏",
+   "name": "玉钏",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 92,
+   "in_alias_table": true,
+   "aliases": [
+    "玉钏儿",
+    "白玉钏"
+   ]
+  },
+  {
+   "id": "贾蔷",
+   "name": "贾蔷",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 47,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "尤三姐",
+   "name": "尤三姐",
+   "family": "其他",
+   "role": "",
+   "degree": 5,
+   "mention": 40,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾兰",
+   "name": "贾兰",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 27,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "巧姐",
+   "name": "巧姐",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 24,
+   "in_alias_table": true,
+   "aliases": [
+    "大姐儿",
+    "巧哥儿"
+   ]
+  },
+  {
+   "id": "彩霞",
+   "name": "彩霞",
+   "family": "贾",
+   "role": "",
+   "degree": 5,
+   "mention": 22,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛蝌",
+   "name": "薛蝌",
+   "family": "薛",
+   "role": "",
+   "degree": 5,
+   "mention": 14,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "甄宝玉",
+   "name": "甄宝玉",
+   "family": "其他",
+   "role": "",
+   "degree": 5,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛宝琴父",
+   "name": "薛宝琴父",
+   "family": "薛",
+   "role": "",
+   "degree": 5,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛公之孙",
+   "name": "薛公之孙",
+   "family": "薛",
+   "role": "",
+   "degree": 5,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "芳官",
+   "name": "芳官",
+   "family": "贾",
+   "role": "",
+   "degree": 4,
+   "mention": 157,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "林红玉",
+   "name": "林红玉",
+   "family": "林",
+   "role": "",
+   "degree": 4,
+   "mention": 86,
+   "in_alias_table": true,
+   "aliases": [
+    "小红",
+    "红玉"
+   ]
+  },
+  {
+   "id": "蒋玉菡",
+   "name": "蒋玉菡",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 25,
+   "in_alias_table": true,
+   "aliases": [
+    "琪官"
+   ]
+  },
+  {
+   "id": "秋桐",
+   "name": "秋桐",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 23,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "蕊官",
+   "name": "蕊官",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 22,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赵嬷嬷",
+   "name": "赵嬷嬷",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 13,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李绮",
+   "name": "李绮",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 9,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "金文翔",
+   "name": "金文翔",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 6,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "孙绍祖",
+   "name": "孙绍祖",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 6,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "金氏",
+   "name": "金氏",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周贵人",
+   "name": "周贵人",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "邢忠",
+   "name": "邢忠",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王子腾之女",
+   "name": "王子腾之女",
+   "family": "王",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "梅翰林之子",
+   "name": "梅翰林之子",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "多官",
+   "name": "多官",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "牛清",
+   "name": "牛清",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "吴贵妃",
+   "name": "吴贵妃",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "花芳官",
+   "name": "花芳官",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周秀才",
+   "name": "周秀才",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "秦思祺",
+   "name": "秦思祺",
+   "family": "其他",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史湘云爷爷",
+   "name": "史湘云爷爷",
+   "family": "史",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾瑞之父",
+   "name": "贾瑞之父",
+   "family": "贾",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王夫人之大兄凤姐之父",
+   "name": "王夫人之大兄凤姐之父",
+   "family": "王",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾巧姐",
+   "name": "贾巧姐",
+   "family": "贾",
+   "role": "",
+   "degree": 4,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "刘姥姥",
+   "name": "刘姥姥",
+   "family": "其他",
+   "role": "乡下老妪，三进荣国府",
+   "degree": 3,
+   "mention": 230,
+   "in_alias_table": true,
+   "aliases": [
+    "刘老老"
+   ]
+  },
+  {
+   "id": "甄士隐",
+   "name": "甄士隐",
+   "family": "其他",
+   "role": "姑苏乡宦，香菱之父",
+   "degree": 3,
+   "mention": 49,
+   "in_alias_table": true,
+   "aliases": [
+    "士隐"
+   ]
+  },
+  {
+   "id": "赖大",
+   "name": "赖大",
+   "family": "贾",
+   "role": "",
+   "degree": 3,
+   "mention": 43,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "李嬷嬷",
+   "name": "李嬷嬷",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 37,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "智能",
+   "name": "智能",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 26,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "龄官",
+   "name": "龄官",
+   "family": "贾",
+   "role": "",
+   "degree": 3,
+   "mention": 22,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "尤老娘",
+   "name": "尤老娘",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 19,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "焦大",
+   "name": "焦大",
+   "family": "贾",
+   "role": "",
+   "degree": 3,
+   "mention": 12,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "太妃",
+   "name": "太妃",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 12,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "冷子兴",
+   "name": "冷子兴",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "傻大姐",
+   "name": "傻大姐",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 6,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "刘氏",
+   "name": "刘氏",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "南安郡王",
+   "name": "南安郡王",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "娇杏",
+   "name": "娇杏",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王老爷",
+   "name": "王老爷",
+   "family": "王",
+   "role": "",
+   "degree": 3,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "智通",
+   "name": "智通",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "钱槐",
+   "name": "钱槐",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小蝉",
+   "name": "小蝉",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "锦乡侯",
+   "name": "锦乡侯",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "西宁郡王",
+   "name": "西宁郡王",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史鼎",
+   "name": "史鼎",
+   "family": "史",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张如圭",
+   "name": "张如圭",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "潘又安",
+   "name": "潘又安",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李守中",
+   "name": "李守中",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "智善",
+   "name": "智善",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "缮国公",
+   "name": "缮国公",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "老舅太太",
+   "name": "老舅太太",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "马贩子王短腿",
+   "name": "马贩子王短腿",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "迎春乳母",
+   "name": "迎春乳母",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "何婆",
+   "name": "何婆",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "卫若兰",
+   "name": "卫若兰",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "保宁侯之子",
+   "name": "保宁侯之子",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "通判傅试",
+   "name": "通判傅试",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "吴贵",
+   "name": "吴贵",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "秦邦业",
+   "name": "秦邦业",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "宝钗祖父",
+   "name": "宝钗祖父",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张大老爷",
+   "name": "张大老爷",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "许氏",
+   "name": "许氏",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王成父",
+   "name": "王成父",
+   "family": "王",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "圆心",
+   "name": "圆心",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "应天府门子",
+   "name": "应天府门子",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "地藏庵的圆心",
+   "name": "地藏庵的圆心",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周琼之子",
+   "name": "周琼之子",
+   "family": "其他",
+   "role": "",
+   "degree": 3,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "平儿",
+   "name": "平儿",
+   "family": "王",
+   "role": "王熙凤陪房丫头，贾琏之妾",
+   "degree": 2,
+   "mention": 512,
+   "in_alias_table": true,
+   "aliases": [
+    "平儿姐姐"
+   ]
+  },
+  {
+   "id": "麝月",
+   "name": "麝月",
+   "family": "贾",
+   "role": "宝玉大丫鬟",
+   "degree": 2,
+   "mention": 154,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "周瑞家的",
+   "name": "周瑞家的",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 146,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "莺儿",
+   "name": "莺儿",
+   "family": "薛",
+   "role": "宝钗丫鬟，本名黄金莺",
+   "degree": 2,
+   "mention": 110,
+   "in_alias_table": true,
+   "aliases": [
+    "黄金莺"
+   ]
+  },
+  {
+   "id": "林之孝",
+   "name": "林之孝",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 89,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "秋纹",
+   "name": "秋纹",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 56,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "彩云",
+   "name": "彩云",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 39,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "坠儿",
+   "name": "坠儿",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 36,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "李贵",
+   "name": "李贵",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 30,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "雪雁",
+   "name": "雪雁",
+   "family": "林",
+   "role": "",
+   "degree": 2,
+   "mention": 29,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "四儿",
+   "name": "四儿",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 28,
+   "in_alias_table": true,
+   "aliases": [
+    "蕙香"
+   ]
+  },
+  {
+   "id": "宝蟾",
+   "name": "宝蟾",
+   "family": "薛",
+   "role": "",
+   "degree": 2,
+   "mention": 24,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "马道婆",
+   "name": "马道婆",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 22,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "入画",
+   "name": "入画",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 19,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "赖嬷嬷",
+   "name": "赖嬷嬷",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 11,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "花自芳",
+   "name": "花自芳",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 10,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "戴权",
+   "name": "戴权",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾琮",
+   "name": "贾琮",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王公",
+   "name": "王公",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "秦业",
+   "name": "秦业",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "宝珠",
+   "name": "宝珠",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "喜儿",
+   "name": "喜儿",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周姨娘",
+   "name": "周姨娘",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "傅试",
+   "name": "傅试",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 6,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赖尚荣",
+   "name": "赖尚荣",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王住儿媳妇",
+   "name": "王住儿媳妇",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "邢德全",
+   "name": "邢德全",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾璜",
+   "name": "贾璜",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "偕鸾",
+   "name": "偕鸾",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "傅秋芳",
+   "name": "傅秋芳",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "夏守忠",
+   "name": "夏守忠",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王嬷嬷",
+   "name": "王嬷嬷",
+   "family": "林",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "篆儿",
+   "name": "篆儿",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "娄氏",
+   "name": "娄氏",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "皇太后",
+   "name": "皇太后",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "甄夫人",
+   "name": "甄夫人",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "嫣红",
+   "name": "嫣红",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王仁",
+   "name": "王仁",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "北静郡王",
+   "name": "北静郡王",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史侯",
+   "name": "史侯",
+   "family": "史",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "先皇",
+   "name": "先皇",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赵国基",
+   "name": "赵国基",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王成",
+   "name": "王成",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李衙内",
+   "name": "李衙内",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "多姑娘儿",
+   "name": "多姑娘儿",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "缮国公诰命",
+   "name": "缮国公诰命",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李公子",
+   "name": "李公子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "南安王太妃",
+   "name": "南安王太妃",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "翠云",
+   "name": "翠云",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾琼之母",
+   "name": "贾琼之母",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "白老媳妇",
+   "name": "白老媳妇",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "新进来的奶子",
+   "name": "新进来的奶子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "娇红",
+   "name": "娇红",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "老姨奶奶",
+   "name": "老姨奶奶",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "瑞珠",
+   "name": "瑞珠",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "锦乡侯诰命",
+   "name": "锦乡侯诰命",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小霞",
+   "name": "小霞",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史鼎的夫人",
+   "name": "史鼎的夫人",
+   "family": "史",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李婶之弟",
+   "name": "李婶之弟",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "镇国公诰命",
+   "name": "镇国公诰命",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小鸠儿",
+   "name": "小鸠儿",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "长安府府太爷",
+   "name": "长安府府太爷",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "老苍头",
+   "name": "老苍头",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "夏奶奶",
+   "name": "夏奶奶",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王子腾夫人",
+   "name": "王子腾夫人",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "柳二媳妇的妹子",
+   "name": "柳二媳妇的妹子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张大财主",
+   "name": "张大财主",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "何三",
+   "name": "何三",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "多浑虫父亲",
+   "name": "多浑虫父亲",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "卜世仁店里伙计",
+   "name": "卜世仁店里伙计",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "卜世仁娘子",
+   "name": "卜世仁娘子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "五嫂子卜氏",
+   "name": "五嫂子卜氏",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛宝衩",
+   "name": "薛宝衩",
+   "family": "薛",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾瑞之母",
+   "name": "贾瑞之母",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "北静郡王长府官",
+   "name": "北静郡王长府官",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "北静王少妃",
+   "name": "北静王少妃",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "湘云母",
+   "name": "湘云母",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "天子之妻",
+   "name": "天子之妻",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛宝琴母",
+   "name": "薛宝琴母",
+   "family": "薛",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "佩凤",
+   "name": "佩凤",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "西宁郡王妃",
+   "name": "西宁郡王妃",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "倪儿娘子",
+   "name": "倪儿娘子",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "刑大舅二姐",
+   "name": "刑大舅二姐",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "叶茗烟",
+   "name": "叶茗烟",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "刑秞烟",
+   "name": "刑秞烟",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张金哥",
+   "name": "张金哥",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "文花",
+   "name": "文花",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "尤氏继母",
+   "name": "尤氏继母",
+   "family": "其他",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王子胜",
+   "name": "王子胜",
+   "family": "王",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾王扁之母",
+   "name": "贾王扁之母",
+   "family": "贾",
+   "role": "",
+   "degree": 2,
+   "mention": 0,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "紫鹃",
+   "name": "紫鹃",
+   "family": "林",
+   "role": "黛玉大丫鬟，原名鹦哥",
+   "degree": 1,
+   "mention": 148,
+   "in_alias_table": true,
+   "aliases": [
+    "紫娟",
+    "鹦哥"
+   ]
+  },
+  {
+   "id": "茗烟",
+   "name": "茗烟",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 114,
+   "in_alias_table": true,
+   "aliases": [
+    "焙茗"
+   ]
+  },
+  {
+   "id": "小丫头子",
+   "name": "小丫头子",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 85,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "兴儿",
+   "name": "兴儿",
+   "family": "王",
+   "role": "",
+   "degree": 1,
+   "mention": 77,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾瑞",
+   "name": "贾瑞",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 73,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "林之孝家的",
+   "name": "林之孝家的",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 66,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "翠缕",
+   "name": "翠缕",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 39,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "琥珀",
+   "name": "琥珀",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 36,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "金荣",
+   "name": "金荣",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 35,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "鲍二",
+   "name": "鲍二",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 29,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王善保",
+   "name": "王善保",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 28,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "冯紫英",
+   "name": "冯紫英",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 27,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "玻璃",
+   "name": "玻璃",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 26,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王善保家的",
+   "name": "王善保家的",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 25,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "丰儿",
+   "name": "丰儿",
+   "family": "王",
+   "role": "",
+   "degree": 1,
+   "mention": 24,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "文官",
+   "name": "文官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 17,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "翠墨",
+   "name": "翠墨",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 17,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "侍书",
+   "name": "侍书",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 17,
+   "in_alias_table": true,
+   "aliases": [
+    "待书"
+   ]
+  },
+  {
+   "id": "碧痕",
+   "name": "碧痕",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 15,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "素云",
+   "name": "素云",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 14,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "大姑娘",
+   "name": "大姑娘",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 14,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "封肃",
+   "name": "封肃",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 13,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾芹",
+   "name": "贾芹",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 13,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "荳官",
+   "name": "荳官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 13,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "彩明",
+   "name": "彩明",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 13,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "佳蕙",
+   "name": "佳蕙",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 12,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "旺儿媳妇",
+   "name": "旺儿媳妇",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 12,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾菌",
+   "name": "贾菌",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 12,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李纹",
+   "name": "李纹",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 11,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "茜雪",
+   "name": "茜雪",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 10,
+   "in_alias_table": true,
+   "aliases": []
+  },
+  {
+   "id": "莲花儿",
+   "name": "莲花儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小螺",
+   "name": "小螺",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "隆儿",
+   "name": "隆儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 8,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "昭儿",
+   "name": "昭儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "宋嬷嬷",
+   "name": "宋嬷嬷",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "银蝶",
+   "name": "银蝶",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "葵官",
+   "name": "葵官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 7,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "金彩",
+   "name": "金彩",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 6,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "碧月",
+   "name": "碧月",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "锄药",
+   "name": "锄药",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "檀云",
+   "name": "檀云",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王信",
+   "name": "王信",
+   "family": "王",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "翡翠",
+   "name": "翡翠",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "薛公",
+   "name": "薛公",
+   "family": "薛",
+   "role": "",
+   "degree": 1,
+   "mention": 5,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "鹦鹉",
+   "name": "鹦鹉",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "袭人之母",
+   "name": "袭人之母",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾琼",
+   "name": "贾琼",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "紫绡",
+   "name": "紫绡",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾代儒",
+   "name": "贾代儒",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "艾官",
+   "name": "艾官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "梅翰林",
+   "name": "梅翰林",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "同喜",
+   "name": "同喜",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 4,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "扫红",
+   "name": "扫红",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "李妈",
+   "name": "李妈",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "庆儿",
+   "name": "庆儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "寿儿",
+   "name": "寿儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "臻儿",
+   "name": "臻儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "费婆子",
+   "name": "费婆子",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "引泉",
+   "name": "引泉",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小舍儿",
+   "name": "小舍儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "善姐",
+   "name": "善姐",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小鹊",
+   "name": "小鹊",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 3,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "春纤",
+   "name": "春纤",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "绣鸾",
+   "name": "绣鸾",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "扫花",
+   "name": "扫花",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赵亦华",
+   "name": "赵亦华",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "彩霞之母",
+   "name": "彩霞之母",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "襄阳侯",
+   "name": "襄阳侯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "文杏",
+   "name": "文杏",
+   "family": "薛",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "彩屏",
+   "name": "彩屏",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "炒豆儿",
+   "name": "炒豆儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "伴鹤",
+   "name": "伴鹤",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "来旺儿",
+   "name": "来旺儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王荣",
+   "name": "王荣",
+   "family": "王",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周氏",
+   "name": "周氏",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "张若锦",
+   "name": "张若锦",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "绣凤",
+   "name": "绣凤",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "墨雨",
+   "name": "墨雨",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "媚人",
+   "name": "媚人",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 2,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "陈翼",
+   "name": "陈翼",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "老叶妈",
+   "name": "老叶妈",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "于老爷",
+   "name": "于老爷",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "彩儿",
+   "name": "彩儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "小吉祥",
+   "name": "小吉祥",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "柳芳",
+   "name": "柳芳",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "王奶奶",
+   "name": "王奶奶",
+   "family": "王",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "抱琴",
+   "name": "抱琴",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "平原侯",
+   "name": "平原侯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "韩奇",
+   "name": "韩奇",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "吴天佑",
+   "name": "吴天佑",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "林如海之祖",
+   "name": "林如海之祖",
+   "family": "林",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "谢鲸",
+   "name": "谢鲸",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "史鼐",
+   "name": "史鼐",
+   "family": "史",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "蒋子宁",
+   "name": "蒋子宁",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "定城侯",
+   "name": "定城侯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "胡老爷",
+   "name": "胡老爷",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "双寿",
+   "name": "双寿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "金鸳鸯",
+   "name": "金鸳鸯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "良儿",
+   "name": "良儿",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "傻大姐的娘",
+   "name": "傻大姐的娘",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "贾敷",
+   "name": "贾敷",
+   "family": "贾",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "牛继宗",
+   "name": "牛继宗",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赵天梁",
+   "name": "赵天梁",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "马尚",
+   "name": "马尚",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "杏奴",
+   "name": "杏奴",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "裘良",
+   "name": "裘良",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "挑云",
+   "name": "挑云",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "茄官",
+   "name": "茄官",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "景田侯",
+   "name": "景田侯",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "来喜家的",
+   "name": "来喜家的",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "戚建辉",
+   "name": "戚建辉",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "周奶妈",
+   "name": "周奶妈",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "南安郡王之孙",
+   "name": "南安郡王之孙",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "双瑞",
+   "name": "双瑞",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "东平郡王",
+   "name": "东平郡王",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "赵天栋",
+   "name": "赵天栋",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  },
+  {
+   "id": "西宁郡王之孙",
+   "name": "西宁郡王之孙",
+   "family": "其他",
+   "role": "",
+   "degree": 1,
+   "mention": 1,
+   "in_alias_table": false,
+   "aliases": []
+  }
+ ],
+ "edges": [
+  {
+   "source": "贾代善",
+   "target": "贾源",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "娄氏",
+   "target": "贾源",
+   "relation": "重孙媳妇",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾母",
+   "target": "贾代善",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "老姨奶奶",
+   "target": "贾代善",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾敏",
+   "target": "贾代善",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "嫣红",
+   "target": "贾赦",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "翠云",
+   "target": "贾赦",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "娇红",
+   "target": "贾赦",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾迎春",
+   "target": "贾赦",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵姨娘",
+   "target": "贾政",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "周姨娘",
+   "target": "贾政",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾珠",
+   "target": "贾政",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "尤二姐",
+   "target": "贾琏",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "秋桐",
+   "target": "贾琏",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "平儿",
+   "target": "贾琏",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛宝衩",
+   "target": "贾宝玉",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "袭人",
+   "target": "贾宝玉",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾菌",
+   "target": "娄氏",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "周秀才",
+   "target": "贾巧姐",
+   "relation": "姐夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "刑大舅二姐",
+   "target": "邢夫人",
+   "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "邢德全",
+   "target": "邢夫人",
+   "relation": "弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "张大老爷",
+   "target": "邢夫人",
+   "relation": "老亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "邢忠",
+   "target": "邢夫人",
+   "relation": "兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "刑秞烟",
+   "target": "邢忠",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李婶",
+   "target": "李守中",
+   "relation": "弟媳",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李婶之弟",
+   "target": "李婶",
+   "relation": "弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李纹",
+   "target": "李婶",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "甄宝玉",
+   "target": "李绮",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "甄夫人",
+   "target": "甄应嘉",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "大姑娘",
+   "target": "甄应嘉",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾迎春",
+   "target": "甄应嘉",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾探春",
+   "target": "甄应嘉",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "袭人之母",
+   "target": "袭人",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "花自芳",
+   "target": "袭人",
+   "relation": "兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "周琼之子",
+   "target": "贾探春",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "林如海之祖",
+   "target": "林如海",
+   "relation": "祖父",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李妈",
+   "target": "贾巧姐",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "昭儿",
+   "target": "贾琏",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "兴儿",
+   "target": "贾琏",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "隆儿",
+   "target": "贾琏",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "庆儿",
+   "target": "贾琏",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵嬷嬷",
+   "target": "贾琏",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵天梁",
+   "target": "赵嬷嬷",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵天栋",
+   "target": "赵嬷嬷",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王信",
+   "target": "贾琏",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "鲍二",
+   "target": "贾琏",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "善姐",
+   "target": "尤二姐",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "迎春乳母",
+   "target": "贾迎春",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王住儿媳妇",
+   "target": "迎春乳母",
+   "relation": "子媳",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "莲花儿",
+   "target": "贾迎春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "秦思祺",
+   "target": "贾迎春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "潘又安",
+   "target": "秦思祺",
+   "relation": "男友",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "篆儿",
+   "target": "刑秞烟",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "新进来的奶子",
+   "target": "贾兰",
+   "relation": "奶妈",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "素云",
+   "target": "李纨",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "碧月",
+   "target": "李纨",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "抱琴",
+   "target": "贾元春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李嬷嬷",
+   "target": "贾宝玉",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵嬷嬷",
+   "target": "贾宝玉",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "宋嬷嬷",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "叶茗烟",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "锄药",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "扫红",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "墨雨",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "引泉",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "扫花",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "挑云",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "伴鹤",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "双瑞",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "双寿",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "老叶妈",
+   "target": "叶茗烟",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李贵",
+   "target": "李嬷嬷",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王荣",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "张若锦",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵亦华",
+   "target": "贾宝玉",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "周瑞",
+   "target": "王夫人",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "冷子兴",
+   "target": "周瑞",
+   "relation": "女婿",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "何三",
+   "target": "周瑞",
+   "relation": "干儿子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "金钏",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "玉钏",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "彩云",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "绣鸾",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "绣凤",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "白老媳妇",
+   "target": "金钏",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "白老媳妇",
+   "target": "玉钏",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "彩霞之母",
+   "target": "彩霞",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小霞",
+   "target": "彩霞",
+   "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小鹊",
+   "target": "赵姨娘",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小吉祥",
+   "target": "赵姨娘",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赵国基",
+   "target": "赵姨娘",
+   "relation": "兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "钱槐",
+   "target": "赵姨娘",
+   "relation": "表兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "钱槐",
+   "target": "贾环",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "雪雁",
+   "target": "林黛玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王嬷嬷",
+   "target": "林黛玉",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "春纤",
+   "target": "林黛玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "藕官",
+   "target": "林黛玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赖嬷嬷",
+   "target": "赖大",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "赖尚荣",
+   "target": "赖大",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "来旺儿",
+   "target": "王熙凤",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "旺儿媳妇",
+   "target": "王熙凤",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "来喜家的",
+   "target": "王熙凤",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "丰儿",
+   "target": "王熙凤",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "彩明",
+   "target": "王熙凤",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "林红玉",
+   "target": "王熙凤",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "林之孝",
+   "target": "林红玉",
+   "relation": "父亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王善保",
+   "target": "邢夫人",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "费婆子",
+   "target": "邢夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "金鸳鸯",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "琥珀",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "鹦鹉",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "袭人",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "翡翠",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "玻璃",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "文官",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "傻大姐的娘",
+   "target": "傻大姐",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "金彩",
+   "target": "鸳鸯",
+   "relation": "父亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "金文翔",
+   "target": "鸳鸯",
+   "relation": "兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "多官",
+   "target": "晴雯",
+   "relation": "表哥",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "多浑虫父亲",
+   "target": "晴雯",
+   "relation": "舅",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "多姑娘儿",
+   "target": "多官",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "吴贵",
+   "target": "晴雯",
+   "relation": "表兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "花芳官",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "媚人",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "麝月",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "茜雪",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "秋纹",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "碧痕",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "檀云",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "四儿",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "佳蕙",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "坠儿",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "紫绡",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "良儿",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "春燕",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "柳二媳妇的妹子",
+   "target": "柳五儿",
+   "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "侍书",
+   "target": "贾探春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "翠墨",
+   "target": "贾探春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "艾官",
+   "target": "贾探春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小蝉",
+   "target": "贾探春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "何婆",
+   "target": "春燕",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "何婆",
+   "target": "芳官",
+   "relation": "干娘",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小鸠儿",
+   "target": "春燕",
+   "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "夏婆子",
+   "target": "春燕",
+   "relation": "姨妈",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "夏婆子",
+   "target": "藕官",
+   "relation": "干娘",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "夏婆子",
+   "target": "小蝉",
+   "relation": "外祖母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "蒋玉菡",
+   "target": "贾宝玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "通判傅试",
+   "target": "贾政",
+   "relation": "门生",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "傅秋芳",
+   "target": "傅试",
+   "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "太上皇",
+   "target": "先皇",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "皇太后",
+   "target": "太上皇",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "太妃",
+   "target": "太上皇",
+   "relation": "嫔妃",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "皇帝",
+   "target": "太上皇",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾元春",
+   "target": "皇帝",
+   "relation": "妃",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "吴贵妃",
+   "target": "皇帝",
+   "relation": "妃",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "周贵人",
+   "target": "皇帝",
+   "relation": "妃",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "吴天佑",
+   "target": "吴贵妃",
+   "relation": "父亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "戴权",
+   "target": "皇帝",
+   "relation": "臣",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "夏守忠",
+   "target": "皇帝",
+   "relation": "臣",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾代化",
+   "target": "贾演",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "焦大",
+   "target": "贾演",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾敷",
+   "target": "贾代化",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾敬",
+   "target": "贾代化",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾惜春",
+   "target": "贾敬",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "史湘云爷爷",
+   "target": "史侯",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "史鼐",
+   "target": "史湘云爷爷",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "史鼎",
+   "target": "史湘云爷爷",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "湘云母",
+   "target": "史湘云爷爷",
+   "relation": "儿媳",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "史鼎的夫人",
+   "target": "史鼎",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "史湘云",
+   "target": "湘云母",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "卫若兰",
+   "target": "史湘云",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "翠缕",
+   "target": "史湘云",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "葵官",
+   "target": "史湘云",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "周奶妈",
+   "target": "史湘云",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "凤姐之祖王夫人之父",
+   "target": "王公",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王夫人之大兄凤姐之父",
+   "target": "凤姐之祖王夫人之父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王子腾",
+   "target": "凤姐之祖王夫人之父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王子胜",
+   "target": "凤姐之祖王夫人之父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王夫人",
+   "target": "凤姐之祖王夫人之父",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛姨妈",
+   "target": "凤姐之祖王夫人之父",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王成父",
+   "target": "凤姐之祖王夫人之父",
+   "relation": "侄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "老舅太太",
+   "target": "王夫人之大兄凤姐之父",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王仁",
+   "target": "王夫人之大兄凤姐之父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王熙凤",
+   "target": "王夫人之大兄凤姐之父",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王子腾夫人",
+   "target": "王子腾",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王子腾之女",
+   "target": "王子腾",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "保宁侯之子",
+   "target": "王子腾之女",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王成",
+   "target": "王成父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王狗儿",
+   "target": "王成",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "刘氏",
+   "target": "王狗儿",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "刘姥姥",
+   "target": "刘氏",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "宝钗祖父",
+   "target": "薛公",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛公之孙",
+   "target": "宝钗祖父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛宝琴父",
+   "target": "宝钗祖父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛姨妈",
+   "target": "薛公之孙",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛宝钗",
+   "target": "薛公之孙",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛蟠",
+   "target": "薛公之孙",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "同喜",
+   "target": "薛姨妈",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "莺儿",
+   "target": "薛宝钗",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "文杏",
+   "target": "薛宝钗",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "喜儿",
+   "target": "薛宝钗",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "蕊官",
+   "target": "薛宝钗",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "夏金桂",
+   "target": "薛蟠",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "老苍头",
+   "target": "薛蟠",
+   "relation": "乳父",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "宝蟾",
+   "target": "夏金桂",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小舍儿",
+   "target": "夏金桂",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "夏奶奶",
+   "target": "夏金桂",
+   "relation": "母亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "臻儿",
+   "target": "香菱",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛宝琴母",
+   "target": "薛宝琴父",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛蝌",
+   "target": "薛宝琴父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "薛宝琴",
+   "target": "薛宝琴父",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "邢岫烟",
+   "target": "薛蝌",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "梅翰林之子",
+   "target": "薛宝琴",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小螺",
+   "target": "薛宝琴",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "荳官",
+   "target": "薛宝琴",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "梅翰林",
+   "target": "梅翰林之子",
+   "relation": "父亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾瑞之父",
+   "target": "贾代儒",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾瑞之母",
+   "target": "贾瑞之父",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾瑞",
+   "target": "贾瑞之父",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾琼",
+   "target": "贾琼之母",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾芸",
+   "target": "五嫂子卜氏",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "卜世仁",
+   "target": "五嫂子卜氏",
+   "relation": "兄弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "小丫头子",
+   "target": "贾芸",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "倪儿娘子",
+   "target": "倪二",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "马贩子王短腿",
+   "target": "倪二",
+   "relation": "友人",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "卜世仁娘子",
+   "target": "卜世仁",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王奶奶",
+   "target": "卜世仁",
+   "relation": "邻居",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "卜世仁店里伙计",
+   "target": "卜世仁",
+   "relation": "伙计",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾芹",
+   "target": "周氏",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "金氏",
+   "target": "贾璜",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "胡氏",
+   "target": "金氏",
+   "relation": "嫂",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "金荣",
+   "target": "胡氏",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "娇杏",
+   "target": "贾雨村",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "应天府门子",
+   "target": "贾雨村",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "张如圭",
+   "target": "贾雨村",
+   "relation": "友人",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王老爷",
+   "target": "贾雨村",
+   "relation": "友人",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "天子之妻",
+   "target": "应天府门子",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "南安王太妃",
+   "target": "南安郡王",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "南安郡王之孙",
+   "target": "南安郡王",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "西宁郡王之孙",
+   "target": "西宁郡王",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "西宁郡王妃",
+   "target": "西宁郡王",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "北静王少妃",
+   "target": "水溶",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "北静郡王长府官",
+   "target": "水溶",
+   "relation": "臣",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "镇国公诰命",
+   "target": "牛清",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "牛继宗",
+   "target": "牛清",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "缮国公诰命",
+   "target": "缮国公",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "蒋子宁",
+   "target": "平原侯",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "谢鲸",
+   "target": "定城侯",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "戚建辉",
+   "target": "襄阳侯",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "裘良",
+   "target": "景田侯",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "锦乡侯诰命",
+   "target": "锦乡侯",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "韩奇",
+   "target": "锦乡侯",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "蕊官",
+   "target": "地藏庵的圆心",
+   "relation": "徒弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "藕官",
+   "target": "圆心",
+   "relation": "徒弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "智能儿",
+   "target": "净虚",
+   "relation": "徒弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "智善",
+   "target": "净虚",
+   "relation": "徒弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "智通",
+   "target": "净虚",
+   "relation": "徒弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "于老爷",
+   "target": "净虚",
+   "relation": "施主",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "胡老爷",
+   "target": "净虚",
+   "relation": "施主",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "张大财主",
+   "target": "净虚",
+   "relation": "施主",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "花芳官",
+   "target": "智能",
+   "relation": "徒弟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "张金哥",
+   "target": "张大财主",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李公子",
+   "target": "张金哥",
+   "relation": "雇主",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李衙内",
+   "target": "长安府府太爷",
+   "relation": "小舅子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "尤氏",
+   "target": "尤老娘",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾蔷",
+   "target": "贾演",
+   "relation": "玄孙",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "龄官",
+   "target": "贾蔷",
+   "relation": "女友",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "佩凤",
+   "target": "贾珍",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "偕鸾",
+   "target": "贾珍",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "文花",
+   "target": "贾珍",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "茄官",
+   "target": "尤氏",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "银蝶",
+   "target": "尤氏",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "炒豆儿",
+   "target": "尤氏",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "秦可卿",
+   "target": "贾蓉",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "胡氏",
+   "target": "贾蓉",
+   "relation": "续弦",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "许氏",
+   "target": "贾蓉",
+   "relation": "续弦",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "入画",
+   "target": "贾惜春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "彩屏",
+   "target": "贾惜春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "彩儿",
+   "target": "贾惜春",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "瑞珠",
+   "target": "秦可卿",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "宝珠",
+   "target": "秦可卿",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "秦钟",
+   "target": "秦业",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "智能儿",
+   "target": "秦钟",
+   "relation": "女友",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "净虚",
+   "target": "智能儿",
+   "relation": "师父",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "喜儿",
+   "target": "贾珍",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "寿儿",
+   "target": "贾珍",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "尤三姐",
+   "target": "柳湘莲",
+   "relation": "女友",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "杏奴",
+   "target": "柳湘莲",
+   "relation": "奴仆",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾演",
+   "target": "贾源",
+   "relation": "兄",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾赦",
+   "target": "贾代善",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾政",
+   "target": "贾代善",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾敏",
+   "target": "贾政",
+   "relation": "妹",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "邢夫人",
+   "target": "贾赦",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾琏",
+   "target": "贾赦",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾琮",
+   "target": "贾赦",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王夫人",
+   "target": "贾政",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾元春",
+   "target": "贾政",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "贾政",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾探春",
+   "target": "贾政",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾环",
+   "target": "贾政",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王熙凤",
+   "target": "贾琏",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾巧姐",
+   "target": "贾琏",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾兰",
+   "target": "贾珠",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李纨",
+   "target": "贾珠",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "孙绍祖",
+   "target": "贾迎春",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李守中",
+   "target": "李纨",
+   "relation": "父亲",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "李绮",
+   "target": "李婶",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "甄宝玉",
+   "target": "甄应嘉",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "林如海",
+   "target": "贾敏",
+   "relation": "夫",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "林黛玉",
+   "target": "林如海",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "王嬷嬷",
+   "target": "贾宝玉",
+   "relation": "乳母",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "彩霞",
+   "target": "王夫人",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "傻大姐",
+   "target": "贾母",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "晴雯",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "篆儿",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "柳五儿",
+   "target": "贾宝玉",
+   "relation": "丫鬟",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾珍",
+   "target": "贾敬",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾母",
+   "target": "史侯",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "香菱",
+   "target": "薛蟠",
+   "relation": "妾",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "倪二",
+   "target": "贾芸",
+   "relation": "友人",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "水溶",
+   "target": "北静郡王",
+   "relation": "孙子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "尤氏",
+   "target": "贾珍",
+   "relation": "妻",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "尤二姐",
+   "target": "尤老娘",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "尤三姐",
+   "target": "尤老娘",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾蓉",
+   "target": "贾珍",
+   "relation": "子",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "秦可卿",
+   "target": "秦业",
+   "relation": "女",
+   "family": "",
+   "src": "kg-hongloumeng"
+  },
+  {
+   "source": "贾演",
+   "target": "贾代化",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代化",
+   "target": "贾演",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敬",
+   "target": "贾代化",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代化",
+   "target": "贾敬",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "焦大",
+   "target": "贾演",
+   "relation": "老奴",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾演",
+   "target": "焦大",
+   "relation": "主人",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珍",
+   "target": "贾敬",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敬",
+   "target": "贾珍",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珍",
+   "target": "尤氏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾蓉",
+   "target": "贾珍",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珍",
+   "target": "贾蓉",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾蓉",
+   "target": "秦可卿",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "瑞珠",
+   "target": "秦可卿",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "宝珠",
+   "target": "秦可卿",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "入画",
+   "target": "贾惜春",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珍",
+   "target": "贾惜春",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾惜春",
+   "target": "贾珍",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "尤氏",
+   "target": "贾惜春",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾惜春",
+   "target": "尤氏",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾源",
+   "target": "贾代善",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾演",
+   "target": "贾源",
+   "relation": "兄弟",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代善",
+   "target": "贾源",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代善",
+   "target": "贾母",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代善",
+   "target": "贾政",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾代善",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代善",
+   "target": "贾赦",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾赦",
+   "target": "贾代善",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾赦",
+   "target": "贾母",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾母",
+   "target": "贾赦",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾赦",
+   "target": "邢夫人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "邢夫人",
+   "target": "贾母",
+   "relation": "大儿媳",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾母",
+   "target": "邢夫人",
+   "relation": "婆婆",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾母",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王夫人",
+   "target": "贾母",
+   "relation": "小儿媳",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "鸳鸯",
+   "target": "贾母",
+   "relation": "丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林如海",
+   "target": "贾敏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敏",
+   "target": "林如海",
+   "relation": "妻",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林如海",
+   "target": "林黛玉",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林黛玉",
+   "target": "林如海",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敏",
+   "target": "林黛玉",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾母",
+   "target": "林黛玉",
+   "relation": "外祖母",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾母",
+   "relation": "外孙女",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "紫鹃",
+   "target": "贾母",
+   "relation": "丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "雪雁",
+   "target": "林黛玉",
+   "relation": "丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王熙凤",
+   "target": "邢夫人",
+   "relation": "儿媳",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "邢夫人",
+   "target": "王熙凤",
+   "relation": "婆婆",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秋桐",
+   "target": "贾赦",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秋桐",
+   "target": "贾赦",
+   "relation": "妾",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾琏",
+   "target": "贾赦",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾赦",
+   "target": "贾琏",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾琏",
+   "target": "王熙凤",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾迎春",
+   "target": "贾赦",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾赦",
+   "target": "贾迎春",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾迎春",
+   "target": "孙绍祖",
+   "relation": "妻",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "巧姐",
+   "target": "王熙凤",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "巧姐",
+   "target": "贾琏",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "巧姐",
+   "target": "刘姥姥",
+   "relation": "被抚养",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾琏",
+   "target": "巧姐",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王熙凤",
+   "target": "巧姐",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王熙凤",
+   "target": "王夫人",
+   "relation": "内侄女",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "尤二姐",
+   "target": "尤氏继母",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "尤二姐",
+   "target": "贾琏",
+   "relation": "二房",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "王夫人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王夫人",
+   "target": "薛姨妈",
+   "relation": "姐妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛姨妈",
+   "target": "王夫人",
+   "relation": "姐妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "金钏",
+   "target": "王夫人",
+   "relation": "大丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "彩云",
+   "target": "王夫人",
+   "relation": "大丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "彩霞",
+   "target": "王夫人",
+   "relation": "大丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "玉钏",
+   "target": "金钏",
+   "relation": "妹妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "金钏",
+   "target": "玉钏",
+   "relation": "姐姐",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "玉钏",
+   "target": "王夫人",
+   "relation": "丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珠",
+   "target": "王夫人",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珠",
+   "target": "贾政",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王夫人",
+   "target": "贾珠",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾珠",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珠",
+   "target": "李纨",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾兰",
+   "target": "贾珠",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾兰",
+   "target": "李纨",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾元春",
+   "target": "贾政",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾元春",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾元春",
+   "target": "王夫人",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王夫人",
+   "target": "贾元春",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "贾政",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾宝玉",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾元春",
+   "target": "贾宝玉",
+   "relation": "姐姐",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "王夫人",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王夫人",
+   "target": "贾宝玉",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "薛宝钗",
+   "relation": "丈夫",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛宝钗",
+   "target": "贾宝玉",
+   "relation": "妻",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛宝钗",
+   "target": "薛姨妈",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "袭人",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "麝月",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秋纹",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "晴雯",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "坠儿",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "四儿",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "柳五儿",
+   "target": "芳官",
+   "relation": "好朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "柳五儿",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "茗烟",
+   "target": "贾宝玉",
+   "relation": "小厮",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾环",
+   "target": "贾政",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾环",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾环",
+   "target": "赵姨娘",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "赵姨娘",
+   "target": "贾环",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾探春",
+   "target": "贾政",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾探春",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾探春",
+   "target": "赵姨娘",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "赵姨娘",
+   "target": "贾探春",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾蔷",
+   "target": "贾珍",
+   "relation": "养子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "金文翔",
+   "target": "鸳鸯",
+   "relation": "哥哥",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "金文翔",
+   "target": "贾母",
+   "relation": "买办",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "周瑞家的",
+   "target": "王夫人",
+   "relation": "陪房",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王善保家的",
+   "target": "邢夫人",
+   "relation": "陪房",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林之孝",
+   "target": "林红玉",
+   "relation": "父",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林之孝家的",
+   "target": "林红玉",
+   "relation": "母",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "李嬷嬷",
+   "target": "李贵",
+   "relation": "母",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "傻大姐",
+   "target": "贾母",
+   "relation": "丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "芳官",
+   "target": "贾宝玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "龄官",
+   "target": "贾蔷",
+   "relation": "相好",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "藕官",
+   "target": "林黛玉",
+   "relation": "丫环",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "赖尚荣",
+   "target": "赖嬷嬷",
+   "relation": "孙子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "吴贵",
+   "target": "晴雯",
+   "relation": "姑舅哥哥",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛蟠",
+   "target": "薛姨妈",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛姨妈",
+   "target": "薛蟠",
+   "relation": "母亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛蝌",
+   "target": "薛姨妈",
+   "relation": "侄儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛宝琴",
+   "target": "薛姨妈",
+   "relation": "侄女",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛姨妈",
+   "target": "薛宝琴",
+   "relation": "姑母",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "薛宝琴",
+   "target": "薛蝌",
+   "relation": "胞妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "香菱",
+   "target": "甄士隐",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "甄士隐",
+   "target": "香菱",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "宝蟾",
+   "target": "夏金桂",
+   "relation": "陪房丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "邢岫烟",
+   "target": "邢忠",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "邢岫烟",
+   "target": "邢夫人",
+   "relation": "侄女",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "莺儿",
+   "target": "薛宝钗",
+   "relation": "丫头",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "刘姥姥",
+   "target": "王狗儿",
+   "relation": "岳母",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾雨村",
+   "target": "林黛玉",
+   "relation": "老师",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "娇杏",
+   "target": "贾雨村",
+   "relation": "二夫人",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "封肃",
+   "target": "甄士隐",
+   "relation": "岳父",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "甄宝玉",
+   "target": "甄应嘉",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "妙玉",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "妙玉",
+   "target": "贾宝玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "柳湘莲",
+   "target": "薛蟠",
+   "relation": "好兄弟",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "蒋玉菡",
+   "target": "贾宝玉",
+   "relation": "好友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "蒋玉菡",
+   "target": "袭人",
+   "relation": "夫妻",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "冷子兴",
+   "target": "周瑞家的",
+   "relation": "女婿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "冷子兴",
+   "target": "贾雨村",
+   "relation": "好友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "马道婆",
+   "target": "贾宝玉",
+   "relation": "乾娘",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "智能儿",
+   "target": "秦钟",
+   "relation": "暧昧",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "尤三姐",
+   "target": "尤氏继母",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "尤三姐",
+   "target": "尤二姐",
+   "relation": "妹妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秦钟",
+   "target": "秦邦业",
+   "relation": "儿子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秦邦业",
+   "target": "秦钟",
+   "relation": "父亲",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秦邦业",
+   "target": "秦可卿",
+   "relation": "养父",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "史湘云",
+   "target": "贾宝玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "史湘云",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "史湘云",
+   "target": "薛宝钗",
+   "relation": "朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "史湘云",
+   "target": "贾母",
+   "relation": "孙女",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王子腾",
+   "target": "王熙凤",
+   "relation": "伯父",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "林黛玉",
+   "relation": "表兄妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾宝玉",
+   "relation": "表兄妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "李纨",
+   "target": "贾宝玉",
+   "relation": "嫂子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾珠",
+   "target": "贾宝玉",
+   "relation": "哥哥",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敏",
+   "target": "贾母",
+   "relation": "女儿",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敏",
+   "target": "贾政",
+   "relation": "兄妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾敏",
+   "target": "贾赦",
+   "relation": "兄妹",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾政",
+   "target": "贾赦",
+   "relation": "兄弟",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "贾珠",
+   "relation": "弟弟",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾代善",
+   "target": "贾宝玉",
+   "relation": "爷爷",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "贾代善",
+   "relation": "孙子",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "贾母",
+   "target": "贾宝玉",
+   "relation": "奶奶",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "秦钟",
+   "target": "贾宝玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "KGQA_HLM"
+  },
+  {
+   "source": "王夫人之父",
+   "target": "王公",
+   "relation": "子",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "凤姐之父",
+   "target": "王夫人之父",
+   "relation": "子",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "凤姐之父",
+   "target": "王夫人",
+   "relation": "兄",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "王子腾",
+   "target": "王夫人之父",
+   "relation": "子",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "王子胜",
+   "target": "王夫人之父",
+   "relation": "子",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "王夫人",
+   "target": "王夫人之父",
+   "relation": "女",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "薛姨妈",
+   "target": "王夫人之父",
+   "relation": "女",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "王成父",
+   "target": "王夫人之父",
+   "relation": "侄",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "老舅太太",
+   "target": "凤姐之父",
+   "relation": "妻",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "王仁",
+   "target": "凤姐之父",
+   "relation": "子",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "王熙凤",
+   "target": "凤姐之父",
+   "relation": "女",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "秦钟",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "柳湘莲",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "水溶",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "史湘云",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "蒋玉菡",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "薛宝钗",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "史湘云",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾迎春",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾探春",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾惜春",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "李纨",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "邢岫烟",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "林黛玉",
+   "target": "香菱",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾元春",
+   "target": "贾迎春",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾迎春",
+   "target": "贾探春",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾探春",
+   "target": "贾惜春",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "妙玉",
+   "target": "贾宝玉",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "妙玉",
+   "target": "邢岫烟",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "妙玉",
+   "target": "薛宝钗",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "妙玉",
+   "target": "林黛玉",
+   "relation": "友",
+   "family": "",
+   "src": "DotRC-triples"
+  },
+  {
+   "source": "贾代善",
+   "target": "老姨奶奶",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾赦",
+   "target": "嫣红",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾赦",
+   "target": "翠云",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾赦",
+   "target": "娇红",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾政",
+   "target": "赵姨娘",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾政",
+   "target": "周姨娘",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾琏",
+   "target": "尤二姐",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾琏",
+   "target": "秋桐",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾琏",
+   "target": "平儿",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "薛宝衩",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "袭人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "周秀才",
+   "target": "贾巧姐",
+   "relation": "姻亲兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "刑大舅二姐",
+   "target": "邢夫人",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "邢德全",
+   "target": "邢夫人",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "张大老爷",
+   "target": "邢夫人",
+   "relation": "远亲",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "邢忠",
+   "target": "邢夫人",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "李婶",
+   "target": "李守中",
+   "relation": "姑嫂",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "李婶之弟",
+   "target": "李婶",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "甄宝玉",
+   "target": "李绮",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "李绮",
+   "target": "甄宝玉",
+   "relation": "妻",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "甄应嘉",
+   "target": "甄夫人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "花自芳",
+   "target": "袭人",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "周琼之子",
+   "target": "贾探春",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾探春",
+   "target": "周琼之子",
+   "relation": "妻",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "王住儿媳妇",
+   "target": "迎春乳母",
+   "relation": "儿媳",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "潘又安",
+   "target": "秦思祺",
+   "relation": "好友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "秦思祺",
+   "target": "潘又安",
+   "relation": "女友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "新进来的奶子",
+   "target": "贾兰",
+   "relation": "乳母",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "何三",
+   "target": "周瑞",
+   "relation": "养子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "小霞",
+   "target": "彩霞",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "赵国基",
+   "target": "赵姨娘",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "钱槐",
+   "target": "赵姨娘",
+   "relation": "表兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "金文翔",
+   "target": "鸳鸯",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "多官",
+   "target": "晴雯",
+   "relation": "表兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "多浑虫父亲",
+   "target": "晴雯",
+   "relation": "舅父",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "多官",
+   "target": "多姑娘儿",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "吴贵",
+   "target": "晴雯",
+   "relation": "表兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "柳二媳妇的妹子",
+   "target": "柳五儿",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "何婆",
+   "target": "芳官",
+   "relation": "养母",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "小鸠儿",
+   "target": "春燕",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "夏婆子",
+   "target": "春燕",
+   "relation": "姨母",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "夏婆子",
+   "target": "藕官",
+   "relation": "养母",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "夏婆子",
+   "target": "小蝉",
+   "relation": "祖母",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "通判傅试",
+   "target": "贾政",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾政",
+   "target": "通判傅试",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "傅秋芳",
+   "target": "傅试",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "太上皇",
+   "target": "皇太后",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "太妃",
+   "target": "太上皇",
+   "relation": "王妃",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "太上皇",
+   "target": "太妃",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾元春",
+   "target": "皇帝",
+   "relation": "妃嫔",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "皇帝",
+   "target": "贾元春",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "吴贵妃",
+   "target": "皇帝",
+   "relation": "妃嫔",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "皇帝",
+   "target": "吴贵妃",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "周贵人",
+   "target": "皇帝",
+   "relation": "妃嫔",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "皇帝",
+   "target": "周贵人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "戴权",
+   "target": "皇帝",
+   "relation": "臣属",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "夏守忠",
+   "target": "皇帝",
+   "relation": "臣属",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "史鼎",
+   "target": "史鼎的夫人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "卫若兰",
+   "target": "史湘云",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "史湘云",
+   "target": "卫若兰",
+   "relation": "妻",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "凤姐之父",
+   "target": "王夫人",
+   "relation": "兄弟",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "凤姐之父",
+   "target": "老舅太太",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "王子腾",
+   "target": "王子腾夫人",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "保宁侯之子",
+   "target": "王子腾之女",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "王子腾之女",
+   "target": "保宁侯之子",
+   "relation": "妻",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "王狗儿",
+   "target": "刘氏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛公之孙",
+   "target": "薛姨妈",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛蟠",
+   "target": "夏金桂",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "老苍头",
+   "target": "薛蟠",
+   "relation": "嬷嬷",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛宝琴父",
+   "target": "薛宝琴母",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛蝌",
+   "target": "邢岫烟",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "梅翰林之子",
+   "target": "薛宝琴",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛宝琴",
+   "target": "梅翰林之子",
+   "relation": "妻",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾瑞之父",
+   "target": "贾瑞之母",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "倪二",
+   "target": "倪儿娘子",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "马贩子王短腿",
+   "target": "倪二",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "倪二",
+   "target": "马贩子王短腿",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "卜世仁",
+   "target": "卜世仁娘子",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "卜世仁店里伙计",
+   "target": "卜世仁",
+   "relation": "伴侣",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾璜",
+   "target": "金氏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "胡氏",
+   "target": "金氏",
+   "relation": "姑嫂",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾雨村",
+   "target": "娇杏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "张如圭",
+   "target": "贾雨村",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾雨村",
+   "target": "张如圭",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "王老爷",
+   "target": "贾雨村",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾雨村",
+   "target": "王老爷",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "应天府门子",
+   "target": "天子之妻",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "南安郡王",
+   "target": "南安王太妃",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "西宁郡王",
+   "target": "西宁郡王妃",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "水溶",
+   "target": "北静王少妃",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "北静郡王长府官",
+   "target": "水溶",
+   "relation": "臣属",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "牛清",
+   "target": "镇国公诰命",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "缮国公",
+   "target": "缮国公诰命",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "锦乡侯",
+   "target": "锦乡侯诰命",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "蕊官",
+   "target": "地藏庵的圆心",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "地藏庵的圆心",
+   "target": "蕊官",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "藕官",
+   "target": "圆心",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "圆心",
+   "target": "藕官",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "智能儿",
+   "target": "净虚",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "净虚",
+   "target": "智能儿",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "智善",
+   "target": "净虚",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "净虚",
+   "target": "智善",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "智通",
+   "target": "净虚",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "净虚",
+   "target": "智通",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "花芳官",
+   "target": "智能",
+   "relation": "学生",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "智能",
+   "target": "花芳官",
+   "relation": "主子",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "李衙内",
+   "target": "长安府府太爷",
+   "relation": "舅父",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾蔷",
+   "target": "龄官",
+   "relation": "好友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾珍",
+   "target": "佩凤",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾珍",
+   "target": "偕鸾",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾珍",
+   "target": "文花",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "胡氏",
+   "target": "贾蓉",
+   "relation": "继室",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾蓉",
+   "target": "胡氏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "许氏",
+   "target": "贾蓉",
+   "relation": "继室",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾蓉",
+   "target": "许氏",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "秦钟",
+   "target": "智能儿",
+   "relation": "好友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "柳湘莲",
+   "target": "尤三姐",
+   "relation": "好友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾敏",
+   "target": "贾政",
+   "relation": "姐妹",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "孙绍祖",
+   "target": "贾迎春",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛蟠",
+   "target": "香菱",
+   "relation": "丈夫",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "倪二",
+   "target": "贾芸",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾芸",
+   "target": "倪二",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "秦钟",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "柳湘莲",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "柳湘莲",
+   "target": "贾宝玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "水溶",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "水溶",
+   "target": "贾宝玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "史湘云",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "薛宝钗",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛宝钗",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "史湘云",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾迎春",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾迎春",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾探春",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾探春",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "贾惜春",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾惜春",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "李纨",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "李纨",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "邢岫烟",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "邢岫烟",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "香菱",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "香菱",
+   "target": "林黛玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "贾宝玉",
+   "target": "妙玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "妙玉",
+   "target": "邢岫烟",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "邢岫烟",
+   "target": "妙玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "妙玉",
+   "target": "薛宝钗",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "薛宝钗",
+   "target": "妙玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  },
+  {
+   "source": "林黛玉",
+   "target": "妙玉",
+   "relation": "朋友",
+   "family": "",
+   "src": "DotRC-edges"
+  }
+ ],
+ "sources": [
+  "kg-hongloumeng__hlm_triples.csv",
+  "KGQAHLM__relation.txt",
+  "The-Dream-of-the-Red-Chamber__data_triples.csv",
+  "DotRC__stone_story_edges.csv"
+ ],
+ "source_counts": {
+  "kg-hongloumeng__hlm_triples.csv": 380,
+  "KGQAHLM__relation.txt": 188,
+  "The-Dream-of-the-Red-Chamber__data_triples.csv": 400,
+  "DotRC__stone_story_edges.csv": 495
+ },
+ "generated_at": "2026-10-26 13:27",
+ "note": "四源合并，节点上限 350。提及频次已含别名（如「贾探春」计入「探春」）。"
+}

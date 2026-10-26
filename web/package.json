@@ -1,0 +1,16 @@
+{
+  "name": "hlm-qa-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "红楼智问 —— 《红楼梦》知识问答 RAG 系统前端（Node.js）",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {}
+}

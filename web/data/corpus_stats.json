@@ -1,0 +1,91 @@
+{
+ "versions": [
+  {
+   "id": "fuqinju",
+   "label": "抚琴居校本",
+   "records": 81,
+   "chars": 600130,
+   "han": 506739,
+   "range": "0-80",
+   "note": "含凡例",
+   "use": "RAG 主链"
+  },
+  {
+   "id": "chenggao",
+   "label": "程高本",
+   "records": 120,
+   "chars": 861457,
+   "han": 728570,
+   "range": "1-120",
+   "note": "",
+   "use": "版本对照"
+  },
+  {
+   "id": "guiyouben",
+   "label": "癸酉本",
+   "records": 28,
+   "chars": 215958,
+   "han": 183573,
+   "range": "81-108",
+   "note": "第81–108回",
+   "use": "版本对照"
+  }
+ ],
+ "totals": {
+  "records": 229,
+  "chars": 1677545,
+  "han": 1418882
+ },
+ "quality": [
+  {
+   "id": "Q1",
+   "desc": "回目格式一致性",
+   "value": "全部通过",
+   "level": "ok"
+  },
+  {
+   "id": "Q2",
+   "desc": "段落非空性",
+   "value": "0 空段（另有 17 个 ≤2 字的诗歌小标题，属正常）",
+   "level": "ok"
+  },
+  {
+   "id": "Q3",
+   "desc": "替换符 U+FFFD 检测",
+   "value": "0 处（S12–S15 已全部修复）",
+   "level": "ok"
+  },
+  {
+   "id": "Q4",
+   "desc": "私用区字符残留",
+   "value": "0 条（已全部按对照表解码）",
+   "level": "ok"
+  },
+  {
+   "id": "Q5",
+   "desc": "三源脂批去重",
+   "value": "12,457 → 8,510（合并 3,947 条重复）",
+   "level": "ok"
+  },
+  {
+   "id": "Q6",
+   "desc": "chunk_id 唯一性",
+   "value": "通过（11,780 chunk 无重复）",
+   "level": "ok"
+  },
+  {
+   "id": "Q7",
+   "desc": "索引完整性",
+   "value": "通过（11,780 chunk / 11,780 向量）",
+   "level": "ok"
+  },
+  {
+   "id": "Q8",
+   "desc": "版本归属字段",
+   "value": "抚琴居 238/3234 条为修复/清理新增，未回填版本；癸酉本 223 条仅标 source（该源无版本归属概念）；脂批大全 38/9000 条为修复/清理新增，未回填版本",
+   "level": "warn"
+  }
+ ],
+ "generated_at": "2026-10-24 23:20",
+ "note": "全部为实测值，由 scripts/s26_1_build_corpus_stats.py 生成。字数为段落合计（含标点）；「汉字」为 CJK 统一表意文字计数。"
+}

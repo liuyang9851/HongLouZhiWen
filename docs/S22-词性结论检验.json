@@ -1,0 +1,44 @@
+{
+ "test1_method_validity": {
+  "D_to_A_pct": 98.8,
+  "D_distribution": {
+   "A_曹雪芹": 79,
+   "金瓶梅": 1
+  },
+  "C_distribution": {
+   "金瓶梅": 14,
+   "B_高鹗": 2,
+   "儒林外史": 7,
+   "A_曹雪芹": 3,
+   "二十年目睹": 1,
+   "醒世姻缘传": 1
+  },
+  "B_distribution": {
+   "B_高鹗": 40
+  },
+  "method_ok": true
+ },
+ "test3_tokenization_quality": {
+  "A_曹雪芹": {
+   "pct_single": 53.47,
+   "avg_wordlen": 1.528
+  },
+  "B_高鹗": {
+   "pct_single": 53.34,
+   "avg_wordlen": 1.53
+  },
+  "C_癸酉本": {
+   "pct_single": 51.98,
+   "avg_wordlen": 1.556
+  },
+  "D_程高本前80": {
+   "pct_single": 53.34,
+   "avg_wordlen": 1.53
+  }
+ },
+ "test4_hard_features_only": {
+  "C_to_A": 3.4271,
+  "C_to_B": 3.9874,
+  "closer": "A"
+ }
+}

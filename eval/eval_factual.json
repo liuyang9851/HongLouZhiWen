@@ -1,0 +1,419 @@
+[
+  {
+    "id": "f001",
+    "type": "factual",
+    "question": "通灵宝玉上的铭文是什么？",
+    "answer": "莫失莫忘，仙寿恒昌",
+    "answer_keywords": [
+      "莫失莫忘",
+      "仙寿恒昌"
+    ],
+    "evidence": {
+      "hui": 8,
+      "para_index": 16
+    },
+    "evidence_anchor": "莫失莫忘",
+    "note": "第8回宝钗念出"
+  },
+  {
+    "id": "f002",
+    "type": "factual",
+    "question": "薛宝钗金锁上的铭文是什么？",
+    "answer": "不离不弃，芳龄永继",
+    "answer_keywords": [
+      "不离不弃",
+      "芳龄永继"
+    ],
+    "evidence": {
+      "hui": 8,
+      "para_index": 17
+    },
+    "evidence_anchor": "不离不弃",
+    "note": "第8回金锁正面/反面音注"
+  },
+  {
+    "id": "f003",
+    "type": "factual",
+    "question": "「可叹停机德，堪怜咏絮才」这句判词写的是谁？",
+    "answer": "薛宝钗与林黛玉",
+    "answer_keywords": [
+      "宝钗",
+      "黛玉"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 28
+    },
+    "evidence_anchor": "可叹停机德",
+    "note": "第5回金陵十二钗正册判词（判词本身不含人名，需解读）"
+  },
+  {
+    "id": "f004",
+    "type": "factual",
+    "question": "「二十年来辨是非，榴花开处照宫闱」是给谁的判词？",
+    "answer": "贾元春",
+    "answer_keywords": [
+      "元春"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 30
+    },
+    "evidence_anchor": "二十年来辨是非",
+    "note": "第5回判词"
+  },
+  {
+    "id": "f005",
+    "type": "factual",
+    "question": "「侬今葬花人笑痴，他年葬侬知是谁」出自哪首诗？",
+    "answer": "葬花吟",
+    "answer_keywords": [
+      "葬花吟",
+      "葬花"
+    ],
+    "evidence": {
+      "hui": 27,
+      "para_index": 41
+    },
+    "evidence_anchor": "侬今葬花人笑痴",
+    "note": "第27回黛玉葬花"
+  },
+  {
+    "id": "f006",
+    "type": "factual",
+    "question": "袭人原本是谁的丫鬟？",
+    "answer": "贾母",
+    "answer_keywords": [
+      "贾母"
+    ],
+    "evidence": {
+      "hui": 3,
+      "para_index": 24
+    },
+    "evidence_anchor": "原来这袭人亦是贾母之婢",
+    "note": "第3回交代袭人本名珍珠，贾母之婢"
+  },
+  {
+    "id": "f007",
+    "type": "factual",
+    "question": "鹦哥被贾母给了谁？",
+    "answer": "林黛玉",
+    "answer_keywords": [
+      "黛玉"
+    ],
+    "evidence": {
+      "hui": 3,
+      "para_index": 23
+    },
+    "evidence_anchor": "名唤鹦哥者与了黛玉",
+    "note": "第3回"
+  },
+  {
+    "id": "f008",
+    "type": "factual",
+    "question": "雪雁是谁带来的丫鬟？",
+    "answer": "林黛玉",
+    "answer_keywords": [
+      "黛玉",
+      "雪雁"
+    ],
+    "evidence": {
+      "hui": 3,
+      "para_index": 23
+    },
+    "evidence_anchor": "雪雁",
+    "note": "第3回黛玉从家中带来的小丫头"
+  },
+  {
+    "id": "f009",
+    "type": "factual",
+    "question": "第3回的回目是什么？",
+    "answer": "金陵城起复贾雨村 荣国府收养林黛玉",
+    "answer_keywords": [
+      "金陵城起复贾雨村",
+      "荣国府收养林黛玉"
+    ],
+    "evidence": {
+      "hui": 3,
+      "para_index": 0
+    },
+    "evidence_anchor": null,
+    "note": "回目直接来自章节数据"
+  },
+  {
+    "id": "f010",
+    "type": "factual",
+    "question": "第5回的回目是什么？",
+    "answer": "游幻境指迷十二钗 饮仙醪曲演红楼梦",
+    "answer_keywords": [
+      "游幻境指迷十二钗",
+      "饮仙醪曲演红楼梦"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 0
+    },
+    "evidence_anchor": null,
+    "note": "第5回"
+  },
+  {
+    "id": "f011",
+    "type": "factual",
+    "question": "刘姥姥第一次进荣国府是在第几回？",
+    "answer": "第6回",
+    "answer_keywords": [
+      "6",
+      "六"
+    ],
+    "evidence": {
+      "hui": 6,
+      "para_index": 5
+    },
+    "evidence_anchor": null,
+    "note": "第6回回目「刘姥姥一进荣国府」"
+  },
+  {
+    "id": "f013",
+    "type": "factual",
+    "question": "「满纸荒唐言，一把辛酸泪」出现在第几回？",
+    "answer": "第1回",
+    "answer_keywords": [
+      "1",
+      "一"
+    ],
+    "evidence": {
+      "hui": 1,
+      "para_index": 10
+    },
+    "evidence_anchor": "满纸荒唐言",
+    "note": "第1回曹雪芹自题绝句"
+  },
+  {
+    "id": "f014",
+    "type": "factual",
+    "question": "「好风频借力，送我上青云」是谁写的？",
+    "answer": "薛宝钗",
+    "answer_keywords": [
+      "宝钗"
+    ],
+    "evidence": {
+      "hui": 70,
+      "para_index": 36
+    },
+    "evidence_anchor": "好风频借力",
+    "note": "第70回柳絮词（宝钗《临江仙》）"
+  },
+  {
+    "id": "f015",
+    "type": "factual",
+    "question": "「凡鸟偏从末世来，都知爱慕此生才」写的是谁？",
+    "answer": "王熙凤",
+    "answer_keywords": [
+      "凤姐",
+      "王熙凤"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 42
+    },
+    "evidence_anchor": "凡鸟偏从末世来",
+    "note": "第5回判词「一从二令三人木」"
+  },
+  {
+    "id": "f016",
+    "type": "factual",
+    "question": "「才自精明志自高，生于末世运偏消」写的是谁？",
+    "answer": "贾探春",
+    "answer_keywords": [
+      "探春"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 32
+    },
+    "evidence_anchor": "才自精明志自高",
+    "note": "第5回判词"
+  },
+  {
+    "id": "f017",
+    "type": "factual",
+    "question": "「富贵又何为，襁褓之间父母违」写的是谁？",
+    "answer": "史湘云",
+    "answer_keywords": [
+      "湘云"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 34
+    },
+    "evidence_anchor": "富贵又何为",
+    "note": "第5回判词"
+  },
+  {
+    "id": "f018",
+    "type": "factual",
+    "question": "「欲洁何曾洁，云空未必空」写的是谁？",
+    "answer": "妙玉",
+    "answer_keywords": [
+      "妙玉"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 36
+    },
+    "evidence_anchor": "欲洁何曾洁",
+    "note": "第5回判词"
+  },
+  {
+    "id": "f019",
+    "type": "factual",
+    "question": "警幻仙子带宝玉进入太虚幻境的哪个司？",
+    "answer": "薄命司",
+    "answer_keywords": [
+      "薄命司"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 17
+    },
+    "evidence_anchor": "薄命司",
+    "note": "第5回"
+  },
+  {
+    "id": "f020",
+    "type": "factual",
+    "question": "太虚幻境薄命司中，宝玉最先看到的是哪一册？",
+    "answer": "金陵十二钗正册",
+    "answer_keywords": [
+      "正册",
+      "金陵十二钗"
+    ],
+    "evidence": {
+      "hui": 5,
+      "para_index": 19
+    },
+    "evidence_anchor": "金陵十二钗正册",
+    "note": "第5回"
+  },
+  {
+    "id": "f021",
+    "type": "factual",
+    "question": "「冷子兴演说荣国府」在第几回？",
+    "answer": "第2回",
+    "answer_keywords": [
+      "2",
+      "二"
+    ],
+    "evidence": {
+      "hui": 2,
+      "para_index": 16
+    },
+    "evidence_anchor": null,
+    "note": "第2回回目"
+  },
+  {
+    "id": "f022",
+    "type": "factual",
+    "question": "元妃省亲（贾元春归省庆元宵）主要在第几回？",
+    "answer": "第18回",
+    "answer_keywords": [
+      "18",
+      "十八"
+    ],
+    "evidence": {
+      "hui": 18,
+      "para_index": 46
+    },
+    "evidence_anchor": null,
+    "note": "第18回回目"
+  },
+  {
+    "id": "f024",
+    "type": "factual",
+    "question": "「勇晴雯病补雀金裘」在第几回？",
+    "answer": "第52回",
+    "answer_keywords": [
+      "52",
+      "五十二"
+    ],
+    "evidence": {
+      "hui": 52,
+      "para_index": 1
+    },
+    "evidence_anchor": null,
+    "note": "第52回回目"
+  },
+  {
+    "id": "f025",
+    "type": "factual",
+    "question": "尤三姐自刎用的是谁的剑？",
+    "answer": "柳湘莲",
+    "answer_keywords": [
+      "柳湘莲",
+      "湘莲"
+    ],
+    "evidence": {
+      "hui": 63,
+      "para_index": 38
+    },
+    "evidence_anchor": "尤三姐",
+    "note": "第66回"
+  },
+  {
+    "id": "f027",
+    "type": "factual",
+    "question": "全书正文（前80回）一共多少字？",
+    "answer": "约60万字",
+    "answer_keywords": [
+      "60",
+      "六十万",
+      "599",
+      "600"
+    ],
+    "evidence": null,
+    "note": "统计口径：段落字数合计 599,196；仅汉字 526,673",
+    "stat_based": true
+  },
+  {
+    "id": "f028",
+    "type": "factual",
+    "question": "全书中被提及次数最多的人物是谁？",
+    "answer": "贾宝玉",
+    "answer_keywords": [
+      "贾宝玉",
+      "宝玉"
+    ],
+    "evidence": null,
+    "note": "MapReduce personfreq: 贾宝玉 2,746 次",
+    "stat_based": true
+  },
+  {
+    "id": "f029",
+    "type": "factual",
+    "question": "前80回中，哪一回的批语（脂批）数量最多？",
+    "answer": "第19回",
+    "answer_keywords": [
+      "19",
+      "十九"
+    ],
+    "evidence": null,
+    "note": "重解码统计：第19回 160 条（另一口径第3回 199 条，需说明口径）",
+    "stat_based": true
+  },
+  {
+    "id": "f030",
+    "type": "factual",
+    "question": "脂批共有多少个不同版本的标注？",
+    "answer": "9个（蒙府/戚序/甲戌/庚辰/己卯/甲辰/列藏/杨藏/未识别）",
+    "answer_keywords": [
+      "9",
+      "九",
+      "蒙府",
+      "庚辰",
+      "甲戌"
+    ],
+    "evidence": null,
+    "note": "重解码 versions_legend 共 9 类（含 1 条未识别）",
+    "stat_based": true
+  }
+]

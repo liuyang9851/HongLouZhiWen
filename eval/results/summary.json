@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-10-24",
+  "model": "deepseek-flash",
+  "factual": {
+    "n_total": 27,
+    "n_auto": 23,
+    "n_stat": 4,
+    "keyword_coverage": 0.9348,
+    "cite_hui_hit": 0.913,
+    "cite_para_hit": 0.6957,
+    "answer_ok": 1.0,
+    "have_citation": 1.0,
+    "avg_elapsed": 2.2322
+  },
+  "factual_stat": {
+    "keyword_coverage": 0.5875,
+    "answer_ok": 1.0
+  },
+  "reasoning": {
+    "n_total": 15,
+    "heur_score_mean": 3.6,
+    "heur_score_dist": {
+      "1": 2,
+      "2": 2,
+      "3": 2,
+      "4": 3,
+      "5": 6
+    },
+    "have_citation": 1.0,
+    "avg_elapsed": 4.7047
+  },
+  "refuse": {
+    "n_total": 10,
+    "correct_refusal": 1.0
+  },
+  "note": "事实型与推理型分开报告，不合成单一准确率"
+}

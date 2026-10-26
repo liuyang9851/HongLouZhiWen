@@ -1,0 +1,52 @@
+# ===== 密钥与本地配置（绝不提交）=====
+backend/.env
+*.env
+!.env.example
+*.key
+*.pem
+secrets.*
+LLM_API.txt
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# ===== Node =====
+node_modules/
+npm-debug.log*
+_srv.log
+_srv.err
+
+# ===== 大文件：本地 ONNX 模型（91 MB，建议另行下载/构建镜像）=====
+backend/models/
+*.onnx
+*.bin
+
+# ===== 数据管道中间产物（可由 pipeline 重建）=====
+pipeline/out/
+pipeline/_deprecated_*
+!pipeline/out/README.md
+
+# ===== 前端派生数据（可由 scripts 重建）=====
+web/data/versions/
+web/data/pizhu.json
+web/_srv.log
+web/_srv.err
+
+# ===== 备份与临时文件 =====
+*.bak
+*.bak-*
+*.bak-fs
+*.bak-arch
+*~
+*.tmp
+*.log
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+desktop.ini
