@@ -17,6 +17,7 @@ import http from 'node:http';
 import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
+import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -26,6 +27,93 @@ const DATA_DIR = path.join(__dirname, 'data');
 const HOST = process.env.HLM_WEB_HOST || '127.0.0.1';
 const PORT = Number(process.env.HLM_WEB_PORT || 3000);
 const BACKEND = process.env.HLM_BACKEND || 'http://127.0.0.1:8000';
+
+/* ---------------- 背景音乐（外部播放器 mpv.net） ----------------
+ * 页面只用 <audio> 无法循环播放 .m4s 这类流式片段可靠，
+ * 因此改为「本地 Node 服务拉起 mpv.net 单曲循环」。
+ * 两个路径都可用环境变量覆盖，避免硬编码。
+ */
+const BGM_FILE = process.env.HLM_BGM_FILE || 'D:\\Download\\774293639-1-30280.m4s';
+const BGM_PLAYER = process.env.HLM_BGM_PLAYER || 'D:\\mpv.net\\mpvnet.exe';
+let bgmProc = null;      // 当前播放进程（null = 未播放）
+const BGM_PID_FILE = path.join(DATA_DIR, '.bgm.pid');
+
+/** 读取上次记录的 PID（服务重启后仍能认出已在播放的进程） */
+function readBgmPid() {
+  try {
+    const n = parseInt(fs.readFileSync(BGM_PID_FILE, 'utf8').trim(), 10);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  } catch { return null; }
+}
+/** 判断某 PID 是否还活着 */
+function pidAlive(pid) {
+  if (!pid) return false;
+  try { process.kill(pid, 0); return true; } catch { return false; }
+}
+/** 当前正在播放的 PID（内存优先，其次 PID 文件） */
+function currentBgmPid() {
+  if (bgmProc && bgmProc.exitCode === null) return bgmProc.pid;
+  const pid = readBgmPid();
+  return pidAlive(pid) ? pid : null;
+}
+function writeBgmPid(pid) {
+  try { fs.writeFileSync(BGM_PID_FILE, String(pid)); } catch { /* 忽略 */ }
+}
+function clearBgmPid() {
+  try { fs.unlinkSync(BGM_PID_FILE); } catch { /* 忽略 */ }
+}
+
+/** 启动背景音乐（幂等：已在播则直接返回） */
+function startBgm() {
+  const running = currentBgmPid();
+  if (running) {
+    return { ok: true, already: true, pid: running };
+  }
+  if (!fs.existsSync(BGM_PLAYER)) {
+    return { ok: false, error: 'player_not_found', path: BGM_PLAYER };
+  }
+  if (!fs.existsSync(BGM_FILE)) {
+    return { ok: false, error: 'audio_not_found', path: BGM_FILE };
+  }
+  try {
+    bgmProc = spawn(BGM_PLAYER, [
+      '--loop-file=inf',      // 单曲循环
+      '--no-video',           // 只要音频
+      '--force-window=no',    // 不弹窗
+      '--no-terminal',
+      '--really-quiet',
+      '--volume=70',
+      BGM_FILE,
+    ], { detached: true, stdio: 'ignore', windowsHide: true });
+    // 独立进程：Node 服务重启/退出不会带走播放器
+    bgmProc.unref();
+    writeBgmPid(bgmProc.pid);
+    bgmProc.on('exit', () => { bgmProc = null; });
+    bgmProc.on('error', () => { bgmProc = null; clearBgmPid(); });
+    return { ok: true, already: false, pid: bgmProc.pid };
+  } catch (err) {
+    return { ok: false, error: 'spawn_failed', message: err.message };
+  }
+}
+
+/** 停止背景音乐 */
+function stopBgm() {
+  const pid = currentBgmPid();
+  if (!pid) { bgmProc = null; clearBgmPid(); return { ok: true, wasPlaying: false }; }
+  try {
+    if (bgmProc && bgmProc.exitCode === null) bgmProc.kill();
+    else process.kill(pid);          // 服务重启过 → 直接按 PID 结束
+  } catch (e) { /* 忽略 */ }
+  bgmProc = null;
+  clearBgmPid();
+  return { ok: true, wasPlaying: true };
+}
+
+/** 当前播放状态 */
+function bgmStatus() {
+  const pid = currentBgmPid();
+  return { playing: !!pid, pid, file: BGM_FILE, player: BGM_PLAYER };
+}
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -315,6 +403,17 @@ async function handleApi(req, res, url) {
   }
 
   // --- 后端代理（RAG / 图谱问答 / 统计问答，待 Python 服务实装）---
+  // ---- 背景音乐控制 ----
+  if (pathname === '/api/bgm/status') {
+    return sendJson(res, bgmStatus());
+  }
+  if (pathname === '/api/bgm/start') {
+    return sendJson(res, startBgm());
+  }
+  if (pathname === '/api/bgm/stop') {
+    return sendJson(res, stopBgm());
+  }
+
   if (pathname.startsWith('/api/backend/')) {
     const target = BACKEND + pathname.replace('/api/backend', '') + url.search;
     try {

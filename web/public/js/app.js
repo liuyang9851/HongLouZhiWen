@@ -2381,6 +2381,9 @@ async function boot() {
   // ⛶ 全屏切换
   initFullscreen();
 
+  // 🎵 背景音乐（打开页面即单曲循环）
+  initBgm();
+
   // 模型切换
   $('#modelSelect').onchange = (e) => {
     state.model = e.target.value;
@@ -2467,4 +2470,69 @@ function initFullscreen() {
   });
 
   sync();
+}
+
+/* =====================================================================
+   🎵 背景音乐：打开页面即在本地用 mpv.net 单曲循环
+   ---------------------------------------------------------------------
+   浏览器 <audio loop> 播放 .m4s 这类流式片段不可靠，
+   因此由本地 Node 服务拉起 mpv.net（--loop-file=inf）播放。
+   首次进入自动开始；同一会话内不重复调用。
+   ===================================================================== */
+function initBgm() {
+  async function api(path) {
+    const r = await fetch(path, { cache: 'no-store' });
+    if (!r.ok) throw new Error(r.status + ' ' + path);
+    return r.json();
+  }
+
+  // 每次打开页面都确保在播放（/api/bgm/start 幂等：已在播则直接返回）
+  api('/api/bgm/start')
+    .then((d) => {
+      if (!d.ok) {
+        console.warn('背景音乐未启动：', d.error || d.message, d.path || '');
+        if (d.error === 'audio_not_found' || d.error === 'player_not_found') {
+          toast('背景音乐文件缺失，已跳过');
+        }
+      }
+    })
+    .catch((e) => console.warn('背景音乐接口不可用', e));
+
+  // 顶栏加一个「🔊 / 🔇」开关，方便随时静音
+  const bar = document.querySelector('.topbar-right');
+  if (!bar) return;
+
+  const btn = document.createElement('button');
+  btn.className = 'btn xs';
+  btn.id = 'btnBgm';
+  btn.title = '背景音乐开关';
+  btn.innerHTML = '<span class="bgm-ico">🔊</span>';
+
+  function paint(on) {
+    btn.querySelector('.bgm-ico').textContent = on ? '🔊' : '🔇';
+    btn.classList.toggle('active', on);
+    btn.title = on ? '背景音乐：开（点击关闭）' : '背景音乐：关（点击开启）';
+  }
+
+  btn.onclick = async () => {
+    try {
+      const st = await api('/api/bgm/status');
+      if (st.playing) {
+        await api('/api/bgm/stop');
+        paint(false);
+        toast('背景音乐已关闭');
+      } else {
+        const d = await api('/api/bgm/start');
+        paint(!!d.ok);
+        toast(d.ok ? '背景音乐已开启' : '无法启动：' + (d.error || d.message));
+      }
+    } catch (e) {
+      toast('背景音乐控制失败');
+    }
+  };
+
+  bar.appendChild(btn);
+
+  // 同步真实状态
+  api('/api/bgm/status').then((st) => paint(!!st.playing)).catch(() => paint(false));
 }

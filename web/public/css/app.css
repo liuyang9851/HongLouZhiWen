@@ -79,7 +79,8 @@ body::before {
   border-bottom: 1px solid var(--line);
 }
 
-.brand { display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; flex: none; }
+.brand-text { white-space: nowrap; }
 
 .seal {
   width: 38px; height: 38px; flex: none;
@@ -99,7 +100,7 @@ body::before {
   letter-spacing: .02em;
 }
 
-.topbar-right { display: flex; align-items: center; gap: 12px; }
+.topbar-right { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 1 auto; }
 
 .model-picker {
   display: flex; align-items: center; gap: 8px;
@@ -110,11 +111,12 @@ body::before {
 .model-picker select {
   border: 0; background: transparent; font-family: var(--font-sans);
   font-size: 17.5px; color: var(--ink-2); outline: none; cursor: pointer;
-  max-width: 300px;   /* 字号放大后需要更宽，否则模型名被截断 */
+  max-width: 268px;   /* 加了背景音乐按钮后收窄；再小会截断下拉箭头 */
 }
 
 .status-pill {
   display: flex; align-items: center; gap: 6px;
+  white-space: nowrap; overflow: hidden; min-width: 0; flex: 0 1 auto;
   padding: 5px 10px; border-radius: 999px;
   background: var(--paper-2); border: 1px solid var(--line);
   font-size: 17px; color: var(--ink-3);

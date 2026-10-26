@@ -50,3 +50,6 @@ web/_srv.err
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# ===== 运行时状态 =====
+web/data/.bgm.pid
