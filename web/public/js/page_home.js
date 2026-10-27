@@ -9,7 +9,7 @@
  */
 import { getCorpusStats } from './rag.js';
 import { renderArchDiagram } from './arch_diagram.js';
-import { renderSequenceDiagram, renderBuildSequenceDiagram, renderDeploymentDiagram } from './diagrams_simple.js';
+import { renderSequenceDiagram, renderBuildSequenceDiagram, renderQuestionDrivenDiagram, renderDeploymentDiagram } from './diagrams_simple.js';
 
 // 注意：app.js 是本模块的宿主，ES module 求值顺序下 window.__HLM__
 // 可能在模块加载时还未赋值 → 必须延迟到调用时再取。
@@ -213,7 +213,20 @@ export async function renderHome(stage) {
 
     <!-- ============ 1.5 程序架构图 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">2</span>程序架构</h2>
+      <h2 class="hp-h2"><span class="hp-num">2</span>问题驱动：为什么这么设计</h2>
+      <p class="hp-diagram-tip">
+        先别急着看架构图。这个项目里<b>每一个技术选择，都是被一个具体问题逼出来的</b>：
+        想快速定位原文 → 才要切块和倒排索引；换个说法就搜不到 → 才要向量和图谱；
+        大模型会编造原文 → 才要 RAG 强制引用；百万级索存放不下 → 才要 HDFS 和 HBase。
+        四行读下来，就是整个项目的来龙去脉。
+      </p>
+      <div class="hp-diagram-wrap">
+        ${renderQuestionDrivenDiagram()}
+      </div>
+    </section>
+
+    <section class="hp-sec">
+      <h2 class="hp-h2"><span class="hp-num">3</span>程序架构</h2>
 
       <h3 class="hp-sub3">先看一次提问经历了什么（顺序图）</h3>
       <p class="hp-diagram-tip">
@@ -264,7 +277,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 3. 项目功能 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">3</span>项目功能</h2>
+      <h2 class="hp-h2"><span class="hp-num">4</span>项目功能</h2>
       <div class="hp-feats">
         <a class="hp-feat" href="#/chat">
           <div class="hp-feat-ico">💬</div>
@@ -309,7 +322,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 4. 技术栈 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">4</span>技术栈</h2>
+      <h2 class="hp-h2"><span class="hp-num">5</span>技术栈</h2>
       <div class="hp-stack">
         <div class="hp-stack-row">
           <div class="hp-stack-k">Hadoop 生态</div>
@@ -370,7 +383,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 5. 快速开始 ============ -->
     <section class="hp-sec hp-sec-last">
-      <h2 class="hp-h2"><span class="hp-num">5</span>试试这些问题</h2>
+      <h2 class="hp-h2"><span class="hp-num">6</span>试试这些问题</h2>
       <div class="hp-starters">
         ${STARTERS.map((s) => `
           <button class="hp-starter" data-q="${esc(s.q)}">

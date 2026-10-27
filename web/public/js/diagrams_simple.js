@@ -223,6 +223,123 @@ export function renderBuildSequenceDiagram() {
 }
 
 /* ============================================================
+   一·C、问题驱动图（从需求到选型到实现到效果）
+   ------------------------------------------------------------
+   不讲技术名词，讲「什么问题逼出了什么决定」。
+   4 列：需求 → 选型 → 实现 → 效果
+   4 行：查得到 / 找得全 / 答得准 / 存得下
+   ============================================================ */
+export function renderQuestionDrivenDiagram() {
+  const W = 1180;
+  const ROW_L = 118;             // 左侧行标签列宽（要放下 3 个汉字 + 内边距）
+  const COL_W = 250;
+  const GAP = 16;
+  const X0 = ROW_L + 10;
+  const headY = 40, headH = 44;
+  const cardY0 = 112, cardH = 86, cardGap = 12;
+  const nRows = 4;
+  const H = cardY0 + nRows * cardH + (nRows - 1) * cardGap + 84;
+
+  const stages = [
+    { title: '① 需求', sub: '用户遇到什么', c: C.front, bg: C.frontBg },
+    { title: '② 选型', sub: '凭什么选它', c: C.llm, bg: C.llmBg },
+    { title: '③ 实现', sub: '落在哪个模块', c: C.api, bg: C.apiBg },
+    { title: '④ 效果', sub: '可验证的数字', c: C.db, bg: C.dbBg },
+  ];
+
+  const rows = [
+    {
+      tag: '查得到',
+      cells: [
+        ['想在原著里快速定位一段话'],
+        ['按回切块 + 联合 bigram 倒排'],
+        ['s2_1_chunk.py', 's2_2_index.py'],
+        ['11,780 个可检索块'],
+      ],
+    },
+    {
+      tag: '找得全',
+      cells: [
+        ['换个说法就搜不到了'],
+        ['向量 512 维 + 人物图谱'],
+        ['RRF 融合 k=60', '同回去重（每回 2 正文 1 批语）'],
+        ['三路互补，召回更稳'],
+      ],
+    },
+    {
+      tag: '答得准',
+      cells: [
+        ['大模型会编造「原文」'],
+        ['RAG + 强制引用', '三档知识策略'],
+        ['app.py build_messages', '片段编号 → 引用角标'],
+        ['每条结论都带出处', '可点回原文段落'],
+      ],
+    },
+    {
+      tag: '存得下',
+      cells: [
+        ['百万级索存放哪、怎么算'],
+        ['HDFS 存湖 + HBase 在线', 'MapReduce 离线批算'],
+        ['s3_mapreduce.py', 's10_1_unify_pizhu.py'],
+        ['606,783 行 · 副本 2', 'HDFS 550 MB / 1.97 TB'],
+      ],
+    },
+  ];
+
+  // 卡片：1~2 行文字，垂直居中
+  const card = (x, y, lines, color, emphasize = false) => {
+    const n = lines.length;
+    const first = y + cardH / 2 - (n - 1) * 10 + 5;
+    return `
+    ${box(x, y, COL_W, cardH, emphasize ? '#fffdf8' : '#ffffff',
+          emphasize ? color + '99' : '#dfd6c7', 9, emphasize ? 1.9 : 1.3)}
+    ${box(x, y, 4, cardH, color, color, 2, 0)}
+    ${lines.map((t, i) => txt(x + 14, first + i * 20, t, 12.5,
+      i === 0 ? C.text : C.muted, i === 0 ? 600 : 400, 'start')).join('')}`;
+  };
+
+  const rowTag = (y, tag, color) => `
+    ${box(6, y + cardH / 2 - 16, ROW_L - 18, 32, color + '14', color + '55', 16, 1.2)}
+    ${txt(6 + (ROW_L - 18) / 2, y + cardH / 2 + 5, tag, 13.5, color, 700)}`;
+
+  return `
+<svg id="qdriveSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
+     style="width:100%;height:auto;max-width:1240px;display:block;margin:0 auto">
+  <defs>
+    <marker id="qdArrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="${C.muted}"/>
+    </marker>
+  </defs>
+
+  <!-- 阶段表头 -->
+  ${stages.map((st, i) => {
+    const x = X0 + i * (COL_W + GAP);
+    return `${box(x, headY, COL_W, headH, st.c, st.c, 9, 0)}
+      ${txt(x + COL_W / 2, headY + 21, st.title, 16.5, '#ffffff', 700)}
+      ${txt(x + COL_W / 2, headY + 37, st.sub, 11.5, '#ffffffcc', 400)}
+      ${i < 3 ? `<line x1="${x + COL_W + 2}" y1="${headY + headH / 2}"
+            x2="${x + COL_W + GAP - 3}" y2="${headY + headH / 2}"
+            stroke="${C.muted}" stroke-width="2" marker-end="url(#qdArrow)"/>` : ''}`;
+  }).join('')}
+
+  <!-- 行 -->
+  ${rows.map((row, ri) => {
+    const y = cardY0 + ri * (cardH + cardGap);
+    return rowTag(y, row.tag, stages[0].c) +
+      row.cells.map((lines, ci) =>
+        card(X0 + ci * (COL_W + GAP), y, lines, stages[ci].c, ci === 0)).join('');
+  }).join('')}
+
+  <!-- 底部主线说明 -->
+  ${txt(W / 2, H - 40, '★ 这条链的起点不是技术，而是「读《红楼梦》时的一个具体问题」—— 每选一个技术，都对应一个原来答不上来的问题',
+    13.5, C.text, 600)}
+  ${txt(W / 2, H - 18, '需求不清就别选型，选型不清就别写代码：四个阶段一一对应，任何一格空着都会在后面返工',
+    12.5, C.muted, 400)}
+</svg>`;
+}
+
+/* ============================================================
    二、UML 部署图
    ------------------------------------------------------------
    看清楚三件事：什么跑在浏览器、什么在本机进程、什么在 Docker。

@@ -1,11 +1,13 @@
-import { renderSequenceDiagram, renderBuildSequenceDiagram, renderDeploymentDiagram }
+import { renderSequenceDiagram, renderBuildSequenceDiagram,
+         renderQuestionDrivenDiagram, renderDeploymentDiagram }
   from '../web/public/js/diagrams_simple.js';
 import fs from 'node:fs';
 
 const items = [
-  ['_seq_diagram.html', '① 顺序图（查询链路）', renderSequenceDiagram()],
-  ['_bseq_diagram.html', '② 顺序图（建库链路）', renderBuildSequenceDiagram()],
-  ['_dep_diagram.html', '③ 部署图', renderDeploymentDiagram()],
+  ['_seq_diagram.html',  '① 查询顺序图',   renderSequenceDiagram()],
+  ['_bseq_diagram.html', '② 建库顺序图',   renderBuildSequenceDiagram()],
+  ['_qd_diagram.html',   '③ 问题驱动图',   renderQuestionDrivenDiagram()],
+  ['_dep_diagram.html',  '④ 部署图',       renderDeploymentDiagram()],
 ];
 
 const wrap = (title, svg) => `<!DOCTYPE html>
