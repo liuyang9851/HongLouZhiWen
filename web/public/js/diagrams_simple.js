@@ -43,11 +43,11 @@ const vtxt = (x, y, s, size = 13, fill = C.text, weight = 700) =>
    左侧用 ①②③④ 标出四个阶段，便于第一次看就抓住主线。
    ============================================================ */
 export function renderSequenceDiagram() {
-  const W = 1040, H = 700;
-  const LEFT = 108;                 // 左侧阶段栏宽度
-  const X = [250, 500, 730, 930];   // 4 条生命线 x
-  const TOP = 84;                   // 生命线起始 y
-  const BOT = 640;
+  const W = 870, H = 860;
+  const LEFT = 96;                 // 左侧阶段栏宽度
+  const X = [212, 424, 622, 800];   // 4 条生命线 x
+  const TOP = 92;                   // 生命线起始 y
+  const BOT = 800;
 
   const heads = [
     { x: X[0], name: '用户 / 浏览器', sub: '原生 ES Module', c: C.front, bg: C.frontBg },
@@ -56,7 +56,7 @@ export function renderSequenceDiagram() {
     { x: X[3], name: 'DeepSeek', sub: '大模型 API', c: C.llm, bg: C.llmBg },
   ];
 
-  const headW = 168, headH = 62;
+  const headW = 158, headH = 70;
 
   // 消息箭头
   const msg = (x1, x2, y, label, color, marker, dashed = false) => {
@@ -64,19 +64,19 @@ export function renderSequenceDiagram() {
     return `
     <line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${color}" stroke-width="1.9"
           ${dashed ? 'stroke-dasharray="7 5"' : ''} marker-end="url(#${marker})"/>
-    ${txt(mid, y - 9, label, 13.5, C.text, 600)}`;
+    ${txt(mid, y - 11, label, 17, C.text, 600)}`;
   };
 
   // 自调用（回到自己的生命线）
   const selfMsg = (x, y, label, color, marker, w = 46, h = 34) => `
     <path d="M ${x} ${y} h ${w} v ${h} h ${-w}" fill="none" stroke="${color}"
           stroke-width="1.9" marker-end="url(#${marker})"/>
-    ${txt(x + w + 10, y + h / 2 + 5, label, 13.5, C.text, 600, 'start')}`;
+    ${txt(x + w + 10, y + h / 2 + 6, label, 17, C.text, 600, 'start')}`;
 
   // 阶段底色条
   const phase = (y0, y1, label) =>
-    box(LEFT - 92, y0, 74, y1 - y0, C.band, C.bandLine, 7, 1) +
-    vtxt(LEFT - 55, (y0 + y1) / 2, label, 13.5, C.muted);
+    box(LEFT - 84, y0, 68, y1 - y0, C.band, C.bandLine, 7, 1) +
+    vtxt(LEFT - 48, (y0 + y1) / 2, label, 17, C.muted);
 
   return `
 <svg id="seqSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
@@ -105,25 +105,25 @@ export function renderSequenceDiagram() {
   <!-- 头部 -->
   ${heads.map((h) => `
     ${box(h.x - headW / 2, TOP - headH / 2, headW, headH, h.bg, h.c, 9, 1.6)}
-    ${txt(h.x, TOP - 4, h.name, 16.5, h.c, 700)}
-    ${txt(h.x, TOP + 17, h.sub, 12.5, C.muted, 400)}`).join('')}
+    ${txt(h.x, TOP - 2, h.name, 19, h.c, 700)}
+    ${txt(h.x, TOP + 21, h.sub, 15, C.muted, 400)}`).join('')}
 
   <!-- ===== 消息序列 ===== -->
-  ${msg(X[0], X[1], 150, '① 提问「宝玉和黛玉什么关系？」', C.api, 'sqB')}
-  ${msg(X[1], X[2], 196, '② 三路召回：关键词 + 向量 + 图谱', C.db, 'sqC')}
-  ${msg(X[2], X[1], 238, '候选片段 Top-30', C.db, 'sqC', true)}
+  ${msg(X[0], X[1], 190, '① 提问「宝玉和黛玉什么关系？」', C.api, 'sqB')}
+  ${msg(X[1], X[2], 246, '② 三路召回：关键词 + 向量 + 图谱', C.db, 'sqC')}
+  ${msg(X[2], X[1], 300, '候选片段 Top-30', C.db, 'sqC', true)}
 
-  ${selfMsg(X[1], 272, '③ RRF 融合 k=60 + 同回去重', C.api, 'sqB')}
+  ${selfMsg(X[1], 342, '③ RRF 融合 k=60 + 同回去重', C.api, 'sqB')}
 
-  ${msg(X[1], X[3], 366, '④ 拼装 prompt（片段 + 引用编号）', C.llm, 'sqD')}
-  ${msg(X[3], X[1], 412, '⑤ 流式返回 token', C.llm, 'sqD', true)}
+  ${msg(X[1], X[3], 448, '④ 拼装 prompt（片段 + 引用编号）', C.llm, 'sqD')}
+  ${msg(X[3], X[1], 502, '⑤ 流式返回 token', C.llm, 'sqD', true)}
 
-  ${msg(X[1], X[0], 500, '⑥ SSE 推送增量 + citations', C.api, 'sqA', true)}
-  ${selfMsg(X[0], 534, '⑦ 打字机显示，引用角标可点击', C.front, 'sqA')}
-  ${selfMsg(X[0], 596, '⑧ 点击跳转原文对应段落', C.front, 'sqA')}
+  ${msg(X[1], X[0], 590, '⑥ SSE 推送增量 + citations', C.api, 'sqA', true)}
+  ${selfMsg(X[0], 694, '⑦ 打字机显示，引用角标可点击', C.front, 'sqA')}
+  ${selfMsg(X[0], 748, '⑧ 点击跳转原文对应段落', C.front, 'sqA')}
 
   <!-- 底部说明 -->
-  ${txt(LEFT, H - 18, '★ 关键：每个结论都带「版本 · 回次 · 段号」，可点回原文 —— 这是「可追溯」的含义', 13.5, C.muted, 600, 'start')}
+  ${txt(LEFT, H - 20, '★ 关键：每个结论都带「版本 · 回次 · 段号」，可点回原文 —— 这是「可追溯」的含义', 16, C.muted, 600, 'start')}
 </svg>`;
 }
 
@@ -134,11 +134,11 @@ export function renderSequenceDiagram() {
    左侧用 ①②③④ 标出「采集切分 → 入湖 → 批统计 → 建索引」。
    ============================================================ */
 export function renderBuildSequenceDiagram() {
-  const W = 1140, H = 706;
-  const LEFT = 108;
-  const X = [205, 405, 615, 825, 1030];
-  const TOP = 84;
-  const BOT = 648;
+  const W = 980, H = 880;
+  const LEFT = 96;
+  const X = [186, 366, 552, 738, 916];
+  const TOP = 92;
+  const BOT = 812;
 
   const heads = [
     { x: X[0], name: '数据管道脚本', sub: 'run_all.sh / s2·s3·s10', c: C.warn, bg: C.warnBg },
@@ -148,24 +148,24 @@ export function renderBuildSequenceDiagram() {
     { x: X[4], name: 'HBase', sub: '5 张表', c: C.api, bg: C.apiBg },
   ];
 
-  const headW = 178, headH = 62;
+  const headW = 164, headH = 74;
 
   const msg = (x1, x2, y, label, color, marker, dashed = false) => {
     const mid = (x1 + x2) / 2;
     return `
     <line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${color}" stroke-width="1.9"
           ${dashed ? 'stroke-dasharray="7 5"' : ''} marker-end="url(#${marker})"/>
-    ${txt(mid, y - 9, label, 13.5, C.text, 600)}`;
+    ${txt(mid, y - 11, label, 17, C.text, 600)}`;
   };
 
   const selfMsg = (x, y, label, color, marker, w = 46, h = 34) => `
     <path d="M ${x} ${y} h ${w} v ${h} h ${-w}" fill="none" stroke="${color}"
           stroke-width="1.9" marker-end="url(#${marker})"/>
-    ${txt(x + w + 10, y + h / 2 + 5, label, 13.5, C.text, 600, 'start')}`;
+    ${txt(x + w + 10, y + h / 2 + 6, label, 17, C.text, 600, 'start')}`;
 
   const phase = (y0, y1, label) =>
-    box(LEFT - 92, y0, 74, y1 - y0, C.band, C.bandLine, 7, 1) +
-    vtxt(LEFT - 55, (y0 + y1) / 2, label, 13.5, C.muted);
+    box(LEFT - 84, y0, 68, y1 - y0, C.band, C.bandLine, 7, 1) +
+    vtxt(LEFT - 48, (y0 + y1) / 2, label, 17, C.muted);
 
   return `
 <svg id="bseqSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
@@ -194,31 +194,31 @@ export function renderBuildSequenceDiagram() {
   <!-- 头部 -->
   ${heads.map((h) => `
     ${box(h.x - headW / 2, TOP - headH / 2, headW, headH, h.bg, h.c, 9, 1.6)}
-    ${txt(h.x, TOP - 4, h.name, 16, h.c, 700)}
-    ${txt(h.x, TOP + 17, h.sub, 12, C.muted, 400)}`).join('')}
+    ${txt(h.x, TOP - 2, h.name, 19, h.c, 700)}
+    ${txt(h.x, TOP + 22, h.sub, 15, C.muted, 400)}`).join('')}
 
   <!-- ===== ① 采集与切分 ===== -->
-  ${msg(X[0], X[1], 148, '① 读取原始语料（txt / PDF）', C.front, 'bsB')}
-  ${msg(X[1], X[0], 190, '文本流', C.front, 'bsB', true)}
-  ${selfMsg(X[0], 224, '② 清洗 · 跨源去重 · 按回切块', C.warn, 'bsA')}
+  ${msg(X[0], X[1], 192, '① 读取原始语料（txt / PDF）', C.front, 'bsB')}
+  ${msg(X[1], X[0], 244, '文本流', C.front, 'bsB', true)}
+  ${selfMsg(X[0], 288, '② 清洗 · 跨源去重 · 按回切块', C.warn, 'bsA')}
 
   <!-- ===== ② 入湖（HDFS）===== -->
-  ${msg(X[0], X[2], 294, '③ 上传 jsonl 分片', C.db, 'bsC')}
-  ${msg(X[2], X[0], 330, '写入确认', C.db, 'bsC', true)}
+  ${msg(X[0], X[2], 360, '③ 上传 jsonl 分片', C.db, 'bsC')}
+  ${msg(X[2], X[0], 404, '写入确认', C.db, 'bsC', true)}
 
   <!-- ===== ③ 批统计（MapReduce → HBase）===== -->
-  ${msg(X[0], X[3], 384, '④ 提交 4 个统计作业', C.llm, 'bsD')}
-  ${msg(X[3], X[2], 420, '⑤ 输出 /hlm/mrout', C.db, 'bsC')}
-  ${msg(X[3], X[4], 456, '⑥ 写入词频 / 统计表', C.api, 'bsE')}
+  ${msg(X[0], X[3], 466, '④ 提交 4 个作业', C.llm, 'bsD')}
+  ${msg(X[3], X[2], 510, '⑤ 输出 /hlm/mrout', C.db, 'bsC')}
+  ${msg(X[3], X[4], 554, '⑥ 写入统计表', C.api, 'bsE')}
 
   <!-- ===== ④ 建索引（HBase）===== -->
-  ${selfMsg(X[0], 500, '⑦ 向量化 bge-small → 512 维', C.warn, 'bsA')}
-  ${msg(X[0], X[4], 566, '⑧ 写入三张索引表', C.api, 'bsE')}
-  ${msg(X[4], X[0], 602, '回填 rowkey', C.api, 'bsE', true)}
-  ${selfMsg(X[0], 626, '⑨ 一致性校验（s32）', C.warn, 'bsA')}
+  ${selfMsg(X[0], 608, '⑦ 向量化 bge-small → 512 维', C.warn, 'bsA')}
+  ${msg(X[0], X[4], 668, '⑧ 写入三张索引表', C.api, 'bsE')}
+  ${msg(X[4], X[0], 712, '回填 rowkey', C.api, 'bsE', true)}
+  ${selfMsg(X[0], 756, '⑨ 一致性校验（s32）', C.warn, 'bsA')}
 
   <!-- 底部说明 -->
-  ${txt(LEFT, H - 16, '★ 产出：11,780 chunk · 11,780 向量（512 维）· 451,817 倒排词项 · HBase 合计 609,759 行', 13.5, C.muted, 600, 'start')}
+  ${txt(LEFT, H - 18, '★ 产出：11,780 chunk · 11,780 向量（512 维）· 451,817 倒排词项 · HBase 合计 609,759 行', 16.5, C.muted, 600, 'start')}
 </svg>`;
 }
 
