@@ -9,7 +9,7 @@
  */
 import { getCorpusStats } from './rag.js';
 import { renderArchDiagram } from './arch_diagram.js';
-import { renderSequenceDiagram, renderDeploymentDiagram } from './diagrams_simple.js';
+import { renderSequenceDiagram, renderBuildSequenceDiagram, renderDeploymentDiagram } from './diagrams_simple.js';
 
 // 注意：app.js 是本模块的宿主，ES module 求值顺序下 window.__HLM__
 // 可能在模块加载时还未赋值 → 必须延迟到调用时再取。
@@ -222,6 +222,16 @@ export async function renderHome(stage) {
       </p>
       <div class="hp-diagram-wrap">
         ${renderSequenceDiagram()}
+      </div>
+
+      <h3 class="hp-sub3">再看数据是怎么进去的（建库顺序图）</h3>
+      <p class="hp-diagram-tip">
+        AI 能回答，是因为<b>离线阶段</b>已经把书拆好、算好、存好了。
+        这条链路只在建库时跑一次：<b>原始语料 → 切块 → 存入 HDFS → MapReduce 批统计 → 写进 HBase 建索引</b>。
+        跑完之后，线上问答只用现成的索引，不再碰原始文件。
+      </p>
+      <div class="hp-diagram-wrap">
+        ${renderBuildSequenceDiagram()}
       </div>
 
       <h3 class="hp-sub3">完整架构（同样的流程，展开到组件级）</h3>

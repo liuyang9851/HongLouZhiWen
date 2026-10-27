@@ -128,6 +128,101 @@ export function renderSequenceDiagram() {
 }
 
 /* ============================================================
+   一·B、UML 顺序图（建库 / 数据入湖链路）
+   ------------------------------------------------------------
+   5 条生命线：脚本 → 语料 → HDFS → MapReduce → HBase
+   左侧用 ①②③④ 标出「采集切分 → 入湖 → 批统计 → 建索引」。
+   ============================================================ */
+export function renderBuildSequenceDiagram() {
+  const W = 1140, H = 706;
+  const LEFT = 108;
+  const X = [205, 405, 615, 825, 1030];
+  const TOP = 84;
+  const BOT = 648;
+
+  const heads = [
+    { x: X[0], name: '数据管道脚本', sub: 'run_all.sh / s2·s3·s10', c: C.warn, bg: C.warnBg },
+    { x: X[1], name: '原始语料', sub: '本地磁盘 · txt / PDF', c: C.front, bg: C.frontBg },
+    { x: X[2], name: 'HDFS', sub: '/hlm/…', c: C.db, bg: C.dbBg },
+    { x: X[3], name: 'MapReduce / Hive', sub: '批统计', c: C.llm, bg: C.llmBg },
+    { x: X[4], name: 'HBase', sub: '5 张表', c: C.api, bg: C.apiBg },
+  ];
+
+  const headW = 178, headH = 62;
+
+  const msg = (x1, x2, y, label, color, marker, dashed = false) => {
+    const mid = (x1 + x2) / 2;
+    return `
+    <line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="${color}" stroke-width="1.9"
+          ${dashed ? 'stroke-dasharray="7 5"' : ''} marker-end="url(#${marker})"/>
+    ${txt(mid, y - 9, label, 13.5, C.text, 600)}`;
+  };
+
+  const selfMsg = (x, y, label, color, marker, w = 46, h = 34) => `
+    <path d="M ${x} ${y} h ${w} v ${h} h ${-w}" fill="none" stroke="${color}"
+          stroke-width="1.9" marker-end="url(#${marker})"/>
+    ${txt(x + w + 10, y + h / 2 + 5, label, 13.5, C.text, 600, 'start')}`;
+
+  const phase = (y0, y1, label) =>
+    box(LEFT - 92, y0, 74, y1 - y0, C.band, C.bandLine, 7, 1) +
+    vtxt(LEFT - 55, (y0 + y1) / 2, label, 13.5, C.muted);
+
+  return `
+<svg id="bseqSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
+     style="width:100%;height:auto;max-width:1220px;display:block;margin:0 auto">
+  <defs>
+    ${[
+      ['bsA', C.warn], ['bsB', C.front], ['bsC', C.db], ['bsD', C.llm], ['bsE', C.api],
+    ].map(([id, col]) => `
+    <marker id="${id}" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="${col}"/>
+    </marker>`).join('')}
+  </defs>
+
+  <!-- 阶段栏 -->
+  ${phase(TOP, 250, '① 采集切分')}
+  ${phase(250, 342, '② 入湖')}
+  ${phase(342, 470, '③ 批统计')}
+  ${phase(470, BOT - 6, '④ 建索引')}
+
+  <!-- 生命线 -->
+  ${heads.map((h) => `
+    <line x1="${h.x}" y1="${TOP + headH / 2}" x2="${h.x}" y2="${BOT}"
+          stroke="${C.line}" stroke-width="1.4" stroke-dasharray="6 5"/>`).join('')}
+
+  <!-- 头部 -->
+  ${heads.map((h) => `
+    ${box(h.x - headW / 2, TOP - headH / 2, headW, headH, h.bg, h.c, 9, 1.6)}
+    ${txt(h.x, TOP - 4, h.name, 16, h.c, 700)}
+    ${txt(h.x, TOP + 17, h.sub, 12, C.muted, 400)}`).join('')}
+
+  <!-- ===== ① 采集与切分 ===== -->
+  ${msg(X[0], X[1], 148, '① 读取原始语料（txt / PDF）', C.front, 'bsB')}
+  ${msg(X[1], X[0], 190, '文本流', C.front, 'bsB', true)}
+  ${selfMsg(X[0], 224, '② 清洗 · 跨源去重 · 按回切块', C.warn, 'bsA')}
+
+  <!-- ===== ② 入湖（HDFS）===== -->
+  ${msg(X[0], X[2], 294, '③ 上传 jsonl 分片', C.db, 'bsC')}
+  ${msg(X[2], X[0], 330, '写入确认', C.db, 'bsC', true)}
+
+  <!-- ===== ③ 批统计（MapReduce → HBase）===== -->
+  ${msg(X[0], X[3], 384, '④ 提交 4 个统计作业', C.llm, 'bsD')}
+  ${msg(X[3], X[2], 420, '⑤ 输出 /hlm/mrout', C.db, 'bsC')}
+  ${msg(X[3], X[4], 456, '⑥ 写入词频 / 统计表', C.api, 'bsE')}
+
+  <!-- ===== ④ 建索引（HBase）===== -->
+  ${selfMsg(X[0], 500, '⑦ 向量化 bge-small → 512 维', C.warn, 'bsA')}
+  ${msg(X[0], X[4], 566, '⑧ 写入三张索引表', C.api, 'bsE')}
+  ${msg(X[4], X[0], 602, '回填 rowkey', C.api, 'bsE', true)}
+  ${selfMsg(X[0], 626, '⑨ 一致性校验（s32）', C.warn, 'bsA')}
+
+  <!-- 底部说明 -->
+  ${txt(LEFT, H - 16, '★ 产出：11,780 chunk · 11,780 向量（512 维）· 448,841 倒排词项 · HBase 合计 606,783 行', 13.5, C.muted, 600, 'start')}
+</svg>`;
+}
+
+/* ============================================================
    二、UML 部署图
    ------------------------------------------------------------
    看清楚三件事：什么跑在浏览器、什么在本机进程、什么在 Docker。
