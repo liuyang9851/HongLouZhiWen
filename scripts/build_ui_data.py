@@ -18,8 +18,19 @@ import sys, os, json, re, hashlib, collections, csv
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-WORK = r"D:\学校事务\大数据原理与应用"
-RED = r"D:\Programming\Red\hlm_corpus"
+# [S41 已注释] WORK = r"D:\学校事务\大数据原理与应用"
+# ---- S41：路径可移植化 ----
+# 原始路径是作者本机路径。为让其他人能重跑，改为环境变量优先。
+#   HLM_WORK   项目上级目录（含「红楼智问」）
+#   HLM_CORPUS 语料根目录
+import os as _os
+
+# 允许通过环境变量覆盖；未设置则用原作者默认值（保持我本机可直接跑）
+WORK = _os.environ.get("HLM_WORK", r"D:\学校事务\大数据原理与应用")
+CORPUS = _os.environ.get("HLM_CORPUS", r"D:\Programming\Red\hlm_corpus")
+# ---- 路径可移植化结束 ----
+
+# [S41 已注释] RED = r"D:\Programming\Red\hlm_corpus"
 OUT = os.path.join(WORK, "红楼智问", "web", "data")
 os.makedirs(OUT, exist_ok=True)
 

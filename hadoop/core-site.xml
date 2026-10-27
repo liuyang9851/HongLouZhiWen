@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  HDFS 核心配置 —— 伪分布式单节点
+
+  关键点：
+    ① fs.defaultFS 用 localhost（容器内自连）
+    ② 开启 WebHDFS —— 项目通过它读数据（HTTP REST，跨版本稳定）
+    ③ 关闭权限检查 —— 单机开发环境，避免 UID 不匹配
+-->
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/data/tmp</value>
+    </property>
+
+    <!-- WebHDFS：项目的数据源层依赖它（端口 9870） -->
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
+
+    <!-- 单机开发：关闭权限检查，避免容器内 UID 与 HDFS 记录不一致 -->
+    <property>
+        <name>hadoop.security.authorization</name>
+        <value>false</value>
+    </property>
+
+    <!-- 关闭指标收集（减少无用日志） -->
+    <property>
+        <name>hadoop.metrics.log.level</name>
+        <value>WARN</value>
+    </property>
+</configuration>

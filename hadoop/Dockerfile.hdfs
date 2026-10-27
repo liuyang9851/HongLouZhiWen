@@ -1,0 +1,80 @@
+# =============================================================
+# 红楼智问 · 单节点 HDFS（Docker 用户专用）
+# =============================================================
+# 目的：让只有 Docker、没有 Hadoop 的同学也能跑出「真 HDFS 模式」，
+#      而不是退化成纯本地文件读取。
+#
+# 设计取舍：
+#   · 只装 HDFS，不装 HBase/Spark/Hive/Flink —— 数据源层只需要 HDFS
+#   · 单容器同时跑 NameNode + DataNode（伪分布式），一条 docker run 起
+#   · WebHDFS 必须开启（项目用它读数据，是版本无关的 HTTP API）
+#
+# 镜像体积：约 2.5 GB（原 hadoop-lab 是 6.89 GB）
+#
+# 构建：docker build -f hadoop/Dockerfile.hdfs -t hlm-hdfs .
+# 运行：docker run -d --name hlm-hdfs -p 19870:9870 -p 19000:9000 \
+#         -v hlm-hdfs-data:/data -v ./deploy/data:/seed:ro hlm-hdfs
+# =============================================================
+FROM eclipse-temurin:11-jre-jammy
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV HADOOP_VERSION=3.3.6
+ENV HADOOP_HOME=/opt/hadoop
+ENV HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop
+ENV PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH
+
+# 基础工具：curl（下载）、procps（ps）、nc（探活）、tini（信号处理）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        curl ca-certificates procps netcat-openbsd tini \
+    && rm -rf /var/lib/apt/lists/*
+
+# ---- 下载 Hadoop（国内镜像优先，失败回退 Apache 官方）----
+RUN set -eux; \
+    cd /tmp; \
+    (curl -fSL --retry 3 --max-time 900 \
+        "https://mirrors.aliyun.com/apache/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz" \
+        -o hadoop.tar.gz \
+     || curl -fSL --retry 3 --max-time 900 \
+        "https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz" \
+        -o hadoop.tar.gz); \
+    tar -xzf hadoop.tar.gz -C /opt; \
+    mv "/opt/hadoop-${HADOOP_VERSION}" "$HADOOP_HOME"; \
+    rm -f hadoop.tar.gz
+
+# ---- 瘦身：只删文档、sources jar、Windows 脚本 ----
+#
+# 踩坑记录（重要）：
+#   **不能删 share/hadoop/{yarn,mapreduce,tools} 目录**。
+#   bin/hdfs 启动时会校验 HADOOP_YARN_HOME / HADOOP_MAPRED_HOME，
+#   目录不存在直接报错 "ERROR: Invalid HADOOP_XXX_HOME"（实测踩了两次）。
+#   这些目录的 jar 只占约 300MB，不值得为此破坏启动脚本。
+RUN set -eux; \
+    cd "$HADOOP_HOME"; \
+    rm -rf share/doc; \
+    find . -name "*-sources.jar" -delete 2>/dev/null || true; \
+    find . -name "*.cmd" -delete 2>/dev/null || true; \
+    find . -name "*.md" -delete 2>/dev/null || true
+
+# ---- 配置文件 ----
+COPY hadoop/core-site.xml  "$HADOOP_CONF_DIR/core-site.xml"
+COPY hadoop/hdfs-site.xml  "$HADOOP_CONF_DIR/hdfs-site.xml"
+COPY hadoop/hadoop-env.sh  "$HADOOP_CONF_DIR/hadoop-env.sh"
+
+# workers 文件必须存在（单节点写 localhost 即可）
+RUN set -eux; \
+    echo "localhost" > "$HADOOP_CONF_DIR/workers"; \
+    chmod +x "$HADOOP_CONF_DIR/hadoop-env.sh"
+
+# ---- 启动脚本 ----
+COPY hadoop/entrypoint.sh /usr/local/bin/hdfs-entrypoint
+RUN chmod +x /usr/local/bin/hdfs-entrypoint
+
+# HDFS 数据目录（用 volume 持久化）
+VOLUME ["/data"]
+# 9870 = WebHDFS / NameNode UI, 9000 = HDFS RPC
+EXPOSE 9870 9000
+
+HEALTHCHECK --interval=15s --timeout=5s --start-period=90s --retries=5 \
+    CMD curl -sf "http://127.0.0.1:9870/webhdfs/v1/?op=LISTSTATUS" >/dev/null || exit 1
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/hdfs-entrypoint"]

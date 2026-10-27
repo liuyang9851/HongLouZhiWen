@@ -1,0 +1,23 @@
+# 红楼智问 · 后端依赖
+# Python 3.10+
+#
+# 安装：
+#   pip install -r requirements.txt
+#
+# 注意：happybase / thriftpy2 只在「完整 HBase 模式」下需要。
+# 若只跑「本地模式（免 Hadoop）」，这两个可以不装 —— 相关 import
+# 是延迟导入的（在 hbase() 函数内部），本地模式不会触发。
+
+# ---- Web 框架 ----
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+httpx==0.28.1
+
+# ---- 向量检索（本地 ONNX embedding）----
+onnxruntime==1.23.2
+numpy>=1.24
+
+# ---- HBase（仅完整模式需要）----
+happybase==1.2.0
+thriftpy2>=0.4.17

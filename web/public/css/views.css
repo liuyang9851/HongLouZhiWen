@@ -428,11 +428,11 @@
 #graphCanvas:active { cursor: grabbing; }
 .gr-tip {
   position: absolute; left: 16px; top: 16px;
-  max-width: calc(100% - 260px);   /* 给右上角「重置」按钮留位置 */
+  max-width: calc(100% - 430px);   /* S36：给右上角「2D/和弦/头像」按钮组 + 「重置」留位置 */
   line-height: 1.65;
   background: rgba(255,255,255,.94); border: 1px solid var(--line);
   border-radius: var(--radius-sm); padding: 7px 11px;
-  font-size: 18.6px; color: var(--ink-3); box-shadow: var(--shadow);
+  font-size: 14px; color: var(--ink-3); box-shadow: var(--shadow);
   backdrop-filter: blur(6px);
 }
 .gr-legend {

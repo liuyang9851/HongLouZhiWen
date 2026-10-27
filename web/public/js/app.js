@@ -13,7 +13,8 @@
  * 但检索是真的：/api/locate 会在真实语料里定位。
  */
 import { bar, hbar, line, pie, heat, force, PALETTE } from './chart.js';
-import { force3d, surface3d, chord } from './chart3d.js';
+import { chord } from './chart3d.js';
+import { personHeatmap } from './chart_heat.js';
 import { avatarGraph } from './chart_avatar.js';
 import {
   probeBackend, backendStatus, fetchModels, streamChat, plainChat, statsAsk,
@@ -1594,12 +1595,12 @@ async function renderStats(stage) {
           <div class="card chart-card col-12">
             <button class="ask-btn" data-ask="主要人物在各回的出场分布">🎯 就此提问</button>
             <div class="card-h">
-              <h3>人物出场曲面（3D）</h3>
-              <span class="tag">高度=该回提及次数 · 拖拽旋转 · 滚轮缩放 · 悬停看数值</span>
+              <h3>人物出场热力图</h3>
+              <span class="tag">色深=该回提及次数 · 悬停看数值 · 点击行高亮</span>
             </div>
             <div class="card-b">
-              <div class="chart-box tall"><canvas class="chart" id="c-terrain"></canvas></div>
-              <div class="surf-note" id="surfNote">点击人物名可高亮其出场曲线</div>
+              <div class="chart-box tall" style="height:640px"><canvas class="chart" id="c-terrain"></canvas></div>
+              <div class="surf-note" id="surfNote">行=人物（按全书提及量降序）· 列=回次（1–80）· 右侧标注峰值回次</div>
             </div>
           </div>
 
@@ -1659,18 +1660,29 @@ async function renderStats(stage) {
 
   // ---- 绘图 ----
   const chapters = s.per_chapter;
-  // 3D 人物出场曲面（需要 person_hui_matrix.json）
+  // S37：人物出场热力图（替代原 3D 曲面）
+  // 3D 柱状图在 30×80=2400 个数据点时柱子互相遮挡，看不出具体分布；
+  // 热力图一格一值、无遮挡，一屏看完 80 回 × 30 人物的规律。
   if (state.terrainInst) { state.terrainInst.destroy(); state.terrainInst = null; }
   try {
     const r = await fetch('/data/person_hui_matrix.json?v=' + Date.now());
     if (r.ok) {
       const M = await r.json();
-      state.terrainInst = surface3d($('#c-terrain'), M);
+      state.terrainInst = personHeatmap($('#c-terrain'), M, {
+        onSelect: (name) => {
+          const sn = $('#surfNote');
+          if (sn) {
+            sn.textContent = name
+              ? `已高亮「${name}」· 再次点击取消`
+              : '行=人物（按全书提及量降序）· 列=回次（1–80）· 右侧标注峰值回次';
+          }
+        },
+      });
     } else {
       const sn = $('#surfNote');
       if (sn) sn.textContent = '⚠ 人物分布数据未生成（运行 scripts/s33_1_build_person_hui_matrix.py）';
     }
-  } catch (e) { console.warn('人物曲面图失败:', e); }
+  } catch (e) { console.warn('人物热力图失败:', e); }
 
   bar($('#c-chars'), chapters.map((c) => ({ label: String(c.hui), value: c.chars })), { rotate: true });
 
@@ -1775,7 +1787,6 @@ async function renderGraph(stage) {
       <section class="gr-main">
         <div class="gr-dim">
           <button class="gr-dim-btn active" data-dim="2d">2D 平面</button>
-          <button class="gr-dim-btn" data-dim="3d">3D 立体</button>
           <button class="gr-dim-btn" data-dim="chord">和弦图</button>
           <button class="gr-dim-btn" data-dim="avatar">人物头像图</button>
         </div>
@@ -1944,23 +1955,8 @@ async function renderGraph(stage) {
       return;
     }
 
-    if (dim === '3d') {
-      try {
-        inst = force3d(fresh, { nodes, edges }, { onSelect: showDetail, cooccur: co });
-      } catch (err) {
-        // WebGL 不可用 → 自动退回 2D，并提示
-        console.warn('3D 渲染失败，退回 2D:', err);
-        const tip = $('#gTip');
-        if (tip) tip.textContent = '⚠ 当前环境不支持 WebGL，已退回 2D 视图';
-        dim = '2d';
-        document.querySelectorAll('.gr-dim-btn').forEach((b) => {
-          b.classList.toggle('active', b.dataset.dim === '2d');
-        });
-        inst = force(fresh, { nodes, edges }, { onSelect: showDetail, cooccur: co });
-      }
-    } else {
-      inst = force(fresh, { nodes, edges }, { onSelect: showDetail, cooccur: co });
-    }
+    // S36：已移除 3D 立体视图（WebGL 透视下节点重叠难辨，2D 更直观）
+    inst = force(fresh, { nodes, edges }, { onSelect: showDetail, cooccur: co });
     currentForce = inst;
   }
 
@@ -1975,8 +1971,7 @@ async function renderGraph(stage) {
       const tip = $('#gTip');
       if (tip) {
         tip.textContent =
-          dim === '3d' ? '拖拽旋转 · 滚轮缩放 · 点击看详情 · 节点按家族着色，大小=关系数'
-          : dim === 'avatar' ? '拖动节点整理布局 · 滚轮缩放 · 点人物看详情 · 连线上标注关系'
+          dim === 'avatar' ? '拖动节点整理布局 · 滚轮缩放 · 点人物看详情 · 连线上标注关系'
           : dim === 'chord' ? '悬停扇区看该家族 · 弦宽=两家关系条数 · 环内为同族关系'
           : '拖拽空白处平移 · 拖拽节点移动 · 滚轮缩放 · 点击看详情 · 双击空白重置';
       }

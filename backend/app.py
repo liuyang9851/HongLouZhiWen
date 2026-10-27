@@ -51,6 +51,9 @@ sys.stdout.reconfigure(encoding="utf-8")
 # 配置（全部可用环境变量覆盖，便于部署与演示）
 # ============================================================
 CFG = {
+    # S38：存储后端（local = 免 Hadoop 部署 / hbase = 完整集群）
+    "storage": os.getenv("HLM_STORAGE", "auto"),
+    "data_dir": os.getenv("HLM_DATA_DIR", "/app/data"),
     "hbase_host": os.getenv("HLM_HBASE_HOST", "master"),
     "hbase_port": int(os.getenv("HLM_HBASE_PORT", "9090")),
     "model_dir": os.getenv("HLM_MODEL_DIR", "/data/opt/models/bge-small-zh-v1.5"),
@@ -330,10 +333,92 @@ def get_encoder():
     return _encoder
 
 
+# ============================================================
+# S38：存储后端切换（local / hbase）
+# ============================================================
+def _data_source_info():
+    """数据源探测详情（供 /health 展示，便于排错）"""
+    try:
+        import data_source
+        return data_source.describe()
+    except Exception as e:
+        return {"source": "unknown", "error": str(e)}
+
+
+def use_local_storage() -> bool:
+    """
+    是否走「文件数据源」路径（HDFS 或 本地文件），而非 HBase。
+
+    返回值语义：
+      True  → 用 data_source 层读 JSONL（HDFS 流 或 本地文件）
+      False → 用 HBase 表
+
+    判定优先级（S39 重写）：
+      1. HLM_STORAGE=local  → 强制文件路径
+      2. HLM_STORAGE=hbase  → 强制 HBase
+      3. auto（默认）：
+         a) 先看 data_source 能否解析出 hdfs / local
+            —— 能就用文件路径（**版本无关，最稳**）
+         b) 都不行才试 HBase（版本风险高）
+
+    为什么把 HBase 降为最后兜底：
+      同学环境里 HBase 版本不一致的风险最高（3.x 已移除 Thrift1，
+      happybase 完全连不上）。而 HDFS 的 WebHDFS 是稳定 HTTP 接口，
+      本地文件更不用说。所以文件路径优先。
+    """
+    mode = (CFG.get("storage") or "auto").lower()
+    if mode == "local":
+        return True
+    if mode == "hbase":
+        return False
+
+    # auto：优先文件数据源
+    global _storage_probed, _storage_is_local
+    if not _storage_probed:
+        _storage_probed = True
+        try:
+            import data_source
+            src = data_source.resolve_source()
+        except Exception as e:
+            src = "none"
+            log(f"  数据源探测异常: {e}")
+
+        if src in ("hdfs", "local"):
+            _storage_is_local = True
+            log(f"  存储后端: 文件数据源（{src}）")
+        else:
+            # 文件源不可用 → 退回 HBase
+            try:
+                hbase().table("hlm_chunks").row(b"__probe__")
+                _storage_is_local = False
+                log("  存储后端: HBase（文件源不可用，已退回 HBase）")
+            except Exception as e:
+                _storage_is_local = True
+                log(f"  存储后端: 文件数据源（HBase 也不可用: {type(e).__name__}）")
+    return _storage_is_local
+
+
+_storage_probed = False
+_storage_is_local = False
+
+
+def _local():
+    """懒加载本地存储模块"""
+    import storage_local
+    return storage_local
+
+
 def load_chunks():
     """全量载入 chunk 元数据（1,035 行，内存常驻）"""
     global _chunk_cache
     if _chunk_cache:
+        return _chunk_cache
+    # S38/S39：文件类数据源（HDFS 或 本地文件）直接读 JSONL
+    if use_local_storage():
+        _chunk_cache = _local().get_chunks()
+        import data_source
+        src = data_source.resolve_source()
+        log(f"载入 chunk 元数据（{src}）: {len(_chunk_cache):,} 条")
         return _chunk_cache
     def _scan_chunks():
         tb = hbase().table("hlm_chunks")
@@ -385,6 +470,17 @@ def load_vectors():
     """向量常驻内存（把 S2 的 383 ms 降到 <5 ms）"""
     global _vec_cache
     if _vec_cache["mat"] is not None:
+        return _vec_cache
+    # S38：本地模式直接用内存矩阵
+    if use_local_storage():
+        m = _local()
+        m.load_all()
+        if m._vec_mat is not None:
+            _vec_cache = {"ids": m._vec_ids, "mat": m._vec_mat,
+                          "srcs": m._vec_srcs, "vers": None}
+            log(f"载入向量矩阵（本地）: {m._vec_mat.shape}")
+            return _vec_cache
+        _vec_cache = {"ids": None, "mat": None}
         return _vec_cache
     def _scan_vectors():
         tb = hbase().table("hlm_vectors")
@@ -487,6 +583,9 @@ N_CHUNKS = int(os.getenv("HLM_N_CHUNKS", "11780"))
 
 def search_keyword(query: str, topk: int = 30,
                    version: Optional[str] = None) -> List[Dict]:
+    # S38：本地模式用内存倒排
+    if use_local_storage():
+        return _local().search_keyword(query, topk, version)
     qgrams = list(bigrams(query).keys())
 
     def _do():
@@ -567,6 +666,10 @@ def search_vector(query: str, topk: int = 30,
     cache = load_vectors()
     if cache["mat"] is None:
         return []
+    # S38：本地模式用 storage_local 的检索（保留版本过滤逻辑）
+    if use_local_storage():
+        return _local().search_vector(query, topk, version,
+                                      encoder=get_encoder())
     qv = get_encoder()([query])[0]
     sims = cache["mat"] @ qv
 
@@ -605,6 +708,26 @@ def search_graph(query: str, topk: int = 10) -> List[Dict]:
     if len(persons) < 2:
         return []
     a, b = sorted(persons[:2])
+    # S38：本地模式没有 hlm_stats 表 → 用 chunk 扫描直接算共现
+    if use_local_storage():
+        aliases_a0 = ALIAS.get(a, [a])
+        aliases_b0 = ALIAS.get(b, [b])
+        chunks0 = load_chunks()
+        hits0 = []
+        for cid, c in chunks0.items():
+            if (c.get("source") or "text") != "text":
+                continue
+            text = c.get("text") or ""
+            if any(x in text for x in aliases_a0) and any(x in text for x in aliases_b0):
+                hits0.append(cid)
+        # S38：score 口径与 HBase 一致（cnt/100，cnt=同时提到两人的 chunk 数）
+        # 原来给固定 0.5 会导致 graph 通道权重失真：
+        #   HBase「宝玉|黛玉」cnt=237 → score=2.37（强）
+        #   本地固定 0.5（弱）→ 第3回被其它通道顶掉，Top1 错成第49回
+        cnt0 = len(hits0)
+        sc0 = round(cnt0 / 100.0, 4)
+        return [{"chunk_id": c, "score": sc0} for c in hits0[:topk]]
+
     tb = hbase().table("hlm_stats")
     row = tb.row(f"cooccur|{a}|{b}".encode())
     if not row:
@@ -1309,6 +1432,12 @@ def _load_stat_rows(prefix: str):
     """扫 hlm_stats 某前缀的所有行（带缓存）"""
     if prefix in _stat_rows_cache:
         return _stat_rows_cache[prefix]
+
+    # S38：本地模式没有 hlm_stats 表，用 stats_summary.json 尽力模拟
+    if use_local_storage():
+        _stat_rows_cache[prefix] = []
+        log(f"本地模式：stats[{prefix}] 不可用（相关统计功能降级）")
+        return []
 
     def _scan():
         tb = hbase().table("hlm_stats")
@@ -2360,6 +2489,11 @@ async def health():
         "ok": True,
         "stage": "S4-RAG后端",
         "hbase": hb,
+        # S38：明确当前存储模式，便于同学排查部署问题
+        "storage": "local" if use_local_storage() else "hbase",
+        "storage_mode_cfg": CFG.get("storage"),
+        # S39：文件数据源详情（hdfs / local / none）
+        "data_source": _data_source_info(),
         "n_chunks": n_chunks,
         "n_chunks_text": n_text,
         "n_chunks_pizhu": n_pizhu,
@@ -2814,6 +2948,13 @@ async def stats_ask(topic: str, question: Optional[str] = None):
     统计界面的「就此提问」后端支持：把统计事实直接拼进 prompt。
     比走全文检索更准 —— 因为「第19回为什么批语最多」这类问题在正文里搜不到。
     """
+    # S38：本地模式无 hlm_stats 表 → 该接口降级
+    if use_local_storage():
+        return {"ok": False,
+                "reason": "local_storage",
+                "message": "本地模式（免 Hadoop）不提供该统计接口；"
+                           "请使用完整 HBase 模式，或在统计界面直接查看图表。"}
+
     tb = hbase().table("hlm_stats")
     facts = {}
     if "批语" in topic or "回" in topic:

@@ -1,0 +1,68 @@
+# =============================================================
+# 红楼智问 · RAG 后端（独立镜像 · 本地模式）
+# =============================================================
+# 这个 Dockerfile **不依赖 hadoop-lab 镜像**，可从零构建。
+# 适用于「本地模式（免 Hadoop）」：数据从 JSONL 快照加载，
+# 检索在内存完成，无需 HBase / HDFS。
+#
+# 构建：
+#   docker build -f Dockerfile.standalone -t hlm-api .
+# 运行：
+#   docker run -d --name hlm-api -p 8000:8000 \
+#     --env-file .env \
+#     -e HLM_STORAGE=local \
+#     -v $(pwd)/data:/app/data:ro \
+#     hlm-api
+#
+# 想要完整 HBase 模式 → 用 Dockerfile（FROM hadoop-lab:2026.10）
+# =============================================================
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# 系统依赖：onnxruntime 需要 libgomp
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libgomp1 \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python 依赖（用清华源加速国内下载）
+COPY requirements.txt /app/requirements.txt
+RUN pip3 install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple \
+        -r /app/requirements.txt
+
+# ---- 应用代码 ----
+COPY app.py /app/app.py
+COPY storage_local.py /app/storage_local.py
+COPY data_source.py /app/data_source.py
+COPY query_api.py /app/query_api.py
+COPY sandbox.py /app/sandbox.py
+COPY hadoop_api.py /app/hadoop_api.py
+
+# ---- 数据文件 ----
+COPY chapter_meta.json /app/chapter_meta.json
+COPY person_roles.json /app/person_roles.json
+COPY starters.json /app/starters.json
+COPY stats_summary.json /app/stats_summary.json
+COPY pizhu_fuqinju.json /app/pizhu_fuqinju.json
+COPY pizhu_guiyouben.json /app/pizhu_guiyouben.json
+
+# ---- embedding 模型（90MB，构建时打进镜像）----
+# 若想减小镜像体积，可改为运行时挂载：
+#   -v /path/to/bge-small-zh-v1.5:/app/models/bge-small-zh-v1.5:ro
+COPY models/bge-small-zh-v1.5 /app/models/bge-small-zh-v1.5
+ENV HLM_MODEL_DIR=/app/models/bge-small-zh-v1.5
+
+# ---- 本地数据目录（JSONL 快照，运行时挂载）----
+ENV HLM_STORAGE=local
+ENV HLM_DATA_DIR=/app/data
+# 问答日志
+RUN mkdir -p /app/qa_logs
+ENV HLM_QA_LOG=/app/qa_logs
+
+EXPOSE 8000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+    CMD python3 -c "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=4)" || exit 1
+
+CMD ["python3", "-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
