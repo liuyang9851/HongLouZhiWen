@@ -34,6 +34,13 @@ const BACKEND = process.env.HLM_BACKEND || 'http://127.0.0.1:8000';
  * 两个路径都可用环境变量覆盖，避免硬编码。
  */
 const BGM_FILE = process.env.HLM_BGM_FILE || 'D:\\Download\\774293639-1-30280.m4s';
+
+/* ---------------- 介绍视频 ----------------
+ * 115 MB，超过 GitHub 单文件上限，因此**不入库**，
+ * 由本地服务从磁盘原路径流式输出（支持 Range，可拖动进度条）。
+ */
+const INTRO_VIDEO = process.env.HLM_INTRO_VIDEO
+  || 'D:\\学校事务\\大数据原理与应用\\视频\\film\\交付\\红楼智问_1080p.mp4';
 const BGM_PLAYER = process.env.HLM_BGM_PLAYER || 'D:\\mpv.net\\mpvnet.exe';
 let bgmProc = null;      // 当前播放进程（null = 未播放）
 const BGM_PID_FILE = path.join(DATA_DIR, '.bgm.pid');
@@ -205,6 +212,73 @@ function expandAliases(q) {
 /**
  * 读取 web/data/ 下的静态 JSON（只允许 .json，防目录逃逸）
  */
+/**
+ * 流式输出大视频文件（支持 HTTP Range）
+ * ------------------------------------------------------------------
+ * 视频必须有 Range 支持，否则浏览器无法拖动进度条、也无法边下边播。
+ *   · 无 Range  → 200 + 完整文件
+ *   · 有 Range  → 206 + 指定区间
+ */
+function serveIntroVideo(req, res) {
+  if (!fs.existsSync(INTRO_VIDEO)) {
+    return sendJson(res, {
+      error: 'video_not_found',
+      path: INTRO_VIDEO,
+      hint: '请把视频放到该路径，或设置环境变量 HLM_INTRO_VIDEO',
+    }, 404);
+  }
+  let stat;
+  try { stat = fs.statSync(INTRO_VIDEO); } catch (e) {
+    return sendJson(res, { error: 'stat_failed', message: e.message }, 500);
+  }
+  const total = stat.size;
+  const range = req.headers.range;
+
+  const baseHeaders = {
+    'Content-Type': 'video/mp4',
+    'Accept-Ranges': 'bytes',
+    'Cache-Control': 'public, max-age=3600',
+  };
+
+  if (!range) {
+    res.writeHead(200, { ...baseHeaders, 'Content-Length': total });
+    if (req.method === 'HEAD') return res.end();
+    fs.createReadStream(INTRO_VIDEO).pipe(res);
+    return;
+  }
+
+  // 解析 "bytes=start-end"
+  const m = /^bytes=(\d*)-(\d*)$/.exec(range.trim());
+  if (!m) {
+    res.writeHead(416, { 'Content-Range': `bytes */${total}` });
+    return res.end();
+  }
+  let start = m[1] === '' ? null : parseInt(m[1], 10);
+  let end = m[2] === '' ? null : parseInt(m[2], 10);
+  if (start === null && end === null) {
+    res.writeHead(416, { 'Content-Range': `bytes */${total}` });
+    return res.end();
+  }
+  if (start === null) {                 // "bytes=-N" 末尾 N 字节
+    start = Math.max(0, total - end);
+    end = total - 1;
+  } else if (end === null || end >= total) {
+    end = total - 1;
+  }
+  if (start > end || start >= total) {
+    res.writeHead(416, { 'Content-Range': `bytes */${total}` });
+    return res.end();
+  }
+
+  res.writeHead(206, {
+    ...baseHeaders,
+    'Content-Range': `bytes ${start}-${end}/${total}`,
+    'Content-Length': end - start + 1,
+  });
+  if (req.method === 'HEAD') return res.end();
+  fs.createReadStream(INTRO_VIDEO, { start, end }).pipe(res);
+}
+
 async function serveData(res, urlPath) {
   const rel = decodeURIComponent(urlPath.replace(/^\/data\//, '')).replace(/^\.\.?\//g, '');
   if (!/\.json$/.test(rel)) return sendText(res, '403 Forbidden', 403);
@@ -252,7 +326,7 @@ async function serveStatic(req, res, urlPath) {
   res.writeHead(200, {
     'Content-Type': MIME[ext] || 'application/octet-stream',
     'Content-Length': stat.size,
-    'Cache-Control': noCache ? 'no-store, must-revalidate' : (ext === '.html' ? 'no-cache' : 'public, max-age=300'),
+    'Cache-Control': (noCache || ['.html','.js','.css'].includes(ext)) ? 'no-store, must-revalidate' : 'public, max-age=300',
     ETag: etag,
   });
   fs.createReadStream(filePath).pipe(res);
@@ -403,6 +477,16 @@ async function handleApi(req, res, url) {
   }
 
   // --- 后端代理（RAG / 图谱问答 / 统计问答，待 Python 服务实装）---
+  // ---- 介绍视频 ----
+  if (pathname === '/api/intro-video') {
+    return serveIntroVideo(req, res);
+  }
+  if (pathname === '/api/intro-video/info') {
+    let exists = false, size = 0;
+    try { const st = fs.statSync(INTRO_VIDEO); exists = true; size = st.size; } catch { /* 不存在 */ }
+    return sendJson(res, { exists, size, mb: +(size / 1048576).toFixed(1), path: INTRO_VIDEO });
+  }
+
   // ---- 背景音乐控制 ----
   if (pathname === '/api/bgm/status') {
     return sendJson(res, bgmStatus());

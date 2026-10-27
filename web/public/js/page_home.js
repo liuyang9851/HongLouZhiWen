@@ -109,6 +109,7 @@ export async function renderHome(stage) {
           <a class="btn primary lg" href="#/chat">💬 开始提问</a>
           <a class="btn ghost lg" href="#/reader">📖 阅读原文</a>
           <a class="btn ghost lg" href="#/guiyou">🔬 癸酉本探究</a>
+          <button class="btn ghost lg" id="btnIntroVideo">🎬 观看介绍视频</button>
         </div>
       </div>
     </section>
@@ -365,7 +366,7 @@ export async function renderHome(stage) {
       const trySend = () => {
         const H = window.__HLM__ || {};
         const $ = H.$;
-        const ta = $ ? $('#chatTextarea') : document.querySelector('#chatTextarea');
+        const ta = document.querySelector('#chatTextarea');
         const autoGrow = H.autoGrow;
         const send = H.send;
 
@@ -382,5 +383,70 @@ export async function renderHome(stage) {
       };
       setTimeout(trySend, 60);
     };
+  });
+
+  // 🎬 观看介绍视频（本模块没有 app.js 的 $ 辅助函数，用原生查询）
+  const vBtn = document.getElementById('btnIntroVideo');
+  if (vBtn) {
+    vBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openIntroVideo(); };
+  }
+}
+
+/* =====================================================================
+   🎬 介绍视频弹窗
+   ---------------------------------------------------------------------
+   视频 115 MB，未入库；由本地服务 /api/intro-video 流式输出
+   （支持 Range，可拖动进度条）。关闭弹窗时销毁 <video> 以释放带宽。
+   ===================================================================== */
+function openIntroVideo() {
+  const mask = document.createElement('div');
+  mask.className = 'modal-mask vid-mask';
+  mask.innerHTML = `
+    <div class="vid-box" role="dialog" aria-label="介绍视频">
+      <div class="vid-h">
+        <span>🎬 红楼智问 · 项目介绍</span>
+        <button class="vid-x" title="关闭（Esc）">✕</button>
+      </div>
+      <div class="vid-b">
+        <video id="introVideoEl" controls autoplay playsinline preload="metadata"
+               src="/api/intro-video"></video>
+        <div class="vid-tip" id="vidTip">加载中…</div>
+      </div>
+    </div>`;
+
+  const close = () => {
+    const v = mask.querySelector('video');
+    if (v) { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) {} }
+    mask.remove();
+    document.removeEventListener('keydown', onKey);
+  };
+  const onKey = (e) => { if (e.key === 'Escape') close(); };
+
+  mask.querySelector('.vid-x').onclick = close;
+  mask.addEventListener('click', (e) => { if (e.target === mask) close(); });
+  document.addEventListener('keydown', onKey);
+  document.body.appendChild(mask);
+
+  const v = mask.querySelector('video');
+  const tip = mask.querySelector('#vidTip');
+
+  // 先探测文件是否就绪，给出明确提示
+  fetch('/api/intro-video/info', { cache: 'no-store' })
+    .then((r) => r.json())
+    .then((d) => {
+      if (!d.exists) {
+        tip.innerHTML = `⚠️ 未找到视频文件<br><code>${d.path || ''}</code>`;
+        return;
+      }
+      tip.textContent = `${d.mb} MB · 加载中…`;
+    })
+    .catch(() => { tip.textContent = ''; });
+
+  v.addEventListener('loadedmetadata', () => {
+    const s = Math.round(v.duration);
+    tip.textContent = `${Math.floor(s / 60)} 分 ${s % 60} 秒`;
+  });
+  v.addEventListener('error', () => {
+    tip.textContent = '⚠️ 视频加载失败（文件缺失或格式不支持）';
   });
 }
