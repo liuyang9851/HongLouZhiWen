@@ -150,7 +150,18 @@ def load_all():
                     n_pz += 1
 
         if not _chunks:
-            _log(f"  ⚠ 本地模式：{DATA_DIR} 下没有 chunk 数据")
+            # S41：加载失败要清理残留，否则下次重试时状态混乱
+            #   场景：Docker 重启后 hlm-api 先于 hlm-hdfs 就绪
+            _chunks.clear()
+            _index.clear()
+            _df.clear()
+            # 注意：_DF_BY_VER / _N_BY_VER 在下面才被赋值，
+            # 此处不能 clear（会触发 UnboundLocalError）。
+            # 它们只在成功路径末尾赋值，失败时保持上一次的值——无害。
+            import data_source as _ds
+            _log(f"  ⚠ 加载失败（数据源 {_ds.resolve_source()}）: "
+                 f"{_ds.describe().get('probe_log')}")
+            _log(f"     下次请求会重试加载")
             return False
 
         # ---- 2) 倒排索引（内存）----

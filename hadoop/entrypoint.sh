@@ -24,8 +24,11 @@ log() { echo "[hdfs] $(date '+%H:%M:%S') $*"; }
 if [ ! -f /data/namenode/current/VERSION ]; then
     log "首次启动，格式化 NameNode ..."
     mkdir -p /data/namenode /data/datanode
-    hdfs namenode -format -nonInteractive >/logs/format.log 2>&1 \
-        || { log "格式化失败，见 /logs/format.log"; cat /logs/format.log; exit 1; }
+    if ! hdfs namenode -format -nonInteractive >/logs/format.log 2>&1; then
+        log "格式化失败，见 /logs/format.log"
+        cat /logs/format.log
+        exit 1
+    fi
     log "格式化完成"
 else
     log "已有 NameNode 数据，跳过格式化"
@@ -38,9 +41,23 @@ log "启动 NameNode ..."
 nohup hdfs namenode > /logs/namenode.log 2>&1 &
 NN_PID=$!
 
-# ---- 3) 等 safe mode 退出 ----
-log "等待 NameNode 退出 safe mode ..."
-for i in $(seq 1 60); do
+# ---- 3) 启动 DataNode（必须**先于**等 safe mode）----
+#
+# 踩坑记录（重要）：
+#   最初是先等 NameNode 退出 safe mode，再启动 DataNode。
+#   这在**首次启动**没问题（新 format 的 NN 没有待复制的块，立刻退出 safe mode），
+#   但**二次启动**会死锁：
+#     NN 读到已有的 block 元数据 → 需要 DataNode 报告块 → 等 DN 上线
+#     而 DN 要等"safe mode OFF"才启动 → 互等，永久卡住
+#   实测：容器起来 2 分钟，safemode 一直 ON，日志停在"等待 NameNode 退出 safe mode"。
+#
+#   正确顺序：**先起 DataNode，再等 safe mode 退出**。
+log "启动 DataNode ..."
+nohup hdfs datanode > /logs/datanode.log 2>&1 &
+DN_PID=$!
+
+log "等待 safe mode 退出（DataNode 已启动）..."
+for i in $(seq 1 90); do
     if hdfs dfsadmin -safemode get 2>/dev/null | grep -q "OFF"; then
         log "safe mode OFF（等待 $((i*2)) 秒）"
         break
@@ -53,7 +70,7 @@ for i in $(seq 1 60); do
     sleep 2
 done
 
-# 二次确认：WebHDFS 可访问
+# 二次确认：WebHDFS 可读真实数据
 for i in $(seq 1 30); do
     if curl -sf --max-time 3 "http://127.0.0.1:9870/webhdfs/v1/?op=LISTSTATUS" >/dev/null 2>&1; then
         log "WebHDFS 就绪"
@@ -61,17 +78,6 @@ for i in $(seq 1 30); do
     fi
     sleep 2
 done
-
-# ---- 4) 启动 DataNode ----
-log "启动 DataNode ..."
-nohup hdfs datanode > /logs/datanode.log 2>&1 &
-DN_PID=$!
-
-sleep 5
-
-# 检查 DataNode 是否注册上
-LIVE=$(hdfs dfsadmin -report 2>/dev/null | grep -c "Live datanodes" || echo 0)
-log "DataNode 状态: $LIVE 项"
 
 # ---- 5) 创建项目需要的目录 ----
 log "创建 HDFS 目录 ..."

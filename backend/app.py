@@ -368,6 +368,9 @@ def use_local_storage() -> bool:
     """
     mode = (CFG.get("storage") or "auto").lower()
     if mode == "local":
+        # S41：HLM_STORAGE=local 时仍然要看 data_source 是否真的可用。
+        #   不可用就返回 True（走文件路径），让 load_all() 重试，
+        #   而不是直接返回 False 误走 HBase。
         return True
     if mode == "hbase":
         return False
@@ -415,9 +418,16 @@ def load_chunks():
         return _chunk_cache
     # S38/S39：文件类数据源（HDFS 或 本地文件）直接读 JSONL
     if use_local_storage():
-        _chunk_cache = _local().get_chunks()
+        _loaded = _local().get_chunks()
         import data_source
         src = data_source.resolve_source()
+        # S41：加载失败（0 条）时**不写入缓存**，否则初次失败会永久固化
+        #   踩坑场景：Docker 重启后 hlm-api 先于 hlm-hdfs 就绪，
+        #   首次读 HDFS 失败 → 空 dict 被缓存 → 之后永远 chunk=-1
+        if not _loaded:
+            log(f"载入 chunk 元数据（{src}）失败：0 条，不缓存，下次请求会重试")
+            return {}
+        _chunk_cache = _loaded
         log(f"载入 chunk 元数据（{src}）: {len(_chunk_cache):,} 条")
         return _chunk_cache
     def _scan_chunks():
@@ -480,8 +490,9 @@ def load_vectors():
                           "srcs": m._vec_srcs, "vers": None}
             log(f"载入向量矩阵（本地）: {m._vec_mat.shape}")
             return _vec_cache
-        _vec_cache = {"ids": None, "mat": None}
-        return _vec_cache
+        # S41：同 load_chunks —— 失败不缓存，下次重试
+        log("载入向量矩阵失败（0 条），不缓存，下次请求会重试")
+        return {"ids": None, "mat": None}
     def _scan_vectors():
         tb = hbase().table("hlm_vectors")
         return list(tb.scan(batch_size=500))

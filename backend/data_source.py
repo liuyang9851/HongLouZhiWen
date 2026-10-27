@@ -96,10 +96,38 @@ def resolve_source() -> str:
 
     cfg = DATA_SOURCE_CFG
 
+    # S41：强制模式下也要**验证可用性**，不可用就返回 none（而不是盲信配置）
+    #
+    # 踩坑场景：Docker 重启后 hlm-api 先于 hlm-hdfs 起，
+    #   强制 hdfs 时若不验证，会一直认为 hdfs 可用，
+    #   load_all() 每次返回空 → chunk=-1 永久不恢复。
     if cfg in ("hdfs", "local", "hbase"):
-        _resolved_source = cfg
-        _log(f"  数据源: {cfg}（环境变量强制）")
-        return cfg
+        if cfg == "hdfs" and WEBHDFS_URL:
+            try:
+                import urllib.request
+                url = f"{WEBHDFS_URL}{HDFS_PATHS['chunks_3ver.jsonl']}?op=OPEN&offset=0&length=100"
+                with urllib.request.urlopen(url, timeout=5) as r:
+                    if r.read(100):
+                        _resolved_source = "hdfs"
+                        _log(f"  数据源: HDFS（环境变量强制，已连接 {WEBHDFS_URL}）")
+                        return "hdfs"
+                _log("  ⚠ 强制 HDFS 但读取为空")
+            except Exception as e:
+                _log(f"  ⚠ 强制 HDFS 但连不上: {type(e).__name__}，将重试")
+                # 不缓存失败，让下次调用重新探测
+                return "none"
+        elif cfg == "local":
+            p0 = os.path.join(DATA_DIR, "chunks_3ver.jsonl")
+            if os.path.exists(p0):
+                _resolved_source = "local"
+                _log(f"  数据源: 本地文件（环境变量强制，{DATA_DIR}）")
+                return "local"
+            _log(f"  ⚠ 强制本地但找不到 {p0}")
+            return "none"
+        else:
+            _resolved_source = cfg
+            _log(f"  数据源: {cfg}（环境变量强制）")
+            return cfg
 
     # ---- auto：依次探测 ----
     _probe_log = []
@@ -135,7 +163,9 @@ def resolve_source() -> str:
         return "hbase"
     _probe_log.append("hbase: HLM_HBASE_HOST 未配置")
 
-    _resolved_source = "none"
+    # S41：**失败不缓存**，让下次请求重新探测。
+    #   否则 Docker 重启后 hdfs 晚于 api 就绪，会永久卡在 none。
+    _probe_log.append("→ 本次探测无可用数据源，下次请求会重试")
     _log(f"  ⚠ 无可用的数据源：{'; '.join(_probe_log)}")
     return "none"
 
