@@ -1896,6 +1896,7 @@ async function renderGraph(stage) {
       const tp = $('#gTip');
       if (tp) tp.style.display = 'none';
       inst = avatarGraph(fresh, d, { onSelect: showDetail });
+      window.__avatarInst = inst;   // 调试用：可在控制台调 __avatarInst.stats()
           currentForce = inst;
         })
         .catch((e) => console.warn('头像关系图失败:', e));

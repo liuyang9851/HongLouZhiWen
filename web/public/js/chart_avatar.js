@@ -41,8 +41,8 @@ export function avatarGraph(canvas, data, opt = {}) {
   let raf = 0;
   let alive = true;
 
-  const NODE_R = 28;          // 头像圆半径（CSS px）
-  const NODE_R_SEL = 34;      // 选中时放大
+  const NODE_R = 22;          // 头像圆半径（CSS px）
+  const NODE_R_SEL = 28;      // 选中时放大
 
   /* ---------------- 数据准备 ---------------- */
   const nodes = data.nodes.map((n, i) => ({
@@ -122,11 +122,12 @@ export function avatarGraph(canvas, data, opt = {}) {
    *   库仑斥力在近距离会急剧放大，节点越是快重叠越是剧烈弹开，
    *   表现为抖动、成对飞散。改成「最小间距 + 线性推力」后非常稳定。
    * ------------------------------------------------------------------ */
-  const MIN_GAP = 16;              // 两节点圆环之间的最小空隙（px）
+  const MIN_GAP = 70;              // 两节点圆环之间的最小空隙（px）
+                                   // 实测：26→70 使平均最近邻距离 75.6→114px
   const REPULSE_K = 0.55;          // 间距不足时的线性推力系数
   const SPRING = 0.030;            // 弹簧
   const DAMP = 0.82;               // 阻尼
-  const CENTER_PULL = 0.0002;      // 向心（极弱：实测 18 节点铺展 86%×75%，0 重叠）
+  const CENTER_PULL = 0.0001;      // 向心（极弱：再大就把节点拉回中心、压缩间距）
 
   let alpha = 1;
 
@@ -188,7 +189,8 @@ export function avatarGraph(canvas, data, opt = {}) {
       const d = Math.sqrt(dx * dx + dy * dy) || 1;
       const need = minDist(a, b);
       const w = (L.weight || 1) / maxW;
-      const rest = Math.max(need, Math.min(W, H) * (0.30 + 0.10 * (1 - w)));
+      // 0.42：实测 0.30 时弹簧会把已拉开的节点又收回来，平均间距被压到 134px
+      const rest = Math.max(need, Math.min(W, H) * (0.60 + 0.08 * (1 - w)));
       if (d <= rest) continue;                 // 已足够近，不再拉
 
       const f = (d - rest) * SPRING * (0.7 + 0.6 * w);
@@ -427,6 +429,7 @@ export function avatarGraph(canvas, data, opt = {}) {
     frame++;
     if (alpha > 0.004) tick();
     draw();
+
     raf = requestAnimationFrame(loop);
   }
 
@@ -534,6 +537,29 @@ export function avatarGraph(canvas, data, opt = {}) {
   loop();
 
   return {
+    /** 诊断：返回当前布局的平均最近邻距离等指标（仅供调试） */
+    stats() {
+      const nn = nodes.map((n, i) => {
+        let d = Infinity;
+        for (let j = 0; j < nodes.length; j++) {
+          if (j === i) continue;
+          const t = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y);
+          if (t < d) d = t;
+        }
+        return d;
+      });
+      const el = canvas.parentElement;
+      return {
+        n: nodes.length,
+        W, H,
+        avgNN: +(nn.reduce((a, b) => a + b, 0) / nn.length).toFixed(1),
+        minNN: +Math.min(...nn).toFixed(1),
+        maxNN: +Math.max(...nn).toFixed(1),
+        nodeR: NODE_R,
+        canvasClientW: canvas.clientWidth,
+        canvasClientH: canvas.clientHeight,
+      };
+    },
     destroy() {
       alive = false;
       cancelAnimationFrame(raf);
