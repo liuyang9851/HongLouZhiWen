@@ -128,7 +128,7 @@ export function renderArchDiagram() {
 
   ${box(388, 272, 160, 78, '#fff', C.hbase, 6)}
   ${txt(468, 290, 'hlm_terms', 13, C.text, 700)}
-  ${mono(468, 306, '448,841 行', 12.5, C.hbase)}
+  ${mono(468, 306, '451,817 行', 12.5, C.hbase)}
   ${mono(468, 320, 'p:postings  p:df', 11)}
   ${mono(468, 334, 'bigram 倒排索引', 11, C.muted)}
 

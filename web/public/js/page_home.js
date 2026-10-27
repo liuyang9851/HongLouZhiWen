@@ -9,7 +9,7 @@
  */
 import { getCorpusStats } from './rag.js';
 import { renderArchDiagram } from './arch_diagram.js';
-import { renderSequenceDiagram, renderBuildSequenceDiagram, renderQuestionDrivenDiagram, renderDeploymentDiagram } from './diagrams_simple.js';
+import { renderSequenceDiagram, renderBuildSequenceDiagram, renderQuestionDrivenDiagram, renderDeploymentDiagram, renderEngineBenchmark } from './diagrams_simple.js';
 
 // 注意：app.js 是本模块的宿主，ES module 求值顺序下 window.__HLM__
 // 可能在模块加载时还未赋值 → 必须延迟到调用时再取。
@@ -301,7 +301,7 @@ export async function renderHome(stage) {
         <a class="hp-feat" href="#/graph">
           <div class="hp-feat-ico">⚭</div>
           <h3>人物关系</h3>
-          <p>350 个人物节点、674 条关系边（亲属 / 丫鬟 / 主仆 / 朋友 / 妃嫔 / 乳母等 120 种关系）。
+          <p>350 个人物节点、673 条关系边（亲属 / 丫鬟 / 主仆 / 朋友 / 妃嫔 / 乳母等 120 种关系）。
              力导向图交互，点击查看人物详情与关系路径。</p>
         </a>
         <a class="hp-feat" href="#/guiyou">
@@ -367,6 +367,18 @@ export async function renderHome(stage) {
             <span class="chip">自研 Markdown 渲染器</span>
           </div>
         </div>
+      </div>
+
+      <h3 class="hp-sub3">为什么批统计用 MapReduce 而不用 Spark</h3>
+      <p class="hp-diagram-tip">
+        Spark 3.5.8 在本集群里<b>是可用的</b>（local 与 on YARN 都实测跑通），
+        同一个 bigram 词频作业两边产出<b>逐字节相同</b>（md5 一致）。
+        但把耗时摊开看就明白：<b>数据规模太小，Spark 的启动开销吃掉优势</b>。
+        下面这张图是同一份输入的实测分阶段耗时。
+      </p>
+      <div class="hp-diagram-wrap">
+        ${renderEngineBenchmark()}
+      </div>
         <div class="hp-stack-row">
           <div class="hp-stack-k">数据工程</div>
           <div class="hp-stack-v">

@@ -28,6 +28,7 @@ S4 · RAG 后端服务
                           └─ 日志：HDFS（问答记录）+ HBase（可查索引）
 """
 import os
+import math
 import sys
 import json
 import time
@@ -480,6 +481,10 @@ def expand_aliases(text: str) -> List[str]:
     return out[:8]
 
 
+# 语料 chunk 总数（用于 IDF 归一；启动后由 health 校验）
+N_CHUNKS = int(os.getenv("HLM_N_CHUNKS", "11780"))
+
+
 def search_keyword(query: str, topk: int = 30,
                    version: Optional[str] = None) -> List[Dict]:
     qgrams = list(bigrams(query).keys())
@@ -507,14 +512,48 @@ def search_keyword(query: str, topk: int = 30,
                 if not row:
                     continue
                 hit += 1
+                # S31：IDF 加权
+                # 原实现所有 bigram 权重都是 1.0，导致泛用词（宝玉 df=596）
+                # 与情节专有词（打死 df=24）等权，泛用词主导排序。
+                # 改为 idf = log(1 + N/df)，稀有词权重高。
+                df = int(row.get(b"p:df", b"0").decode() or 0)
+                idf = 1.0 + math.log((N_CHUNKS + 1.0) / (df + 1.0))
                 for cid, tf in json.loads(row[b"p:postings"].decode()):
-                    scores[cid] = scores.get(cid, 0) + 1.0 + min(tf, 2) * 0.1
+                    scores[cid] = scores.get(cid, 0) + idf * (1.0 + min(tf, 2) * 0.1)
         return scores, hit
 
     scores, hit = with_hbase_retry(_do)
     if qgrams:
         n = len(qgrams)
         scores = {k: v / n for k, v in scores.items()}
+
+    # S32：长度归一化 + 脂批降权
+    #
+    # 两个独立问题（实测数据）：
+    #   ① 超短 chunk 的 bigram 密度虚高
+    #      正文平均 546 字，脂批平均 30 字，差 18 倍。
+    #      「宝玉为什么挨打」曾让一个 11 字的 chunk 排第一。
+    #   ② 脂批是"评点"不是"情节"
+    #      「宝钗为什么搬出大观园」曾让一条脂批（第16回）排第一，
+    #      而真正讲这事的第77回正文没进 Top-3。
+    #
+    # 修法（单侧，不做完整 BM25，避免双重惩罚）：
+    #   · 短 chunk 线性打折（阈值 60 字）
+    #   · 脂批再乘一个整体系数 0.6
+    _chunks = load_chunks()
+    _MIN_LEN = 60
+    _SRC_W = {"text": 1.0, "pizhu": 0.6}
+    _adj = {}
+    for cid, sc in scores.items():
+        c = _chunks.get(cid) or {}
+        _L = len(c.get("text") or "")
+        _s = c.get("source") or "text"
+        _w = _SRC_W.get(_s, 1.0)
+        if 0 < _L < _MIN_LEN:
+            _w *= (_L / _MIN_LEN)
+        _adj[cid] = sc * _w
+    scores = _adj
+
     ranked = sorted(scores.items(), key=lambda x: -x[1])[:topk]
     return [{"chunk_id": c, "score": round(s, 4)} for c, s in ranked], len(qgrams), hit
 
@@ -715,20 +754,52 @@ def rrf_fuse(kw, vec, graph, k=60, topk=5, dedup_by_hui: bool = True):
 # 注意：这是规则改写，不调 LLM（省 token、可解释、可测）。
 # S5 会加一路「LLM 改写」并对比效果。
 REWRITE_RULES = [
-    # (匹配模式, 扩展关键词列表)
-    (("为什么", "为何", "原因", "缘由"),
-     ["进", "入", "到", "接", "送", "投", "归", "缘由"]),
-    (("进贾府", "进荣府", "进京", "投奔"),
-     ["到了都中", "进入神京", "荣府门前", "弃舟登岸", "外祖母", "接", "轿子"]),
-    (("结局", "后来", "最后", "下场"),
+    # ---- 情节锚点：现代口语 → 原文用词 ----
+    # 这类最容易出问题：用户用现代词，原文用文言词，直接检索必然 0 命中
+
+    # 「宝玉挨打」= 第33回
+    # ⚠️ 注意：回目写「大遭笞挞」，但**正文里没有「笞挞」二字**
+    #    （正文用的是「板子」「打死」「大板」「着实打死」）
+    #    而倒排索引只对正文建，不含回目 → 扩展词必须用正文真实用词。
+    #    实测：chunks.jsonl 中「笞挞」仅出现在 huimu 字段，text 字段 0 次。
+    (("挨打", "被打", "挨了打", "打了一顿", "毒打"),
+     ["板子", "打死", "着实打死", "大板", "棍", "动弹不得"]),
+
+    # 「被撵」= 撵出去 / 逐出 / 打发出去
+    (("被撵", "撵出去", "赶出去", "被赶", "逐出"),
+     ["撵出去", "撵了", "逐出", "打发出去", "撵走"]),
+
+    # 「抄检大观园」= 第74回
+    (("抄检", "搜检", "查抄"),
+     ["抄检大观园", "查抄", "搜检", "绣春囊", "王善保家的"]),
+
+    # ---- 具体事件（触发词足够具体，不会误伤）----
+    # 「进贾府」必须同时出现「进」和「贾府/荣府」才算，不能只凭「为什么」
+    (("进贾府", "进荣府", "进京", "投奔", "初进荣国府"),
+     ["到了都中", "进入神京", "弃舟登岸", "外祖母", "轿子", "荣府门前"]),
+
+    # ---- 结局类 ----
+    (("结局", "后来怎样", "最后怎样", "下场", "最终"),
      ["死", "亡", "出家", "嫁", "散", "终"]),
+
+    # ---- 人物身份（具体词，非泛化）----
     (("丫鬟", "丫头", "侍女"),
-     ["丫鬟", "丫头", "大丫鬟", "小丫头", "鹦哥", "雪雁", "袭人"]),
+     ["丫鬟", "丫头", "大丫鬟", "小丫头", "屋里人"]),
+
+    # ---- 性格 ----
     (("性格", "为人", "脾气"),
      ["笑道", "冷笑道", "叹道", "性子", "脾气", "为人"]),
-    (("关系", "亲戚"),
-     ["亲戚", "亲", "表", "堂", "嫁", "娶", "母", "父", "兄弟"]),
+
+    # ---- 关系 ----
+    (("什么关系", "亲戚关系", "怎么称呼"),
+     ["亲戚", "表", "堂", "嫁", "娶", "母", "父", "兄弟"]),
 ]
+
+# ⚠️ 已删除：原来有一条
+#     (("为什么", "为何", "原因", "缘由"), ["进","入","到","接","送","投","归","缘由"])
+#   这条把「为什么」当成触发词，导致所有原因类问题都被注入同一批无关词，
+#   实测「宝玉为什么挨打」「宝钗为什么搬出大观园」「晴雯为什么被撵」
+#   全部被带偏到第67回。原因类问题不存在统一的扩展词。
 
 # 场景扩展：问题里出现这些，补对应回次的锚点词
 SCENE_HINTS = {
@@ -748,6 +819,228 @@ OBJECT_HINTS = {
     "冷香丸": ["冷香丸", "癞头和尚", "药"],
     "风月宝鉴": ["风月宝鉴", "宝鉴", "镜子"],
 }
+
+
+KEYWORD_SYS_PROMPT = """你是《红楼梦》文本检索专家。用户会给你一个问题，
+你要提取用于全文检索的**关键词**。
+
+【任务】
+把用户问题转换成一组检索词，要求：
+1. **用原文可能出现的词**，不要用现代口语
+   · 「挨打」→「笞挞」「板子」「打死」（第33回正文用「板子」「打死」）
+   · 「被撵」→「撵出去」「逐出」「打发出去」
+   · 「死了」→「没了」「去世」「亡故」「殡天」
+2. **补全专名**：简称 → 全名
+   · 宝玉 → 贾宝玉　黛玉 → 林黛玉　凤姐 → 王熙凤　宝钗 → 薛宝钗
+3. **补上可能相关的人物/物件/地点**（帮助定位情节）
+   · 「宝玉挨打」→ 贾政、金钏、琪官、忠顺王府
+4. 关键词 3~8 个，每个 1~4 字
+5. 不要输出解释性长句，只要词
+
+【输出格式】严格输出 JSON，不要任何其他文字：
+{"keywords": ["词1", "词2", "词3"], "reason": "一句话说明检索思路"}
+
+【示例】
+问题：宝玉为什么挨打？
+{"keywords": ["板子", "打死", "贾政", "金钏", "琪官"], "reason": "第33回宝玉被贾政笞挞，起因是琪官与金钏两事"}
+"""
+
+
+async def gen_keywords(question: str, model_id: str,
+                       timeout: float = 8.0) -> List[str]:
+    """
+    由 LLM 生成检索关键词。失败/超时返回空列表（调用方用规则改写兜底）。
+    """
+    import asyncio
+    try:
+        out = await asyncio.wait_for(
+            call_llm(model_id,
+                     [{"role": "system", "content": KEYWORD_SYS_PROMPT},
+                      {"role": "user", "content": f"问题：{question}"}],
+                     stream=False, thinking=False, temperature=0.1),
+            timeout=timeout)
+        raw = (out.get("content") or "").strip()
+        # 容错：可能被 ```json 包裹
+        raw = _re.sub(r"^```(?:json)?\s*|\s*```$", "", raw).strip()
+        m = _re.search(r"\{.*\}", raw, _re.S)
+        if not m:
+            return []
+        obj = json.loads(m.group(0))
+        kws = obj.get("keywords") or []
+        # 清洗：只保留中文，长度 1~8
+        clean = []
+        for k in kws:
+            k = str(k).strip()
+            if 1 <= len(k) <= 8 and _re.fullmatch(r"[\u4e00-\u9fff]+", k):
+                clean.append(k)
+        return clean[:8]
+    except asyncio.TimeoutError:
+        log(f"关键词生成超时（>{timeout}s），降级到规则改写")
+        return []
+    except Exception as e:
+        log(f"关键词生成失败: {type(e).__name__}: {e}")
+        return []
+
+
+# ============================================================
+# S33：关键词缓存（LRU + TTL + 落盘）
+# ============================================================
+# 为什么要缓存：
+#   每次问答都调一次 LLM 生成关键词，约 0.8~1.2s。
+#   但同一问题（或近似问题）会反复出现，尤其：
+#     · 用户重复提问 / 刷新重问
+#     · 多轮对话里同一实体反复出现
+#     · 演示时反复走同一批示例问题
+#
+# 缓存策略：
+#   · key = 规范化后的问题（去空白、去标点）
+#   · LRU 上限 KEYWORD_CACHE_MAX（默认 500）
+#   · TTL KEYWORD_CACHE_TTL（默认 7 天）
+#   · 落盘到 keyword_cache.json，重启后仍有效
+#   · 只缓存非空结果（LLM 失败不写缓存，下次重试）
+
+import time as _time
+
+KEYWORD_CACHE_MAX = int(os.getenv("HLM_KW_CACHE_MAX", "500"))
+KEYWORD_CACHE_TTL = int(os.getenv("HLM_KW_CACHE_TTL", str(7 * 86400)))
+_KEYWORD_CACHE_PATH = os.getenv("HLM_KW_CACHE_PATH",
+                                "/workspace/pipeline/out/keyword_cache.json")
+
+_kw_cache: Dict[str, Dict] = {}      # {norm_q: {"kws": [...], "ts": 秒}}
+_KW_HIT = 0                          # 缓存命中次数（供 /health 观察）
+_KW_MISS = 0                         # 未命中次数
+_kw_cache_loaded = False
+_kw_cache_dirty = 0
+
+
+def _norm_q(q: str) -> str:
+    """
+    问题规范化（作为缓存 key）。
+
+    注意：**不能过度归一**。
+      · 去空白、去标点 → 安全
+      · 去「为什么/是什么」→ 危险（「宝玉为什么挨打」vs「宝玉怎么挨打」可能答案不同）
+    所以只做最小归一。
+    """
+    q = (q or "").strip()
+    q = _re.sub(r"[\s\u3000]+", "", q)
+    q = _re.sub(r"[？?！!。，,、；;：:]+$", "", q)
+    return q
+
+
+def _kw_cache_load():
+    """懒加载磁盘缓存"""
+    global _kw_cache_loaded, _kw_cache
+    if _kw_cache_loaded:
+        return
+    _kw_cache_loaded = True
+    try:
+        if os.path.exists(_KEYWORD_CACHE_PATH):
+            with open(_KEYWORD_CACHE_PATH, encoding="utf-8") as f:
+                d = json.load(f)
+            if isinstance(d, dict):
+                _kw_cache = d
+                log(f"关键词缓存载入: {len(_kw_cache)} 条")
+    except Exception as e:
+        log(f"关键词缓存载入失败（忽略）: {e}")
+
+
+def _kw_cache_save(force=False):
+    """
+    写盘。
+
+    策略：
+      · 缓存条目 ≤ 50 → 每次都写（文件小，开销可忽略，保证不丢）
+      · 条目 > 50    → 每 20 次新写入刷一次（减少 IO）
+    """
+    global _kw_cache_dirty
+    _kw_cache_dirty += 1
+    if not force and len(_kw_cache) > 50 and _kw_cache_dirty < 20:
+        return
+    try:
+        os.makedirs(os.path.dirname(_KEYWORD_CACHE_PATH), exist_ok=True)
+        # 先写临时文件再 rename，避免写一半崩溃损坏
+        tmp = _KEYWORD_CACHE_PATH + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(_kw_cache, f, ensure_ascii=False)
+        os.replace(tmp, _KEYWORD_CACHE_PATH)
+        _kw_cache_dirty = 0
+    except Exception as e:
+        log(f"关键词缓存写盘失败（忽略）: {e}")
+
+
+def _kw_cache_get(q: str):
+    """返回缓存的 keywords，未命中/过期返回 None"""
+    _kw_cache_load()
+    k = _norm_q(q)
+    ent = _kw_cache.get(k)
+    if not ent:
+        return None
+    if _time.time() - ent.get("ts", 0) > KEYWORD_CACHE_TTL:
+        _kw_cache.pop(k, None)
+        return None
+    return ent.get("kws")
+
+
+def _kw_cache_put(q: str, kws: List[str]):
+    """写缓存（LRU 淘汰）"""
+    _kw_cache_load()
+    if not kws:
+        return
+    k = _norm_q(q)
+    _kw_cache[k] = {"kws": kws, "ts": int(_time.time())}
+    # LRU 淘汰：超上限时按 ts 最旧的删
+    if len(_kw_cache) > KEYWORD_CACHE_MAX:
+        ordered = sorted(_kw_cache.items(), key=lambda x: x[1].get("ts", 0))
+        for kk, _ in ordered[:len(_kw_cache) - KEYWORD_CACHE_MAX]:
+            _kw_cache.pop(kk, None)
+    _kw_cache_save()
+
+
+def gen_keywords_sync(question: str, model_id: str,
+                      timeout: float = 8.0) -> List[str]:
+    """
+    同步包装（retrieve 是同步函数，需要用它）。
+
+    两种情况：
+      · 无 running loop（脚本/测试）→ asyncio.run
+      · 有 running loop（FastAPI）→ 新线程里 run，避免 "already running" 错误
+
+    S33：先查缓存。命中直接返回，不打 LLM（省 0.8~1.2s）。
+    """
+    import asyncio
+    import concurrent.futures
+
+    # ---- 缓存命中 ----
+    cached = _kw_cache_get(question)
+    if cached is not None:
+        global _KW_HIT, _KW_MISS
+        _KW_HIT += 1
+        log(f"  关键词缓存命中: {cached}")
+        return cached
+
+    _KW_MISS += 1
+
+    try:
+        asyncio.get_running_loop()
+        in_loop = True
+    except RuntimeError:
+        in_loop = False
+
+    if not in_loop:
+        kws = asyncio.run(gen_keywords(question, model_id, timeout))
+    else:
+        # 已在 event loop 里 → 丢到线程池执行
+        def _worker():
+            return asyncio.run(gen_keywords(question, model_id, timeout))
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as ex:
+            kws = ex.submit(_worker).result(timeout=timeout + 3)
+
+    # 只缓存非空结果（LLM 失败不写，下次重试）
+    if kws:
+        _kw_cache_put(question, kws)
+    return kws
 
 
 def rewrite_query(question: str) -> List[str]:
@@ -1051,8 +1344,14 @@ def _load_stats_summary() -> Optional[Dict]:
 
 
 def retrieve(question: str, topk_context: int = 5, use_graph: bool = True,
-             version: Optional[str] = None):
-    """三路检索 + RRF 融合 + 回表"""
+             version: Optional[str] = None, model_id: Optional[str] = None,
+             use_llm_kw: bool = True):
+    """
+    三路检索 + RRF 融合 + 回表。
+
+    S32：检索关键词由 **LLM 生成**（理解语义 + 红楼专名归一），
+         再与规则改写取并集。LLM 失败/超时则只用规则改写。
+    """
     t0 = time.time()
 
     # -2) 主观 / 跨作品问题：直接软拒答（评测 x007 暴露）
@@ -1063,6 +1362,7 @@ def retrieve(question: str, topk_context: int = 5, use_graph: bool = True,
             "debug": {
                 "subjective_route": True,
                 "rewrites": [question], "n_queries": 0, "expanded_aliases": 0,
+                "llm_keywords": [],
                 "kw": {"hits": 0, "bigrams": 0, "hit_bigrams": 0, "ms": 0},
                 "vec": {"candidates": 0, "ms": 0},
                 "graph": {"hits": 0, "ms": 0},
@@ -1087,13 +1387,31 @@ def retrieve(question: str, topk_context: int = 5, use_graph: bool = True,
             },
         }
 
-    # 0) 查询改写 + 别名展开（两者叠加）
+    # 0) 查询改写（规则）+ LLM 关键词生成（S32 新增）
     rewrites = rewrite_query(question)
+
+    # S32：先由模型理解原问题，生成检索关键词
+    llm_kws: List[str] = []
+    if use_llm_kw:
+        _mid = model_id or CFG.get("default_model") or "deepseek-flash"
+        llm_kws = gen_keywords_sync(question, _mid, timeout=8.0)
+        if llm_kws:
+            log(f"  LLM 关键词: {llm_kws}")
+            # 组合检索：原问题+关键词、纯关键词，各作为一路改写
+            rewrites.append(" ".join([question] + llm_kws))
+            rewrites.append(" ".join(llm_kws))
+        else:
+            log("  LLM 关键词为空，仅用规则改写")
+
     queries = []
     for rq in rewrites:
         for eq in expand_aliases(rq):
             if eq not in queries:
                 queries.append(eq)
+    # 关键词本身也直接参与 L1 检索（不光是拼成句子）
+    for k in llm_kws:
+        if k not in queries:
+            queries.append(k)
     queries = queries[:24]        # 上限，避免过多 HBase 往返
 
     # L1：对所有（改写 × 别名）写法都查，取并集
@@ -1141,6 +1459,7 @@ def retrieve(question: str, topk_context: int = 5, use_graph: bool = True,
         "debug": {
             "version": version or "all",
             "pizhu_sources": PIZHU_SOURCES_FOR.get(version, []),
+            "llm_keywords": llm_kws,
             "rewrites": rewrites,
             "n_queries": len(queries),
             "expanded_aliases": len(queries),
@@ -1162,10 +1481,15 @@ def retrieve(question: str, topk_context: int = 5, use_graph: bool = True,
 SYSTEM_PROMPT = """你是「红楼智问」，一个专精《红楼梦》的知识问答助手。
 
 【回答规则】
-1. **优先**基于提供的【语料片段】回答，并标注引用编号，绝不编造原文。
-   但若用户消息里出现【检索说明】标注"未找到直接相关语料"，
-   则按「模型自身知识兜底模式」的规则用通识知识回答，
-   并明确标注「以下基于通识知识，非原文」。
+1. **必须**基于提供的【语料片段】回答，并标注引用编号，绝不编造原文。
+
+   ⚠️ 只有在检索结果**完全为空**时（用户消息里出现【检索说明】且明确写着
+   "未找到直接相关语料"），才可以按「模型自身知识兜底模式」用通识回答，
+   并必须**在开头**标注「以下基于通识知识，非原文」。
+
+   **若片段非空（哪怕只有部分相关），绝不能说"以通识知识为主体""以下基于通识"** ——
+   必须先从片段里找依据、给引用，再补充解释。
+   片段覆盖不全时，说"片段未完整覆盖，以下是基于片段的推断"，而不是退回通识。
 2. 每条结论后用 [1] [2] 这样的编号标注出自哪个片段。
 3. 若片段间存在版本差异或矛盾，要指出。
 4. 人物、回次、诗词引用必须准确。不确定就说"不确定"。
@@ -1328,12 +1652,23 @@ def make_para_range(c: Dict, question: str) -> Dict:
 #   档3 超出《红楼梦》范围 / 主观 / 荒谬 → 软拒答（原行为）
 
 # 需要「模型自身知识」兜底的问题特征
+#
+# ⚠️ 设计教训（S30）：
+#   原版把「为什么|原因|为何|何以」也放进这个正则，导致**任何问原因的具体情节问题**
+#   都被误判为「元知识型问题」，强制走通识兜底模式。
+#   实测：「宝玉为什么挨打？」检索明明召回了第33回原文，却仍被标注
+#        「以下基于通识知识，非原文」——这是错误标注。
+#
+#   规律：**「为什么」是问题形式，不是问题领域。**
+#        问「宝玉为什么挨打」是情节问题（语料里有答案），
+#        问「为什么后40回争议大」才是元知识问题（语料里没有）。
+#   所以把「为什么/原因/为何」从本正则删除，改由「n_contexts 是否充足」来判断。
 META_KNOWLEDGE_PAT = _re.compile(
-    r"(版本|程高本|程甲本|程乙本|脂本|脂评本|庚辰本|甲戌本|己卯本|蒙府本|戚序本|"
+    r"(版本比较|版本区别|程高本|程甲本|程乙本|脂本|脂评本|庚辰本|甲戌本|己卯本|蒙府本|戚序本|"
     r"杨藏本|列藏本|舒序本|梦稿本|郑藏本|"
-    r"区别|差异|不同|对比|比较|异同|"
-    r"为什么|原因|为何|何以|"
-    r"意义|价值|地位|影响|评价|看法|解读|理解|赏析|艺术|手法|风格|"
+    r"区别|差异|异同|版本对比|"
+    r"文学史|学术史|"
+    r"意义|价值|地位|影响|评价|看法|赏析|艺术|手法|风格|"
     r"主题|主旨|思想|内涵|寓意|象征|隐喻|伏笔|草蛇灰线|"
     r"续书|后四十回|高鹗|程伟元|"
     r"红学|考证|探佚|脂砚斋是谁|曹雪芹|作者|成书|流传|"
@@ -1467,6 +1802,9 @@ PERSON_ALIASES = {
 
 _person_roles_cache = None
 
+# 全集型问题：聚合表里提示的「相关回次」（供检索排序参考）
+ROLE_HINT_HUIS: List[int] = []
+
 
 def load_person_roles() -> Dict:
     """载入预建的「人物-身份」聚合表"""
@@ -1527,6 +1865,15 @@ def build_role_context(person: str, role: str) -> Optional[str]:
     lst = d.get(role) or []
     if not lst:
         return None
+
+    # S31：把聚合表里提到的「首见回次」记下来，供检索侧排序参考。
+    # 原因：全集型问题的答案主干来自聚合表（已正确），
+    #      但 Top-K 引用可能落在无关回次（实测「宝玉的丫鬟有谁」Top1 曾为第87回），
+    #      观感上像是"答非所问"。
+    global ROLE_HINT_HUIS
+    ROLE_HINT_HUIS = sorted({int(x.get("first_hui") or 0)
+                             for x in lst
+                             if isinstance(x, dict) and x.get("first_hui")})
 
     high = [x for x in lst if x.get("conf") == "high"]
     mid = [x for x in lst if x.get("conf") == "medium"]
@@ -1849,6 +2196,117 @@ class ChatReq(BaseModel):
 # ============================================================
 # 路由
 # ============================================================
+# ============================================================
+# S34：关键词缓存预热
+# ============================================================
+# 目的：后端启动后，主动为「前端示例问题 + 常见问法」生成关键词，
+#      用户第一次点击示例时就能命缓存（省 1.2s）。
+#
+# 设计：
+#   · **后台异步执行**，不阻塞启动（否则启动慢 10s+）
+#   · 只在缓存为空/条目少时预热（避免每次重启都重跑）
+#   · 失败不影响主流程
+
+# S34：预热开关（开发调试时可关，避免反复消耗 token）
+#   HLM_SKIP_WARMUP=1  → 完全跳过预热
+#   HLM_WARMUP_N=6     → 只预热前 N 个问题（默认全部）
+SKIP_WARMUP = os.getenv("HLM_SKIP_WARMUP", "0") in ("1", "true", "yes")
+WARMUP_N = int(os.getenv("HLM_WARMUP_N", "0"))     # 0 = 全部
+
+# S35：预热清单改为从共享 JSON 读取（与前端示例同一数据源）
+# 目的：避免前后端各自硬编码 —— 曾经改前端示例忘记改后端，预热白跑。
+# 文件：web/data/starters.json（容器内挂载为 /app/starters.json 或从 web 目录读）
+_STARTERS_PATHS = [
+    "/app/starters.json",
+    "/workspace/web/data/starters.json",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "web", "data", "starters.json"),
+]
+
+# 兜底：文件读不到时用内置清单，保证预热不失效
+_FALLBACK_WARMUP = [
+    "贾宝玉的丫鬟有谁？", "林黛玉为什么进贾府？", "第19回为什么批语最多？",
+    "宝玉和黛玉是什么关系？", "「千红一窟」有什么隐喻？", "前80回一共多少字？",
+    "宝玉为什么挨打？", "晴雯为什么被撵？", "金钏为什么投井？",
+    "黛玉葬花在第几回？", "通灵宝玉上的铭文是什么？", "宝钗扑蝶是怎么回事？",
+    "刘姥姥进大观园在哪一回？", "贾宝玉的丫鬟有哪些", "宝玉和黛玉什么关系",
+]
+
+
+def _load_warmup_questions():
+    """从共享 JSON 读取预热清单；失败则用内置兜底"""
+    for p in _STARTERS_PATHS:
+        try:
+            if not os.path.exists(p):
+                continue
+            with open(p, encoding="utf-8") as f:
+                d = json.load(f)
+            qs = [s.get("q") for s in (d.get("starters") or []) if s.get("q")]
+            qs += [q for q in (d.get("warmup_extra") or []) if q]
+            # 去重保序
+            seen, out = set(), []
+            for q in qs:
+                if q not in seen:
+                    seen.add(q)
+                    out.append(q)
+            if out:
+                log(f"  预热清单: 从 {p} 读取 {len(out)} 条")
+                return out
+        except Exception as e:
+            log(f"  读 {p} 失败: {type(e).__name__}")
+    log(f"  预热清单: 用内置兜底 {len(_FALLBACK_WARMUP)} 条")
+    return list(_FALLBACK_WARMUP)
+
+
+WARMUP_QUESTIONS = _load_warmup_questions()
+
+_warmup_state = {"running": False, "done": 0, "total": 0, "skipped": False}
+
+
+async def warmup_keywords():
+    """后台预热关键词缓存"""
+    global _warmup_state
+
+    # 开关：HLM_SKIP_WARMUP=1 完全跳过
+    if SKIP_WARMUP:
+        _warmup_state["skipped"] = True
+        _warmup_state["reason"] = "HLM_SKIP_WARMUP=1"
+        log("  关键词预热已禁用（HLM_SKIP_WARMUP=1）")
+        return
+
+    _kw_cache_load()
+
+    # 截断：HLM_WARMUP_N=6 只预热前 6 个
+    qs = WARMUP_QUESTIONS[:WARMUP_N] if WARMUP_N > 0 else WARMUP_QUESTIONS
+
+    if len(_kw_cache) >= len(qs):
+        _warmup_state["skipped"] = True
+        _warmup_state["reason"] = f"缓存已有 {len(_kw_cache)} 条"
+        log(f"  关键词缓存已有 {len(_kw_cache)} 条，跳过预热")
+        return
+
+    _warmup_state.update(running=True, total=len(qs), done=0, skipped=False)
+    log(f"  开始预热关键词缓存（{len(qs)} 个问题）…")
+
+    import asyncio
+    model = DEFAULT_MODEL
+    for i, q in enumerate(qs, 1):
+        if _kw_cache_get(q) is not None:
+            _warmup_state["done"] = i
+            continue
+        try:
+            kws = await gen_keywords(q, model, timeout=10.0)
+            if kws:
+                _kw_cache_put(q, kws)
+        except Exception as e:
+            log(f"    预热失败 [{q}]: {type(e).__name__}")
+        _warmup_state["done"] = i
+        await asyncio.sleep(0.1)      # 让出事件循环，避免阻塞请求
+
+    _kw_cache_save(force=True)
+    _warmup_state["running"] = False
+    log(f"  预热完成: {len(_kw_cache)} 条缓存已落盘")
+
+
 @app.on_event("startup")
 async def startup():
     log("=" * 60)
@@ -1858,13 +2316,27 @@ async def startup():
     log(f"  默认模型  : {DEFAULT_MODEL}")
     load_custom_providers()
     log(f"  可用模型  : {list(all_providers())}")
-    # 预热
+    # 预热（chunk/向量）
     try:
         load_chunks()
         load_vectors()
         log("  预热完成")
     except Exception as e:
         log(f"  预热失败（首次请求时会重试）: {e}")
+
+    # S34：后台异步预热关键词缓存（不阻塞启动）
+    if SKIP_WARMUP:
+        _warmup_state["skipped"] = True
+        _warmup_state["reason"] = "HLM_SKIP_WARMUP=1"
+        log("  关键词预热: 已禁用（HLM_SKIP_WARMUP=1）")
+    else:
+        import asyncio as _aio
+        try:
+            _aio.create_task(warmup_keywords())
+            _n = WARMUP_N if WARMUP_N > 0 else len(WARMUP_QUESTIONS)
+            log(f"  关键词预热任务已提交（后台执行，{_n} 个问题）")
+        except Exception as e:
+            log(f"  关键词预热任务提交失败: {e}")
     log("=" * 60)
 
 
@@ -2026,9 +2498,10 @@ async def models():
 
 
 @app.get("/retrieve")
-async def retrieve_only(q: str, topk: int = 5, version: Optional[str] = None):
+async def retrieve_only(q: str, topk: int = 5, version: Optional[str] = None,
+                        model: Optional[str] = None):
     """只检索不生成（供调试/演示）；version 可限定语料版本"""
-    r = retrieve(q, topk, True, version)
+    r = retrieve(q, topk, True, version, model_id=model)
     return {
         "question": q,
         "contexts": [{k: v for k, v in c.items() if k != "text"} | {"snippet": c["text"][:200]}
@@ -2056,7 +2529,8 @@ async def chat(req: ChatReq):
     session_id = req.session_id or f"s_{uuid.uuid4().hex[:12]}"
 
     # 1) 检索
-    r = retrieve(req.question, req.topk, req.use_graph, req.version)
+    r = retrieve(req.question, req.topk, req.use_graph, req.version,
+                 model_id=req.model)
     contexts = r["contexts"]
 
     # 2a) 主观问题软拒答（不调 LLM，省 token 也更可控）
@@ -2119,6 +2593,19 @@ async def chat(req: ChatReq):
         role_ctx = build_role_context(_person, _role)
         if role_ctx:
             log(f"全集型问题命中: {_person} 的{_role}（注入聚合表）")
+            # S31：按聚合表提示的「首见回次」重排引用
+            # 答案主干已由聚合表提供（正确），但 Top-K 引用可能落在无关回次，
+            # 观感上像"答非所问"。把命中提示回次的 chunk 提前。
+            if ROLE_HINT_HUIS:
+                _hint = set(ROLE_HINT_HUIS)
+                _ctxs = r.get("contexts") or []
+                _hit = [c for c in _ctxs if int(c.get("hui") or 0) in _hint]
+                _rest = [c for c in _ctxs if int(c.get("hui") or 0) not in _hint]
+                if _hit:
+                    _new_ctxs = _hit + _rest
+                    r["contexts"] = _new_ctxs
+                    contexts = _new_ctxs      # 关键：citations 后续用的是 contexts 变量
+                    log(f"  引用重排: {len(_hit)} 条命中提示回次 {sorted(_hint)}")
 
     # 有检索结果时，若为元知识型问题 → 组合模式
     if know_mode is None and contexts:
@@ -2207,7 +2694,8 @@ async def chat(req: ChatReq):
 async def chat_stream(req: ChatReq):
     """流式问答（SSE，R-106）"""
     session_id = req.session_id or f"s_{uuid.uuid4().hex[:12]}"
-    r = retrieve(req.question, req.topk, req.use_graph, req.version)
+    r = retrieve(req.question, req.topk, req.use_graph, req.version,
+                 model_id=req.model)
     contexts = r["contexts"]
 
     # 无检索 → 三档分流（S25）：元知识型问题用模型自身知识回答
@@ -2239,6 +2727,16 @@ async def chat_stream(req: ChatReq):
         role_ctx = build_role_context(_person, _role)
         if role_ctx:
             log(f"全集型问题命中: {_person} 的{_role}（注入聚合表）")
+            # S31：按聚合表提示的「首见回次」重排引用（与 /chat 端点保持一致）
+            if ROLE_HINT_HUIS:
+                _hint = set(ROLE_HINT_HUIS)
+                _hit = [c for c in contexts if int(c.get("hui") or 0) in _hint]
+                _rest = [c for c in contexts if int(c.get("hui") or 0) not in _hint]
+                if _hit:
+                    _new_ctxs = _hit + _rest
+                    r["contexts"] = _new_ctxs
+                    contexts = _new_ctxs
+                    log(f"  引用重排(stream): {len(_hit)} 条命中提示回次 {sorted(_hint)}")
 
     # 有检索结果时，元知识型问题 → 组合模式
     if know_mode is None and contexts:
@@ -2554,6 +3052,70 @@ async def query_custom(req: QueryReq):
         "attempts": attempts,
         "elapsed_ms": round((time.time() - t0) * 1000, 1),
     }
+
+
+@app.on_event("shutdown")
+async def _on_shutdown():
+    """进程关闭前强制刷盘关键词缓存（避免丢未落盘的条目）"""
+    try:
+        _kw_cache_save(force=True)
+        log(f"关键词缓存已刷盘: {len(_kw_cache)} 条")
+    except Exception as e:
+        log(f"关闭时刷盘失败: {e}")
+
+
+@app.get("/keyword-cache/stats")
+async def keyword_cache_stats():
+    """关键词缓存统计（供运维界面观察）"""
+    _kw_cache_load()
+    tot = len(_kw_cache)
+    hits = _KW_HIT
+    miss = _KW_MISS
+    rate = round(hits / (hits + miss) * 100, 1) if (hits + miss) else 0.0
+    return {
+        "enabled": True,
+        "entries": tot,
+        "max_entries": KEYWORD_CACHE_MAX,
+        "ttl_seconds": KEYWORD_CACHE_TTL,
+        "hits": hits,
+        "misses": miss,
+        "hit_rate_pct": rate,
+        "path": _KEYWORD_CACHE_PATH,
+        "available": os.path.exists(_KEYWORD_CACHE_PATH),
+        "warmup": {
+            **dict(_warmup_state),
+            "enabled": not SKIP_WARMUP,
+            "limit": WARMUP_N if WARMUP_N > 0 else len(WARMUP_QUESTIONS),
+            "n_questions": len(WARMUP_QUESTIONS),
+        },
+    }
+
+
+@app.post("/keyword-cache/warmup")
+async def keyword_cache_warmup():
+    """手动触发关键词预热（后台执行）"""
+    import asyncio
+    if _warmup_state.get("running"):
+        return {"started": False, "reason": "已在预热中", "state": dict(_warmup_state)}
+    asyncio.create_task(warmup_keywords())
+    return {"started": True, "n_questions": len(WARMUP_QUESTIONS)}
+
+
+@app.delete("/keyword-cache")
+async def keyword_cache_clear():
+    """清空关键词缓存（内存 + 磁盘）"""
+    global _kw_cache, _KW_HIT, _KW_MISS
+    _kw_cache_load()
+    n = len(_kw_cache)
+    _kw_cache = {}
+    _KW_HIT = _KW_MISS = 0
+    try:
+        if os.path.exists(_KEYWORD_CACHE_PATH):
+            os.remove(_KEYWORD_CACHE_PATH)
+    except Exception as e:
+        log(f"删除缓存文件失败: {e}")
+    log(f"关键词缓存已清空: {n} 条")
+    return {"cleared": n}
 
 
 @app.get("/query/examples")

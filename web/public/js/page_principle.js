@@ -141,7 +141,7 @@ export async function renderPrinciple(stage) {
             </li>
             <li>
               <b>MapReduce 批处理</b>
-              <span>切两字组合 → 建索引表 hlm_terms(448,841 行)<br>
+              <span>切两字组合 → 建索引表 hlm_terms(451,817 行)<br>
                     统词频 → hlm_wordfreq(133,673 行)<br>
                     统计人物共现 → hlm_stats cooccur(588 行)</span>
             </li>
@@ -226,14 +226,14 @@ export async function renderPrinciple(stage) {
               <td><b>MapReduce</b></td>
               <td><span class="pr-badge off">离线</span></td>
               <td>切两字组合、建索引表；统计词频；统计人物共现</td>
-              <td>448,841 + 133,673 + 709 行</td>
+              <td>451,817 + 133,673 + 709 行</td>
               <td class="num">—</td>
             </tr>
             <tr>
               <td><b>HBase</b><br><small>hlm_terms</small></td>
               <td><span class="pr-badge on">在线·关键词</span></td>
               <td>按两字组合逐行查索引表，取出记录累加打分</td>
-              <td>读 ~${(stages.find((x) => x.id === 2)?.detail?.rows_sample || []).length * 2 || 16} 行 / 表内 448,841 行</td>
+              <td>读 ~${(stages.find((x) => x.id === 2)?.detail?.rows_sample || []).length * 2 || 16} 行 / 表内 451,817 行</td>
               <td class="num">${fmtMs(tL1)}</td>
             </tr>
             <tr>
@@ -349,7 +349,7 @@ export async function renderPrinciple(stage) {
       <div class="pr-why">
         <div class="pr-why-item">
           <div class="pr-why-h">① 数据量不适合塞进内存</div>
-          <p>倒排表 448,841 行、向量 11,780 × 512 维、正文 167.8 万字。
+          <p>倒排表 451,817 行、向量 11,780 × 512 维、正文 167.8 万字。
              这些必须落在<b>可横向扩展的分布式存储</b>上，
              而不是一个进程里的 Python 字典。</p>
         </div>
@@ -604,7 +604,7 @@ const BUILD_IO = {
     return {
       input: [
         ['是什么', '三个版本全部文本块各自切出的两字组合，以及每个组合在该块内出现几次'],
-        ['规模', `全库合计 <b>448,841</b> 个不同组合；本块贡献 ${d.samples ? '527' : '—'} 个`],
+        ['规模', `全库合计 <b>451,817</b> 个不同组合；本块贡献 ${d.samples ? '527' : '—'} 个`],
         ['怎么读入', 'Hadoop 把 <code>chunks.jsonl</code> 切成多个分片，多台机器同时处理，所以这一张表是<b>分布式算出来的</b>'],
       ],
       output: [

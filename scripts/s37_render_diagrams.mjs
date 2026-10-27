@@ -1,13 +1,15 @@
 import { renderSequenceDiagram, renderBuildSequenceDiagram,
-         renderQuestionDrivenDiagram, renderDeploymentDiagram }
+         renderQuestionDrivenDiagram, renderDeploymentDiagram,
+         renderEngineBenchmark }
   from '../web/public/js/diagrams_simple.js';
 import fs from 'node:fs';
 
 const items = [
-  ['_seq_diagram.html',  '① 查询顺序图',   renderSequenceDiagram()],
-  ['_bseq_diagram.html', '② 建库顺序图',   renderBuildSequenceDiagram()],
-  ['_qd_diagram.html',   '③ 问题驱动图',   renderQuestionDrivenDiagram()],
-  ['_dep_diagram.html',  '④ 部署图',       renderDeploymentDiagram()],
+  ['_seq_diagram.html',   '① 查询顺序图',   renderSequenceDiagram()],
+  ['_bseq_diagram.html',  '② 建库顺序图',   renderBuildSequenceDiagram()],
+  ['_qd_diagram.html',    '③ 问题驱动图',   renderQuestionDrivenDiagram()],
+  ['_dep_diagram.html',   '④ 部署图',       renderDeploymentDiagram()],
+  ['_bench_diagram.html', '⑤ 引擎对比图',   renderEngineBenchmark()],
 ];
 
 const wrap = (title, svg) => `<!DOCTYPE html>
@@ -21,5 +23,5 @@ for (const [file, title, svg] of items) {
   const open = (svg.match(/<svg/g) || []).length;
   const close = (svg.match(/<\/svg>/g) || []).length;
   const bad = ['undefined', 'NaN'].filter((x) => svg.includes(x));
-  console.log(`${file}: ${svg.length} B, <svg>=${open} </svg>=${close} ${open === close ? 'OK' : 'MISMATCH'}` + (bad.length ? ` ⚠ 含 ${bad}` : ''));
+  console.log(`${file}: ${svg.length} B | svg ${open}/${close} ${open === close ? 'OK' : 'MISMATCH'}` + (bad.length ? ` ⚠ ${bad}` : ''));
 }

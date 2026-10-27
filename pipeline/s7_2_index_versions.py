@@ -371,7 +371,12 @@ def main():
             continue
         postings = collections.defaultdict(list)
         for ch in vchunks:
-            for bg, tf in bigrams(ch["text"]).items():
+            # S31：把 huimu（回目）也纳入倒排索引。
+            # 原实现只用 text，导致回目专有词（如第33回「大遭笞挞」的「笞挞」）
+            # 用户直接检索时 0 命中 —— 因为「笞挞」只在回目里出现，正文没有。
+            # 注意：只影响倒排召回面，chunk 的 d:text 内容不变（原文阅读仍显示正文）。
+            _idx = (ch["text"] or "") + " " + (ch.get("huimu") or "")
+            for bg, tf in bigrams(_idx).items():
                 postings[bg].append([ch["chunk_id"], tf])
         with tbt.batch(batch_size=100) as b:
             for term, plist in postings.items():

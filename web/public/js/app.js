@@ -192,7 +192,10 @@ async function route() {
 /* =====================================================================
    ① AI 问答界面（R-401）
    ===================================================================== */
-const STARTERS = [
+// S35：示例问题改为从共享 JSON 读取（与后端预热清单同一数据源）
+// 目的：避免前后端各自硬编码，改一处忘另一处
+// 兜底：JSON 读取失败时用内置值，保证界面不空白
+let STARTERS = [
   { q: '贾宝玉的丫鬟有谁？', k: '事实型 · 可检索' },
   { q: '林黛玉为什么进贾府？', k: '推理型 · 需结合原文' },
   { q: '第19回为什么批语最多？', k: '统计型 · 可验证' },
@@ -200,6 +203,21 @@ const STARTERS = [
   { q: '「千红一窟」有什么隐喻？', k: '推理型 · 脂批证据' },
   { q: '前80回一共多少字？', k: '事实型 · 精确可答' },
 ];
+
+// 异步加载共享清单（启动时调用一次）
+async function loadStarters() {
+  try {
+    const r = await fetch('/data/starters.json?v=' + Date.now());
+    if (!r.ok) return;
+    const d = await r.json();
+    if (Array.isArray(d.starters) && d.starters.length) {
+      STARTERS = d.starters;
+      console.debug('[starters] 已从共享 JSON 加载', STARTERS.length, '条');
+    }
+  } catch (e) {
+    console.warn('[starters] 加载失败，用内置值', e);
+  }
+}
 
 async function renderChat(stage) {
   stage.innerHTML = `
@@ -1553,7 +1571,7 @@ async function renderStats(stage) {
           <div class="kpi">
             <div class="k">正文总字数</div>
             <div class="v" id="k1">${fmt(totalChars)}<small>字</small></div>
-            <div class="d">80 回 · 2,512 段 · 抚琴居校本（不含凡例）</div>
+            <div class="d">80 回 · 2,562 段 · 抚琴居校本（不含凡例）</div>
           </div>
           <div class="kpi">
             <div class="k">脂批条数</div>
@@ -2368,6 +2386,7 @@ async function boot() {
   }
 
   // 后端探测（S4：真实 RAG 服务）
+  await loadStarters();      // S35：先加载共享示例清单，再渲染界面
   await probeBackend();
   state.backendOk = backendStatus.ok;
   const pill = $('#backendStatus');

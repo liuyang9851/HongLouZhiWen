@@ -42,6 +42,7 @@ web/_srv.err
 *.bak-*
 *.bak-fs
 *.bak-arch
+*.bak_s*
 *~
 *.tmp
 *.log

@@ -32,6 +32,8 @@ COPY app.py /app/app.py
 COPY chapter_meta.json /app/chapter_meta.json
 # 人物身份聚合表（S20：全集型问题用，如「宝玉的丫鬟有谁」）
 COPY person_roles.json /app/person_roles.json
+# S35：示例问题 + 预热清单（共享数据源，前端也读同一份）
+COPY starters.json /app/starters.json
 # S21 自定义查询：语料 API + 沙箱
 COPY query_api.py /app/query_api.py
 COPY sandbox.py /app/sandbox.py
