@@ -31,9 +31,13 @@ pipeline/out/
 pipeline/_deprecated_*
 !pipeline/out/README.md
 
-# ===== 前端派生数据（可由 scripts 重建）=====
-web/data/versions/
-web/data/pizhu.json
+# ===== 前端数据 =====
+# S41：原先把 pizhu.json 和 versions/ 忽略了，导致 clone 后
+#       「原文阅读」和「脂批侧栏」空白（数据不在仓库里）。
+#       这两个是**运行时必需**，不是可重建的中间产物，改为提交。
+#       合计约 7.5 MB，可接受。
+# web/data/versions/     ← 已改为提交（360 个章节 JSON）
+# web/data/pizhu.json    ← 已改为提交（1.6 MB 脂批）
 web/_srv.log
 web/_srv.err
 
@@ -57,3 +61,21 @@ web/data/.bgm.pid
 
 # ===== 人物头像：只入库圆形成品，原图 3.2MB 不入库（可用 scripts 重新下载） =====
 web/public/img/avatars/*.jpg
+
+# ===== 运行时产物（S38 部署包补充）=====
+qa_logs/
+web.log
+web.err
+web/_srv.log
+web/_srv.err
+web/data/.bgm.pid
+web/data/keyword_cache.json
+**/_stale_backup/
+*.tmp
+
+# ===== S41：部署数据快照 =====
+# deploy/data 有 48MB（含 23MB 向量）。
+# 完整包通过 GitHub Release 分发（见 docs/38-部署指南.md）。
+# 仓库里只提交轻量的元数据文件，大文件走 Release。
+deploy/data/*.jsonl
+!deploy/data/README.md
