@@ -346,14 +346,14 @@ export function renderQuestionDrivenDiagram() {
    用堆叠横条把「时间花在哪」摊开，才能解释为什么本项目仍选 MapReduce。
    ============================================================ */
 export function renderEngineBenchmark() {
-  const W = 1080;
-  const ROW_H = 62, ROW_GAP = 26;
-  const LABEL_W = 168;          // 左侧引擎名
+  const W = 940;
+  const ROW_H = 74, ROW_GAP = 30;
+  const LABEL_W = 158;          // 左侧引擎名
   const BAR_X = LABEL_W + 16;
-  const BAR_W = 620;            // 条形最大宽度
+  const BAR_W = 600;            // 条形最大宽度
   const TOP = 96;
   const n = 2;
-  const H = TOP + n * ROW_H + (n - 1) * ROW_GAP + 230;
+  const H = TOP + n * ROW_H + (n - 1) * ROW_GAP + 290;
 
   // 实测数据（秒）
   const rows = [
@@ -391,15 +391,15 @@ export function renderEngineBenchmark() {
 <svg id="benchSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
      style="width:100%;height:auto;max-width:1140px;display:block;margin:0 auto">
   <!-- 标题 -->
-  ${txt(W / 2, 34, '同一作业、同一份输入：时间到底花在哪', 17, C.text, 700)}
-  ${txt(W / 2, 56, '文本 bigram 词频统计 · 输入 1,035 行 / 2.0 MB · 产出 133,673 个 key（两边 md5 完全相同）', 12.5, C.muted, 400)}
+  ${txt(W / 2, 34, '同一作业、同一份输入：时间到底花在哪', 20, C.text, 700)}
+  ${txt(W / 2, 56, '文本 bigram 词频统计 · 输入 1,035 行 / 2.0 MB · 产出 133,673 个 key（两边 md5 完全相同）', 15, C.muted, 400)}
 
   <!-- 坐标轴 -->
   ${[0, 4, 8, 12, 16].map((v) => {
     const x = BAR_X + v * scale;
     return `<line x1="${x}" y1="${TOP - 12}" x2="${x}" y2="${TOP + n * (ROW_H + ROW_GAP) - ROW_GAP + 8}"
             stroke="${C.line}" stroke-width="1" stroke-dasharray="3 4"/>
-      ${txt(x, TOP - 20, v + 's', 11.5, C.muted, 400)}`;
+      ${txt(x, TOP - 20, v + 's', 14, C.muted, 400)}`;
   }).join('')}
 
   <!-- 条形 -->
@@ -411,39 +411,39 @@ export function renderEngineBenchmark() {
       const alpha = 1 - k * 0.17;
       const rect = `<rect x="${x}" y="${y}" width="${Math.max(w, 1)}" height="${ROW_H}"
         fill="${r.color}" fill-opacity="${alpha}" stroke="#fff" stroke-width="1.2"/>`;
-      const inner = w > 46 ? txt(x + w / 2, y + ROW_H / 2 + 4.5, sg.v.toFixed(2) + 's', 11, '#fff', 700) : '';
+      const inner = w > 46 ? txt(x + w / 2, y + ROW_H / 2 + 4.5, sg.v.toFixed(2) + 's', 13.5, '#fff', 700) : '';
       x += w;
       return rect + inner;
     }).join('');
     return `
-    ${txt(BAR_X - 14, y + 26, r.name, 14.5, r.color, 700, 'end')}
-    ${txt(BAR_X - 14, y + 45, '合计 ' + r.total.toFixed(2) + ' s', 11.5, C.muted, 400, 'end')}
+    ${txt(BAR_X - 14, y + 26, r.name, 17, r.color, 700, 'end')}
+    ${txt(BAR_X - 14, y + 45, '合计 ' + r.total.toFixed(2) + ' s', 14, C.muted, 400, 'end')}
     ${bars}`;
   }).join('')}
 
   <!-- 图例：每个引擎一组，颜色与条形一致 -->
   ${rows.map((r, ri) => {
-    const ly = TOP + n * (ROW_H + ROW_GAP) + 10 + ri * 24;
+    const ly = TOP + n * (ROW_H + ROW_GAP) + 12 + ri * 28;
     return r.segs.map((sg, k) => {
-      const lx = BAR_X - 30 + k * 176;
+      const lx = BAR_X - 30 + k * 190;
       return `
       <rect x="${lx}" y="${ly}" width="13" height="13" rx="2"
             fill="${r.color}" fill-opacity="${1 - k * 0.17}"/>
-      ${txt(lx + 19, ly + 11, sg.label, 11.5, C.text, 400, 'start')}`;
+      ${txt(lx + 19, ly + 11, sg.label, 14, C.text, 400, 'start')}`;
     }).join('');
   }).join('')}
 
   <!-- 关键结论 -->
   ${(() => {
-    const cy = TOP + n * (ROW_H + ROW_GAP) + 78;
+    const cy = TOP + n * (ROW_H + ROW_GAP) + 92;
     return `
-    <rect x="${LABEL_W - 30}" y="${cy - 22}" width="${W - LABEL_W - 40}" height="132" rx="10"
+    <rect x="${LABEL_W - 30}" y="${cy - 22}" width="${W - LABEL_W - 40}" height="158" rx="10"
           fill="${C.warnBg}" stroke="${C.warn}" stroke-width="1.3"/>
-    ${txt(LABEL_W - 8, cy + 2, '为什么本项目仍然选 MapReduce', 14, C.warn, 700, 'start')}
-    ${txt(LABEL_W - 8, cy + 28, '① 规模太小 —— 输入 2 MB，连一个 HDFS block（128 MB）都没填满，Spark 的启动开销吃掉优势', 12.5, C.text, 400, 'start')}
-    ${txt(LABEL_W - 8, cy + 52, '② 没有迭代 —— 四个作业都是一次性全表扫描，Spark 的内存缓存复用完全用不上', 12.5, C.text, 400, 'start')}
-    ${txt(LABEL_W - 8, cy + 76, '③ 教学更透明 —— MapReduce 日志直接给出 Map → Combine → Reduce 三个数字，shuffle 语义看得见', 12.5, C.text, 400, 'start')}
-    ${txt(LABEL_W - 8, cy + 100, '※ 结论：Spark 更适合「大数据量 + 迭代计算」，本项目的规模用不上它的核心优势', 12.5, C.warn, 600, 'start')}`;
+    ${txt(LABEL_W - 8, cy + 4, '为什么本项目仍然选 MapReduce', 16.5, C.warn, 700, 'start')}
+    ${txt(LABEL_W - 8, cy + 34, '① 规模太小 —— 输入 2 MB，连一个 HDFS block（128 MB）都没填满，Spark 的启动开销吃掉优势', 14.5, C.text, 400, 'start')}
+    ${txt(LABEL_W - 8, cy + 62, '② 没有迭代 —— 四个作业都是一次性全表扫描，Spark 的内存缓存复用完全用不上', 14.5, C.text, 400, 'start')}
+    ${txt(LABEL_W - 8, cy + 90, '③ 教学更透明 —— MapReduce 日志直接给出 Map → Combine → Reduce 三个数字，shuffle 语义看得见', 14.5, C.text, 400, 'start')}
+    ${txt(LABEL_W - 8, cy + 120, '※ 结论：Spark 更适合「大数据量 + 迭代计算」，本项目的规模用不上它的核心优势', 15, C.warn, 600, 'start')}`;
   })()}
 </svg>`;
 }
