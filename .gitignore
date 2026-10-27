@@ -25,6 +25,8 @@ _srv.err
 backend/models/
 *.onnx
 *.bin
+# 但 README 必须入库（说明模型从哪下载）
+!backend/models/README.md
 
 # ===== 数据管道中间产物（可由 pipeline 重建）=====
 pipeline/out/
