@@ -230,15 +230,15 @@ export function renderBuildSequenceDiagram() {
    4 行：查得到 / 找得全 / 答得准 / 存得下
    ============================================================ */
 export function renderQuestionDrivenDiagram() {
-  const W = 1180;
-  const ROW_L = 118;             // 左侧行标签列宽（要放下 3 个汉字 + 内边距）
-  const COL_W = 250;
-  const GAP = 16;
+  const W = 980;
+  const ROW_L = 112;             // 左侧行标签列宽（要放下 3 个汉字 + 内边距）
+  const COL_W = 196;
+  const GAP = 12;
   const X0 = ROW_L + 10;
-  const headY = 40, headH = 44;
-  const cardY0 = 112, cardH = 86, cardGap = 12;
+  const headY = 40, headH = 52;
+  const cardY0 = 128, cardH = 86, cardGap = 12;
   const nRows = 4;
-  const H = cardY0 + nRows * cardH + (nRows - 1) * cardGap + 84;
+  const H = cardY0 + nRows * cardH + (nRows - 1) * cardGap + 118;
 
   const stages = [
     { title: '① 需求', sub: '用户遇到什么', c: C.front, bg: C.frontBg },
@@ -261,7 +261,7 @@ export function renderQuestionDrivenDiagram() {
       tag: '找得全',
       cells: [
         ['换个说法就搜不到了'],
-        ['向量 512 维 + 人物图谱'],
+        ['512 维向量 + 图谱'],
         ['RRF 融合 k=60', '同回去重（每回 2 正文 1 批语）'],
         ['三路互补，召回更稳'],
       ],
@@ -287,20 +287,110 @@ export function renderQuestionDrivenDiagram() {
   ];
 
   // 卡片：1~2 行文字，垂直居中
+  // ---- 文字宽度估算 & 自动折行 ----
+  // 中文按 1em，ASCII 按 0.55em（与实测渲染基本吻合）
+  const textW = (t, fs) => {
+    let w = 0;
+    for (const ch of t) {
+      w += /[\u4e00-\u9fff\uff00-\uffef「」『』（）：，、—→]/.test(ch) ? fs : fs * 0.55;
+    }
+    return w;
+  };
+  /**
+   * 按可用宽度把一行拆成多行
+   * ------------------------------------------------------------------
+   * 关键：不能把英文单词 / 数字切成两半（"bigram" 不能变成 "bi"+"gram"）。
+   * 做法：先把文本切成「不可再分的 token」——连续 ASCII 视作一个整体，
+   *       中文按单字。再按 token 累加宽度折行。
+   */
+  const tokenize = (t) => {
+    const out = [];
+    let buf = '';
+    const flush = () => {
+      if (!buf) return;
+      // ASCII 段若含空格，按空格再切（保留空格在前缀），
+      // 这样长英文串可以在空格处折行，但不会切在单词内部
+      if (buf.includes(' ')) {
+        const parts = buf.split(' ');
+        parts.forEach((p2, i2) => {
+          if (p2) out.push((i2 > 0 ? ' ' : '') + p2);
+        });
+      } else {
+        out.push(buf);
+      }
+      buf = '';
+    };
+    for (const ch of t) {
+      if (/[\x20-\x7e]/.test(ch)) {
+        buf += ch;
+      } else {
+        flush();
+        out.push(ch);            // 中文/全角字符按单字
+      }
+    }
+    flush();
+    return out;
+  };
+
+  const wrapText = (t, fs, maxW) => {
+    if (textW(t, fs) <= maxW) return [t];
+    const toks = tokenize(t);
+    const lines = [];
+    let cur = '';
+    for (const tk of toks) {
+      const cand = cur + tk;
+      if (cur && textW(cand, fs) > maxW) {
+        lines.push(cur);
+        cur = tk === ' ' ? '' : tk;
+      } else {
+        cur = cand;
+      }
+    }
+    if (cur.trim()) lines.push(cur);
+    if (!lines.length) return [t];
+
+    // ---- 避免孤字：末行太短时，从上一行匀 token 过来 ----
+    // 例如「向量 512 维 + 人 / 物图谱」→「向量 512 维 / + 人物图谱」
+    // 判据用「末行字符数」而非像素宽度，避免单位混用
+    const MIN_CHARS = 3;                 // 末行至少 3 个字符
+    let guard = 0;
+    while (lines.length >= 2 && guard++ < 6) {
+      const last = lines[lines.length - 1];
+      if ([...last.replace(/\s/g, '')].length >= MIN_CHARS) break;
+      const prev = lines[lines.length - 2];
+      const ptoks = tokenize(prev);
+      if (ptoks.length < 2) break;
+      const moved = ptoks.pop();
+      const trial = moved + last;
+      if (textW(trial, fs) > maxW) break;          // 搬完会超宽，放弃
+      lines[lines.length - 2] = ptoks.join('');
+      lines[lines.length - 1] = trial;
+    }
+    return lines;
+  };
+
   const card = (x, y, lines, color, emphasize = false) => {
-    const n = lines.length;
-    const first = y + cardH / 2 - (n - 1) * 10 + 5;
+    const FS = 15.5, MAXW = COL_W - 24;      // 左右各留 13
+    // 每条按宽度自动折行，再展平
+    const flat = [];
+    lines.forEach((t, idx) => {
+      wrapText(t, FS, MAXW).forEach((seg, k) => {
+        flat.push({ t: seg, muted: idx > 0 || k > 0 });
+      });
+    });
+    const n = flat.length;
+    const first = y + cardH / 2 - (n - 1) * 13 + 6;
     return `
     ${box(x, y, COL_W, cardH, emphasize ? '#fffdf8' : '#ffffff',
           emphasize ? color + '99' : '#dfd6c7', 9, emphasize ? 1.9 : 1.3)}
-    ${box(x, y, 4, cardH, color, color, 2, 0)}
-    ${lines.map((t, i) => txt(x + 14, first + i * 20, t, 12.5,
-      i === 0 ? C.text : C.muted, i === 0 ? 600 : 400, 'start')).join('')}`;
+    ${box(x, y, 5, cardH, color, color, 2, 0)}
+    ${flat.map((o, i) => txt(x + 13, first + i * 26, o.t, FS,
+      o.muted ? C.muted : C.text, o.muted ? 400 : 600, 'start')).join('')}`;
   };
 
   const rowTag = (y, tag, color) => `
-    ${box(6, y + cardH / 2 - 16, ROW_L - 18, 32, color + '14', color + '55', 16, 1.2)}
-    ${txt(6 + (ROW_L - 18) / 2, y + cardH / 2 + 5, tag, 13.5, color, 700)}`;
+    ${box(6, y + cardH / 2 - 19, ROW_L - 14, 38, color + '14', color + '55', 16, 1.2)}
+    ${txt(6 + (ROW_L - 14) / 2, y + cardH / 2 + 6, tag, 17, color, 700)}`;
 
   return `
 <svg id="qdriveSvg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
@@ -316,8 +406,8 @@ export function renderQuestionDrivenDiagram() {
   ${stages.map((st, i) => {
     const x = X0 + i * (COL_W + GAP);
     return `${box(x, headY, COL_W, headH, st.c, st.c, 9, 0)}
-      ${txt(x + COL_W / 2, headY + 21, st.title, 16.5, '#ffffff', 700)}
-      ${txt(x + COL_W / 2, headY + 37, st.sub, 11.5, '#ffffffcc', 400)}
+      ${txt(x + COL_W / 2, headY + 25, st.title, 20, '#ffffff', 700)}
+      ${txt(x + COL_W / 2, headY + 43, st.sub, 15, '#ffffffcc', 400)}
       ${i < 3 ? `<line x1="${x + COL_W + 2}" y1="${headY + headH / 2}"
             x2="${x + COL_W + GAP - 3}" y2="${headY + headH / 2}"
             stroke="${C.muted}" stroke-width="2" marker-end="url(#qdArrow)"/>` : ''}`;
@@ -332,10 +422,10 @@ export function renderQuestionDrivenDiagram() {
   }).join('')}
 
   <!-- 底部主线说明 -->
-  ${txt(W / 2, H - 40, '★ 这条链的起点不是技术，而是「读《红楼梦》时的一个具体问题」—— 每选一个技术，都对应一个原来答不上来的问题',
-    13.5, C.text, 600)}
-  ${txt(W / 2, H - 18, '需求不清就别选型，选型不清就别写代码：四个阶段一一对应，任何一格空着都会在后面返工',
-    12.5, C.muted, 400)}
+  ${txt(W / 2, H - 48, '★ 这条链的起点不是技术，而是「读《红楼梦》时的一个具体问题」—— 每选一个技术，都对应一个原来答不上来的问题',
+    17, C.text, 600)}
+  ${txt(W / 2, H - 20, '需求不清就别选型，选型不清就别写代码：四个阶段一一对应，任何一格空着都会在后面返工',
+    15.5, C.muted, 400)}
 </svg>`;
 }
 
