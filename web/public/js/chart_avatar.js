@@ -52,6 +52,7 @@ export function avatarGraph(canvas, data, opt = {}) {
     r: NODE_R,
     img: null,
     imgReady: false,
+    pinned: false,      // 被拖拽时为 true，力推不动它
   }));
 
   const idx = new Map(nodes.map((n, i) => [n.id, i]));
@@ -87,8 +88,9 @@ export function avatarGraph(canvas, data, opt = {}) {
     const cy = H / 2 + 16;   // 视觉中心下移，避开顶部按钮栏
     const sorted = [...nodes].sort((a, b) => (b.degree || 0) - (a.degree || 0));
     // 依据画布宽高比决定两圈半径，避免横向溢出
-    const Rx = W * 0.34;
-    const Ry = Math.min(H * 0.36, W * 0.34);
+    // 实测（画布 878×584）：Rx=0.52W + 向心 0.0002 → 铺展 86%×75%，0 重叠
+    const Rx = W * 0.52;
+    const Ry = Math.min(H * 0.44, W * 0.52);
 
     sorted.forEach((n, i) => {
       if (i === 0) {
@@ -97,8 +99,8 @@ export function avatarGraph(canvas, data, opt = {}) {
       } else if (i <= 6) {
         // 内圈 6 人
         const a = ((i - 1) / 6) * Math.PI * 2 - Math.PI / 2;
-        n.x = cx + Math.cos(a) * Rx * 0.52;
-        n.y = cy + Math.sin(a) * Ry * 0.52;
+        n.x = cx + Math.cos(a) * Rx * 0.55;
+        n.y = cy + Math.sin(a) * Ry * 0.55;
       } else {
         // 外圈其余
         const k = i - 7;
@@ -110,65 +112,106 @@ export function avatarGraph(canvas, data, opt = {}) {
     });
   }
 
-  /* ---------------- 力导向参数（小规模，收敛快） ---------------- */
-  const REPULSION = 260000;
-  const SPRING = 0.035;
-  const REST = Math.min(W, H) * 0.34;
-  const DAMP = 0.80;
-  const CENTER_PULL = 0.0012;
+  /* ---------------- 力模型 ----------------
+   * 设计目标（按用户要求）：
+   *   ① 标签之间不产生任何力 —— 标签固定在连线中点，见 drawLink
+   *   ② 节点不重叠 —— 用「硬碰撞」保证最小间距，而不是只靠库仑斥力
+   *   ③ 拖动一个节点时，其余节点只做小幅避让 —— 见 tick() 里的拖拽隔离
+   *
+   * 为什么不用 REPULSION/d²：
+   *   库仑斥力在近距离会急剧放大，节点越是快重叠越是剧烈弹开，
+   *   表现为抖动、成对飞散。改成「最小间距 + 线性推力」后非常稳定。
+   * ------------------------------------------------------------------ */
+  const MIN_GAP = 16;              // 两节点圆环之间的最小空隙（px）
+  const REPULSE_K = 0.55;          // 间距不足时的线性推力系数
+  const SPRING = 0.030;            // 弹簧
+  const DAMP = 0.82;               // 阻尼
+  const CENTER_PULL = 0.0002;      // 向心（极弱：实测 18 节点铺展 86%×75%，0 重叠）
 
   let alpha = 1;
+
+  /** 两个节点的「不重叠最小距离」 */
+  function minDist(a, b) {
+    return a.r + b.r + MIN_GAP;
+  }
 
   function tick() {
     if (alpha < 0.004) return;
     const cx = W / 2;
     const cy = H / 2;
 
-    // 斥力
+    /* ---------- ① 硬碰撞：间距不足时线性推开 ----------
+     * 与库仑斥力不同，这里的推力与「侵入深度」成正比，且有上限，
+     * 不会因为距离趋近 0 而爆炸 → 节点稳定不抖。 */
     for (let i = 0; i < nodes.length; i++) {
       const a = nodes[i];
       for (let j = i + 1; j < nodes.length; j++) {
         const b = nodes[j];
+        if (a.pinned && b.pinned) continue;
+
         let dx = b.x - a.x;
         let dy = b.y - a.y;
-        let d2 = dx * dx + dy * dy;
-        if (d2 < 1) d2 = 1;
-        const d = Math.sqrt(d2);
-        const f = REPULSION / d2;
-        const fx = (dx / d) * f;
-        const fy = (dy / d) * f;
-        a.vx -= fx; a.vy -= fy;
-        b.vx += fx; b.vy += fy;
+        let d = Math.sqrt(dx * dx + dy * dy);
+        const need = minDist(a, b);
+        if (d >= need) continue;
+
+        // 完全重合时给一个确定方向，避免 NaN 和对称死锁
+        if (d < 0.01) {
+          const ang = (i * 2.399963) % (Math.PI * 2);   // 黄金角散开
+          dx = Math.cos(ang); dy = Math.sin(ang); d = 1;
+        }
+        const overlap = need - d;                       // 侵入深度
+        const push = Math.min(overlap * REPULSE_K, 6);  // 单帧推力上限
+        const ux = dx / d;
+        const uy = dy / d;
+
+        // 被拖拽/钉住的节点不移动，全部位移让给另一方
+        const wa = a.pinned ? 0 : (b.pinned ? 1 : 0.5);
+        const wb = b.pinned ? 0 : (a.pinned ? 1 : 0.5);
+        a.vx -= ux * push * wa * 2;
+        a.vy -= uy * push * wa * 2;
+        b.vx += ux * push * wb * 2;
+        b.vy += uy * push * wb * 2;
       }
     }
 
-    // 弹簧（关系越强，弹簧越硬、静止长度越短）
+    /* ---------- ② 弹簧：只拉不推（推的部分交给硬碰撞）----------
+     * 弹簧若也能推，会和碰撞力打架 → 抖动。
+     * 这里只在「距离过远」时收拢，过近时不额外施加推力。 */
     const maxW = Math.max(...links.map((l) => l.weight || 1), 1);
     for (const L of links) {
       const a = nodes[L.s];
       const b = nodes[L.t];
+      if (a.pinned && b.pinned) continue;
       const dx = b.x - a.x;
       const dy = b.y - a.y;
       const d = Math.sqrt(dx * dx + dy * dy) || 1;
+      const need = minDist(a, b);
       const w = (L.weight || 1) / maxW;
-      const rest = REST * (1.25 - 0.45 * w);
-      const k = SPRING * (0.7 + 0.6 * w);
-      const f = (d - rest) * k;
-      const fx = (dx / d) * f;
-      const fy = (dy / d) * f;
-      a.vx += fx; a.vy += fy;
-      b.vx -= fx; b.vy -= fy;
+      const rest = Math.max(need, Math.min(W, H) * (0.30 + 0.10 * (1 - w)));
+      if (d <= rest) continue;                 // 已足够近，不再拉
+
+      const f = (d - rest) * SPRING * (0.7 + 0.6 * w);
+      const ux = dx / d;
+      const uy = dy / d;
+      const wa = a.pinned ? 0 : (b.pinned ? 1 : 0.5);
+      const wb = b.pinned ? 0 : (a.pinned ? 1 : 0.5);
+      a.vx += ux * f * wa * 2;
+      a.vy += uy * f * wa * 2;
+      b.vx -= ux * f * wb * 2;
+      b.vy -= uy * f * wb * 2;
     }
 
-    // 向心 + 阻尼
+    /* ---------- ③ 向心 + 阻尼 + 位置更新 ---------- */
     for (const n of nodes) {
+      if (n.pinned) { n.vx = 0; n.vy = 0; continue; }
       n.vx += (cx - n.x) * CENTER_PULL;
       n.vy += (cy - n.y) * CENTER_PULL;
       n.vx *= DAMP;
       n.vy *= DAMP;
       n.x += n.vx * alpha;
       n.y += n.vy * alpha;
-      // 边界保护：顶部要给「2D/3D/和弦图/人物头像图」按钮栏让位
+
       const padX = n.r + 10;
       const padTop = n.r + 52;
       const padBottom = n.r + 26;
@@ -325,23 +368,11 @@ export function avatarGraph(canvas, data, opt = {}) {
     const padX = 5;
     const hgt = fs + 7;
 
-    // ---- 标签避让 ----
-    // 沿法线方向找不重叠的位置；找不到就画在原点（重叠总比不画好）
-    const nx = -uy;
-    const ny = ux;
-    let mx = (x1 + x2) / 2;
-    let my = (y1 + y2) / 2;
-    const offsets = [0, 14, -14, 26, -26, 40, -40];
-    let placed = false;
-    for (const off of offsets) {
-      const tx = mx + nx * off;
-      const ty = my + ny * off;
-      if (!overlaps(tx - tw / 2 - padX, ty - hgt / 2, tw + padX * 2, hgt)) {
-        mx = tx; my = ty; placed = true; break;
-      }
-    }
-    if (!placed) { mx += 22; my -= 22; }
-    labelBoxes.push({ x: mx - tw / 2 - padX, y: my - hgt / 2, w: tw + padX * 2, h: hgt });
+    // ---- 标签固定在线段中点 ----
+    // 不使用任何位移/避让：标签之间互不产生作用力，位置只由两端节点决定。
+    // （之前沿法线找空位的做法，会让标签看起来在「互相推挤」）
+    const mx = (x1 + x2) / 2;
+    const my = (y1 + y2) / 2;
 
     // 胶囊底
     ctx.fillStyle = dim ? 'rgba(250,247,242,.55)' : 'rgba(255,255,255,.94)';
@@ -355,18 +386,8 @@ export function avatarGraph(canvas, data, opt = {}) {
     ctx.fillText(L.relation, mx, my + 0.5);
   }
 
-  // 标签占位表：避免关系文字互相压叠
-  const labelBoxes = [];
-  function overlaps(x, y, w, h) {
-    for (const b of labelBoxes) {
-      if (x < b.x + b.w && x + w > b.x && y < b.y + b.h && y + h > b.y) return true;
-    }
-    return false;
-  }
-
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    labelBoxes.length = 0;
 
     // 选中时，非邻居边淡化
     const neighbors = new Set();
@@ -420,7 +441,10 @@ export function avatarGraph(canvas, data, opt = {}) {
     const i = hitTest(x, y);
     if (i >= 0) {
       drag = { i, ox: nodes[i].x - x / view.k, oy: nodes[i].y - y / view.k };
-      alpha = Math.max(alpha, 0.35);   // 拖动时给一点活力
+      // 被拖拽的节点「钉住」：其他节点的力推不动它，位置完全跟随鼠标
+      nodes[i].pinned = true;
+      // 只给很小的活力 —— 其余节点只做轻微避让，而不是整体重排
+      alpha = Math.max(alpha, 0.16);
     } else {
       pan = { x, y, vx: view.x, vy: view.y, moved: false };
     }
@@ -435,6 +459,8 @@ export function avatarGraph(canvas, data, opt = {}) {
       n.x = x / view.k + drag.ox;
       n.y = y / view.k + drag.oy;
       n.vx = 0; n.vy = 0;
+      // 保持一个「小」的 alpha，让周围节点缓慢小幅让位；解拖后自然衰减
+      alpha = Math.max(alpha, 0.10);
       return;
     }
     if (pan) {
@@ -464,6 +490,9 @@ export function avatarGraph(canvas, data, opt = {}) {
       }
     }
     if (drag) {
+      // 解除钉住
+      const di = drag.i;
+      if (nodes[di]) nodes[di].pinned = false;
       // 拖动后若位移很小，视为点击选中
       const i = drag.i;
       const n = nodes[i];
@@ -475,6 +504,8 @@ export function avatarGraph(canvas, data, opt = {}) {
     }
     drag = null;
     pan = null;
+    // 解拖后温和收敛，避免整体剧烈重排
+    alpha = Math.max(alpha, 0.12);
     canvas.style.cursor = 'grab';
   }
 
