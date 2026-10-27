@@ -9,6 +9,7 @@
  */
 import { getCorpusStats } from './rag.js';
 import { renderArchDiagram } from './arch_diagram.js';
+import { renderSequenceDiagram, renderDeploymentDiagram } from './diagrams_simple.js';
 
 // 注意：app.js 是本模块的宿主，ES module 求值顺序下 window.__HLM__
 // 可能在模块加载时还未赋值 → 必须延迟到调用时再取。
@@ -213,6 +214,17 @@ export async function renderHome(stage) {
     <!-- ============ 1.5 程序架构图 ============ -->
     <section class="hp-sec">
       <h2 class="hp-h2"><span class="hp-num">2</span>程序架构</h2>
+
+      <h3 class="hp-sub3">先看一次提问经历了什么（顺序图）</h3>
+      <p class="hp-diagram-tip">
+        不用急着看细节 —— 记住这条主线就够了：<b>提问 → 三路召回 → 融合去重 → 交给大模型 → 带着引用回到页面</b>。
+        左边 ① 检索 ② 融合 ③ 生成 ④ 展示 就是回答的四个阶段。
+      </p>
+      <div class="hp-diagram-wrap">
+        ${renderSequenceDiagram()}
+      </div>
+
+      <h3 class="hp-sub3">完整架构（同样的流程，展开到组件级）</h3>
       <p class="hp-arch-intro">
         数据自下而上流动：<b>原始语料</b>存入 HDFS → <b>MapReduce 批统计</b>产出派生数据 →
         <b>HBase</b> 建立倒排索引与向量表 → <b>三路混合检索</b>召回 → <b>LLM</b> 生成带引用的回答。
@@ -227,6 +239,16 @@ export async function renderHome(stage) {
         <div class="hp-lg-item"><span class="hp-lg-dot" style="background:#7a6a52"></span>计算分析</div>
         <div class="hp-lg-item"><span class="hp-lg-dot" style="background:#2f4858"></span>RAG 应用</div>
         <div class="hp-lg-item"><span class="hp-lg-dot" style="background:#5b6b7a"></span>生成与展示</div>
+      </div>
+
+      <h3 class="hp-sub3">这些东西都跑在哪（部署图）</h3>
+      <p class="hp-diagram-tip">
+        三句话讲完：<b>浏览器</b>只负责界面；<b>本机两个进程</b>（Node 静态服务 + FastAPI 容器）负责页面与检索；
+        <b>Docker 里三个节点</b>（master / slave1 / slave2）承担 HDFS 存储与 HBase 检索。
+        大模型在云端，视频与音频留在本地磁盘、按需流式读取。
+      </p>
+      <div class="hp-diagram-wrap">
+        ${renderDeploymentDiagram()}
       </div>
     </section>
 
