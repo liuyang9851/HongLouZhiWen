@@ -41,8 +41,8 @@ export function avatarGraph(canvas, data, opt = {}) {
   let raf = 0;
   let alive = true;
 
-  const NODE_R = 31;          // 头像圆半径（CSS px）
-  const NODE_R_SEL = 38;      // 选中时放大
+  const NODE_R = 28;          // 头像圆半径（CSS px）
+  const NODE_R_SEL = 34;      // 选中时放大
 
   /* ---------------- 数据准备 ---------------- */
   const nodes = data.nodes.map((n, i) => ({
@@ -84,27 +84,36 @@ export function avatarGraph(canvas, data, opt = {}) {
   /* ---------------- 初始布局：主人物居中，其余环形展开 ---------------- */
   function seedLayout() {
     const cx = W / 2;
-    const cy = H / 2 + 22;   // 视觉中心下移，避开顶部按钮栏
-    // 度数最高的放中心
+    const cy = H / 2 + 16;   // 视觉中心下移，避开顶部按钮栏
     const sorted = [...nodes].sort((a, b) => (b.degree || 0) - (a.degree || 0));
-    const R = Math.min(W, H) * 0.35;
+    // 依据画布宽高比决定两圈半径，避免横向溢出
+    const Rx = W * 0.34;
+    const Ry = Math.min(H * 0.36, W * 0.34);
+
     sorted.forEach((n, i) => {
       if (i === 0) {
+        // 度数最高 → 正中
         n.x = cx; n.y = cy;
+      } else if (i <= 6) {
+        // 内圈 6 人
+        const a = ((i - 1) / 6) * Math.PI * 2 - Math.PI / 2;
+        n.x = cx + Math.cos(a) * Rx * 0.52;
+        n.y = cy + Math.sin(a) * Ry * 0.52;
       } else {
-        const a = ((i - 1) / (sorted.length - 1)) * Math.PI * 2 - Math.PI / 2;
-        // 两层：前 6 个内圈，其余外圈
-        const rr = i <= 5 ? R * 0.58 : R;
-        n.x = cx + Math.cos(a) * rr;
-        n.y = cy + Math.sin(a) * rr;
+        // 外圈其余
+        const k = i - 7;
+        const total = sorted.length - 7;
+        const a = (k / Math.max(total, 1)) * Math.PI * 2 - Math.PI / 2;
+        n.x = cx + Math.cos(a) * Rx;
+        n.y = cy + Math.sin(a) * Ry;
       }
     });
   }
 
   /* ---------------- 力导向参数（小规模，收敛快） ---------------- */
-  const REPULSION = 380000;
+  const REPULSION = 260000;
   const SPRING = 0.035;
-  const REST = Math.min(W, H) * 0.44;
+  const REST = Math.min(W, H) * 0.34;
   const DAMP = 0.80;
   const CENTER_PULL = 0.0012;
 
@@ -167,7 +176,7 @@ export function avatarGraph(canvas, data, opt = {}) {
       n.y = Math.max(padTop, Math.min(H - padBottom, n.y));
     }
 
-    alpha *= 0.990;
+    alpha *= 0.986;
   }
 
   /* ---------------- 转换与命中 ---------------- */
@@ -313,12 +322,28 @@ export function avatarGraph(canvas, data, opt = {}) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     const tw = ctx.measureText(L.relation).width;
-    const mx = (x1 + x2) / 2;
-    const my = (y1 + y2) / 2;
-
-    // 胶囊底
     const padX = 5;
     const hgt = fs + 7;
+
+    // ---- 标签避让 ----
+    // 沿法线方向找不重叠的位置；找不到就画在原点（重叠总比不画好）
+    const nx = -uy;
+    const ny = ux;
+    let mx = (x1 + x2) / 2;
+    let my = (y1 + y2) / 2;
+    const offsets = [0, 14, -14, 26, -26, 40, -40];
+    let placed = false;
+    for (const off of offsets) {
+      const tx = mx + nx * off;
+      const ty = my + ny * off;
+      if (!overlaps(tx - tw / 2 - padX, ty - hgt / 2, tw + padX * 2, hgt)) {
+        mx = tx; my = ty; placed = true; break;
+      }
+    }
+    if (!placed) { mx += 22; my -= 22; }
+    labelBoxes.push({ x: mx - tw / 2 - padX, y: my - hgt / 2, w: tw + padX * 2, h: hgt });
+
+    // 胶囊底
     ctx.fillStyle = dim ? 'rgba(250,247,242,.55)' : 'rgba(255,255,255,.94)';
     roundRect(mx - tw / 2 - padX, my - hgt / 2, tw + padX * 2, hgt, 5);
     ctx.fill();
@@ -330,8 +355,18 @@ export function avatarGraph(canvas, data, opt = {}) {
     ctx.fillText(L.relation, mx, my + 0.5);
   }
 
+  // 标签占位表：避免关系文字互相压叠
+  const labelBoxes = [];
+  function overlaps(x, y, w, h) {
+    for (const b of labelBoxes) {
+      if (x < b.x + b.w && x + w > b.x && y < b.y + b.h && y + h > b.y) return true;
+    }
+    return false;
+  }
+
   function draw() {
     ctx.clearRect(0, 0, W, H);
+    labelBoxes.length = 0;
 
     // 选中时，非邻居边淡化
     const neighbors = new Set();

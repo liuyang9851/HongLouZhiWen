@@ -58,7 +58,9 @@ MAIN = [
     "贾宝玉", "林黛玉", "薛宝钗", "王熙凤",
     "史湘云", "贾探春", "贾迎春", "贾惜春",
     "李纨",   "妙玉",   "袭人",   "晴雯",
-    "秦可卿", "贾琏",   "王夫人", "邢岫烟",
+    "贾琏",   "王夫人", "邢岫烟",
+    # 补充：贾府三代结构 + 宝玉的姐姐
+    "贾政",   "贾母",   "贾元春",
 ]
 
 # ---- 关系词归一化：同义 → 统一显示名 ----
@@ -81,8 +83,45 @@ NORM = {
     "主人": "主仆",
 }
 
-# 归一化后仍视为「同一对关系」的键（用于去重）
+# ---- 亲属关系：按「主语的性别」决定显示词 ----
+# 值 = (关系中「前者」的角色, 关系中「后者」的角色)
+# 例如 ("儿子","王夫人") → 前者是儿子、后者是母亲 → 母子
+#      ("母亲","贾宝玉") → 前者是母亲、后者是儿子 → 母子
+# 只记录「前者是什么角色」，父/母由对方节点的实际性别决定。
+# 这样 "贾元春--[女]-->贾政" 与 "贾元春--[女儿]-->贾政" 会得到同一个词。
+KIN = {
+    "父亲": "父", "父": "父",
+    "母亲": "母", "母": "母",
+    "儿子": "子", "子": "子",
+    "女儿": "女", "女": "女",
+    "儿媳": "媳", "婆婆": "婆",
+}
+
+# 女性人物（用于判定「父/母」「子/女」的对方性别）
+FEMALE = {
+    "贾母","王夫人","王熙凤","林黛玉","薛宝钗","史湘云","贾探春","贾迎春",
+    "贾惜春","李纨","妙玉","袭人","晴雯","邢岫烟","贾元春","平儿","秦可卿",
+    "香菱","薛宝琴","尤三姐","鸳鸯","紫鹃",
+}
+
+def kin_label(role, other_name):
+    """role=前者的角色；other_name=后者姓名 → 统一词（按后者性别选字）"""
+    female = other_name in FEMALE
+    if role == "父" and not female: return "父子"
+    if role == "父" and female:     return "父女"
+    if role == "母" and not female: return "母子"
+    if role == "母" and female:     return "母女"
+    if role == "子" and not female: return "父子"
+    if role == "子" and female:     return "母子"
+    if role == "女" and not female: return "父女"
+    if role == "女" and female:     return "母女"
+    if role == "媳":                return "婆媳"
+    if role == "婆":                return "婆媳"
+    return None
+
+
 def norm_rel(r):
+    """把原始关系词归一化为显示名（尽量不带方向）"""
     r = (r or "").strip()
     return NORM.get(r, r)
 
@@ -129,13 +168,18 @@ def main():
         s, t = e["source"], e["target"]
         if s not in ids or t not in ids or s == t:
             continue
-        rel = norm_rel(e["relation"])
+        raw = (e["relation"] or "").strip()
+        # 亲属关系：按语义方向推出显示词（关键修复）
+        rel = None
+        if raw in KIN:
+            rel = kin_label(KIN[raw], t)
+        if rel is None:
+            rel = norm_rel(raw)
         if not rel:
             continue
         key = (frozenset((s, t)), rel)
-        # 保留出现次数，用于决定显示哪个方向
         if key not in seen:
-            seen[key] = {"a": s, "b": t, "rel": rel, "n": 0, "raw": e["relation"]}
+            seen[key] = {"a": s, "b": t, "rel": rel, "n": 0, "raw": raw}
         seen[key]["n"] += 1
 
     print(f"原始边(主要人物间): {sum(1 for e in g['edges'] if e['source'] in ids and e['target'] in ids)}")
@@ -151,16 +195,55 @@ def main():
     edges = []
     for (a, b), rels in pairs.items():
         rels.sort(key=lambda x: -x[1])
-        # 子女关系只显示一条（「父子 / 母子」这种并列在图上会读成两种关系）
-        CHILD = {"父子", "母子", "母女", "父子"}
         top = [r for r, _ in rels]
-        if len(set(top) & CHILD) > 1:
-            keep = next(r for r in top if r in CHILD)
-            top = [keep] + [r for r in top if r not in CHILD]
-        label = " / ".join(top[:2])
+
+        # ---- 统一方向与词面 ----
+        # 1) 「奶奶/外祖母/孙女/外孙女」等方向性称呼 → 统一为中性词
+        NEUTRAL = {
+            "奶奶": "祖孙", "祖父": "祖孙",
+            "外祖母": "祖孙", "外祖父": "祖孙",
+            "孙女": "祖孙", "孙子": "祖孙",
+            "外孙女": "祖孙", "外孙": "祖孙",
+            "小儿媳": "婆媳", "大儿媳": "婆媳", "婆婆": "婆媳", "儿媳": "婆媳",
+            "嫂子": "叔嫂", "内侄女": "姑侄",
+        }
+        # 2) 长辈在前的组合词：若出现反向写法，翻成规范写法
+        FLIP = {
+            "母子": ("母", "子"), "父子": ("父", "子"),
+            "母女": ("母", "女"), "父女": ("父", "女"),
+        }
+        fixed = []
+        for r in top:
+            r2 = NEUTRAL.get(r, r)
+            if r2 not in fixed:
+                fixed.append(r2)
+        label = " / ".join(fixed[:2])
+
+        # 方向修正：组合词形如「母子/父子」已隐含「长辈在前」，
+        # 因此必须让长辈在 source 位置。用逐对的辈分关系判定（比全局 ELDER 集合准）。
+        ELDER_OF = {
+            ("贾母","贾政"), ("贾母","贾宝玉"), ("贾母","林黛玉"), ("贾母","史湘云"),
+            ("贾母","王夫人"), ("贾母","邢岫烟"),
+            ("贾政","贾宝玉"), ("贾政","贾元春"), ("贾政","贾探春"),
+            ("王夫人","贾宝玉"), ("王夫人","贾元春"),
+            ("刘姥姥",),
+        }
+        elder_pairs = {
+            ("贾母","贾政"),("贾母","贾宝玉"),("贾母","林黛玉"),("贾母","史湘云"),
+            ("贾母","王夫人"),
+            ("贾政","贾宝玉"),("贾政","贾元春"),("贾政","贾探春"),
+            ("王夫人","贾宝玉"),("王夫人","贾元春"),
+        }
+        src, dst = a, b
+        if fixed and fixed[0] in FLIP:
+            if (src, dst) in elder_pairs:
+                pass
+            elif (dst, src) in elder_pairs:
+                src, dst = dst, src
+
         edges.append({
-            "source": a,
-            "target": b,
+            "source": src,
+            "target": dst,
             "relation": label,
             "all_relations": [r for r, _ in rels],
             "weight": sum(n for _, n in rels),
