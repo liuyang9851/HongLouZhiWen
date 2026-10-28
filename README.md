@@ -24,15 +24,30 @@ cp backend/.env.example backend/.env
 **完整部署文档**（含版本兼容性、三条路线、常见问题）：
 👉 **[docs/38-部署指南.md](docs/38-部署指南.md)**
 
-### 三条部署路线
+### 一键启动（四种模式，同一入口）
 
-| 你的环境 | 命令 | 有 Hadoop |
-|:---|:---|:---:|
-| 有 Hadoop 集群（2.x/3.x 均可） | `./start.sh` | ✅ 用你的 |
-| **只有 Docker** | `./start.sh --with-hdfs` | ✅ **内置单节点 HDFS** |
-| 只想最快看到效果 | `./start.sh --local-only` | ❌ |
+```bash
+./start.sh --cluster       # 完整 Hadoop 集群（HBase）
+./start.sh --with-hdfs     # 单节点 HDFS（只有 Docker）
+./start.sh --local-only    # 纯本地文件（最快）
+./start.sh                 # 自动探测
 
-三条路线的**检索逻辑与结果完全相同**（实测 9/10 命中一致）。
+./start.sh --status        # 只看状态
+./start.sh --stop          # 停止全部
+```
+
+| 模式 | 数据源 | 需要 Hadoop | 冷启动 |
+|:---|:---|:---:|:---:|
+| `--cluster` | HBase（完整集群） | ✅ 已有 | 11~20 秒 |
+| `--with-hdfs` | 单节点 HDFS | ✅ 自带 | 1~2 分钟 |
+| `--local-only` | 本地 JSONL | ❌ | 30 秒 |
+
+**四种模式检索结果完全相同**（实测 5/5 命中一致）。
+
+> Windows / WSL 用户：前端由 `start-web.ps1` 在 Windows 侧启动
+> （WSL2 的 localhost 转发单向，WSL 内起的服务 Windows 访问不到）。
+> 脚本会自动处理。
+
 
 ### 版本兼容性（重要）
 
