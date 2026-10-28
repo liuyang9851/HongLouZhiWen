@@ -1,0 +1,11 @@
+{
+ "home": 1000,
+ "principle": 1000,
+ "chat": 1000,
+ "reader": 1000,
+ "stats": 1000,
+ "graph": 1000,
+ "guiyou": 1000,
+ "corpus": 1000,
+ "ops": 1000
+}

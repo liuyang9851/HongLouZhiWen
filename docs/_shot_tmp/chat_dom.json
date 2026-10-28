@@ -1,0 +1,139 @@
+{
+ "ta": [
+  {
+   "tag": "TEXTAREA",
+   "id": "chatTextarea",
+   "cls": "",
+   "ph": "问《红楼梦》的任何问题…  Enter 发送 / Shift+Enter 换行",
+   "txt": ""
+  }
+ ],
+ "btns": [
+  {
+   "tag": "BUTTON",
+   "id": "btnModelCfg",
+   "cls": "btn xs",
+   "ph": "",
+   "txt": "⚙ 配置"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnFullscreen",
+   "cls": "btn xs",
+   "ph": "",
+   "txt": "⛶\n全屏"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnBgm",
+   "cls": "btn xs active",
+   "ph": "",
+   "txt": "🔊"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "newChat",
+   "cls": "btn primary",
+   "ph": "",
+   "txt": "＋ 新对话"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnClearHistory",
+   "cls": "btn ghost",
+   "ph": "",
+   "txt": "🗑"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "starter",
+   "ph": "",
+   "txt": "贾宝玉的丫鬟有谁？\n事实型 · 可检索"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "starter",
+   "ph": "",
+   "txt": "林黛玉为什么进贾府？\n推理型 · 需结合原文"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "starter",
+   "ph": "",
+   "txt": "第19回为什么批语最多？\n统计型 · 可验证"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "starter",
+   "ph": "",
+   "txt": "宝玉和黛玉是什么关系？\n图谱型 · 走知识图谱"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "starter",
+   "ph": "",
+   "txt": "「千红一窟」有什么隐喻？\n推理型 · 脂批证据"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "starter",
+   "ph": "",
+   "txt": "前80回一共多少字？\n事实型 · 精确可答"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnEvidence",
+   "cls": "icon-btn",
+   "ph": "",
+   "txt": "🔍"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnThink",
+   "cls": "icon-btn on",
+   "ph": "",
+   "txt": "🧠"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnCustomQuery",
+   "cls": "icon-btn",
+   "ph": "",
+   "txt": "🔬"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "btnSend",
+   "cls": "btn primary sm",
+   "ph": "",
+   "txt": "发送"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "evClose",
+   "cls": "icon-btn",
+   "ph": "",
+   "txt": "✕"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "",
+   "ph": "",
+   "txt": "🎯 就此提问"
+  },
+  {
+   "tag": "BUTTON",
+   "id": "",
+   "cls": "",
+   "ph": "",
+   "txt": "复制"
+  }
+ ]
+}
