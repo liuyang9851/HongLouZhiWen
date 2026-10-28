@@ -81,3 +81,9 @@ web/data/keyword_cache.json
 # 仓库里只提交轻量的元数据文件，大文件走 Release。
 deploy/data/*.jsonl
 !deploy/data/README.md
+
+# ===== 文档构建临时产物（S40 补充）=====
+docs/_build/
+docs/_shot_tmp/
+docs/_ref_preview/
+docs/_factsheet-*.md
