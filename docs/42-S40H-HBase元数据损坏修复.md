@@ -313,13 +313,45 @@ hlm_chunks 分布:
 
 **三种模式都已修复**，检索质量不受影响（5/5 命中保持）。
 
-### 上游要不要改
+### 上游已根治（S40b 第二轮）
 
-`pipeline/s10_1_unify_pizhu.py` 的 chunk_id 生成逻辑**没有改**
-（它属于历史数据管道，改动会牵动全量重建）。
+`pipeline/s10_1_unify_pizhu.py` 的 `make_chunks()` 已修改。
+在返回前对**冲突项**追加 `_{seg}` 后缀：
 
-当前策略：**在数据层修一次，固化成 `deploy/data/*.jsonl`**，
-后续部署直接用修复后的文件。如果将来重跑上游管道，需要记得再跑一次消解。
+```python
+by = collections.defaultdict(list)
+for c in chunks:
+    by[c["chunk_id"]].append(c)
+for cid, items in by.items():
+    if len(items) > 1:
+        for c in items:
+            c["chunk_id"] = f"{cid}_{c['seg']}"
+```
+
+**为什么用后缀而不是把 seg 纳入哈希**：
+
+数据文件里只存了已哈希的 `chunk_id`，没有 `fp` 原值，
+无法用新哈希重算历史数据。用后缀方案能与已发布的
+`deploy/data/*.jsonl` **完全兼容**。
+
+实测验证：
+
+```
+总记录: 8,662
+原始 cid 唯一数: 8,510
+冲突组: 129
+需加后缀: 281 条
+
+模拟新逻辑结果:
+  唯一 cid: 8,662
+  与记录数一致: ✅
+  与现有数据 id 集合一致: ✅
+```
+
+**所以重跑上游管道不会破坏已有向量** —— id 集合完全相同。
+
+`s40_import_pizhu.py` 里保留同样的消解逻辑，作为读取旧数据文件时的保险
+（幂等，对已修复的数据不再改动）。
 
 ---
 
