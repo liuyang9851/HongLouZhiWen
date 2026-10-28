@@ -89,15 +89,18 @@ def main():
                 recs.append(json.loads(line))
     log(f"  {len(recs):,} 条")
 
-    # ---- 消解 chunk_id 冲突 ----
+    # ---- 消解 chunk_id 冲突（兼容旧数据的保险）----
     #
-    # 问题：上游 s10_1_unify_pizhu.py 用
+    # 上游 s10_1_unify_pizhu.py 原先用
     #   cid = sha1(f"{ver}|{hui}|{fp[:24]}|{STRATEGY_REV}")[:16]
-    # 其中 fp 是**文本指纹**。同一条批语可能同时出现在两个位置
-    # （实测：seg=991 侧批 / seg=993 眉批，文本相同），指纹相同 → cid 相同
-    # → 写入 HBase 时后写覆盖先写，8,662 条只剩 8,662 条（丢 152 条）。
+    # 其中 fp 是归一化文本前 24 字符。一条批语在不同批型里可能被切成两条
+    # （seg=991 侧批 152 字 / seg=993 眉批 128 字，前 24 字相同）
+    # → fp[:24] 相同 → cid 相同 → 写入时后覆盖先
+    # → 源文件 8,662 条，实际只入库 8,510 条（丢 152 条，含 1 条回末总评）。
     #
-    # 修法：只在**真正冲突**时给 cid 加 seg 后缀，不影响不冲突的 8,533 条。
+    # **上游已修**（S40b）：make_chunks 末尾对冲突项加 _{seg} 后缀。
+    # 这里保留同样逻辑，作为读取旧数据文件时的保险——幂等，
+    # 对已修复的数据不会再改动（那时已无冲突）。
     import collections as _col
     _by_cid = _col.defaultdict(list)
     for _r in recs:

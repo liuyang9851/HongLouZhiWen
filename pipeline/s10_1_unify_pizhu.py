@@ -260,7 +260,8 @@ def make_chunks(records):
     for i, r in enumerate(records):
         text = r["text"]
         hui = r["hui"]
-        # chunk_id 带 ver + 指纹前 8 位：改策略/换来源都会变
+        # chunk_id = sha1(ver | hui | fp前24 | STRATEGY_REV)[:16]
+        # 「改策略/换来源都会变」——这个设计本身没问题。
         cid = sha1(f"{r['ver']}|{hui:03d}|{r['fp'][:24]}|{STRATEGY_REV}")[:16]
         chunks.append({
             "chunk_id": cid,
@@ -282,6 +283,32 @@ def make_chunks(records):
             "pizhu_page": r.get("page"),
             "text": text,
         })
+
+    # ---- S40b：消解 chunk_id 碰撞 ----
+    #
+    # 问题：fp 是归一化文本的前 24 字符。一条批语在不同批型里可能被切成
+    #   两条，前缀相同、尾部不同：
+    #     seg=991 侧批 152 字「又是李嬷，事有凑巧…」
+    #     seg=993 眉批 128 字「又是李嬷，事有凑巧…」（前 24 字一样）
+    #   → fp[:24] 相同 → cid 相同 → 写 HBase 时后覆盖先
+    #   实测 129 组冲突，丢 152 条脂批（含 1 条回末总评）。
+    #
+    # 修法：**只给冲突的那些**加 _{seg} 后缀，不冲突的保持原 id。
+    #   这样与已发布的 deploy/data/*.jsonl 完全兼容（那些数据就是这样修的），
+    #   且不影响任何已有向量（向量的 chunk_id 也是同一套后缀）。
+    _by = collections.defaultdict(list)
+    for c in chunks:
+        _by[c["chunk_id"]].append(c)
+    _n_fix = 0
+    for _cid, _items in _by.items():
+        if len(_items) > 1:
+            for _c in _items:
+                _c["chunk_id"] = f"{_cid}_{_c['seg']}"
+                _n_fix += 1
+    if _n_fix:
+        log(f"  chunk_id 碰撞: {len([k for k,v in _by.items() if len(v)>1])} 组，"
+            f"加后缀 {_n_fix} 条")
+
     return chunks
 
 
