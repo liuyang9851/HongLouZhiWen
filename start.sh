@@ -304,18 +304,23 @@ if [ "$MODE" = "cluster" ]; then
         hlm-rag-api:latest >/dev/null || { error "后端容器启动失败"; exit 1; }
 
     info "等待后端加载 $EXPECT_CHUNKS chunk ..."
+    N=""
     for i in $(seq 1 40); do
         N=$(get_nchunks)
         if [ "$N" = "$EXPECT_CHUNKS" ]; then
             ok "后端就绪（$((i*3)) 秒）"; break
         fi
-        [ "$i" -eq 40 ] && {
-            error "后端超时（n_chunks=$N）"
-            echo "        1. docker logs hlm-api --tail 30"
-            echo "        2. docker cp tools/check_hbase_tables.py master:/tmp/ && \\"
-            echo "           docker exec master python3 /tmp/check_hbase_tables.py"
+        if [ "$i" -eq 40 ]; then
+            echo
+            error "后端超时（n_chunks=${N:-无响应}）"
+            echo
+            echo "  逐表校验 HBase 数据："
+            docker cp tools/check_hbase_tables.py master:/tmp/ 2>/dev/null || true
+            docker exec master python3 /tmp/check_hbase_tables.py 2>&1 | sed 's/^/    /' || true
+            echo
+            echo "  其他：docker logs hlm-api --tail 30"
             exit 1
-        }
+        fi
         sleep 3; printf "."
     done
     echo
@@ -473,17 +478,39 @@ else
 
     info "等待后端加载 $EXPECT_CHUNKS chunk ..."
     N=""
-    for _ in $(seq 1 120); do
+    for i in $(seq 1 90); do
         N=$(get_nchunks)
         if [ "$N" = "$EXPECT_CHUNKS" ]; then break; fi
-        sleep 2; printf "."
+        # 每 15 秒报一次实际值，别让用户干等
+        if [ $((i % 15)) -eq 0 ]; then
+            echo
+            dim "  [${i}0s] 当前 n_chunks=${N:-无响应}"
+        else
+            printf "."
+        fi
+        sleep 10
     done
     echo
 
     if [ "$N" != "$EXPECT_CHUNKS" ]; then
         error "数据未正确加载（n_chunks=${N:-无响应}，应为 $EXPECT_CHUNKS）"
         echo
-        echo "  排查："
+        # 差 152 是最典型的情况：HDFS/本地数据里的 chunk_id 没消解
+        if [ -n "$N" ] && [ "$N" != "-1" ] && [ "$N" -lt "$EXPECT_CHUNKS" ] 2>/dev/null; then
+            echo "  数据比预期少 $((EXPECT_CHUNKS - N)) 条。"
+            echo "  最常见原因：数据文件里的 chunk_id 有碰撞（旧版数据）。"
+            echo "    验证："
+            if [ "$DATA_SOURCE" = "hdfs" ]; then
+                echo "      docker exec master hdfs dfs -cat /hlm/warehouse/pizhu3src/pizhu_3src.jsonl \\"
+                echo "        | wc -l        # 应是 8662"
+            else
+                echo "      wc -l deploy/data/pizhu_3src.jsonl   # 应是 8662"
+            fi
+            echo "    修复：用 deploy/data/pizhu_3src.jsonl 覆盖远端数据"
+            echo "          （详见 docs/42-S40H-HBase元数据损坏修复.md 第六章）"
+            echo
+        fi
+        echo "  其他排查："
         echo "    1. docker logs hlm-api --tail 30"
         echo "    2. docker exec hlm-api python3 -c \"import data_source;print(data_source.describe())\""
         [ "$DATA_SOURCE" = "local" ] && echo "    3. docker exec hlm-api ls -la /app/data   # 应有 8 个文件"
