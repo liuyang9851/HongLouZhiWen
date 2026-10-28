@@ -121,6 +121,22 @@ if [ "$HOSTNAME" = "master" ]; then
         org.apache.spark.deploy.master.Master \
         --host master --port 7077 --webui-port 8080
 
+    # ---- HBase Thrift（9090）----
+    # 重要：Thrift 不是 HBase Master 的子进程，容器重启后**不会自动启动**。
+    #   项目后端靠 happybase 连 9090，没它就全部检索失败。
+    #   这里加一个后台守护：每 30 秒检查一次，不在就拉起。
+    (
+        while true; do
+            sleep 30
+            if ! nc -z localhost 9090 2>/dev/null; then
+                log "  Thrift 9090 未监听，自动拉起"
+                nohup hbase thrift start > /logs/hbase-thrift.log 2>&1 &
+                sleep 25
+            fi
+        done
+    ) &
+    log "  HBase Thrift 守护已启动（30 秒检查一次）"
+
 # =============================================================
 # SLAVE
 # =============================================================
