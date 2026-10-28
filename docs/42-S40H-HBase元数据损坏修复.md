@@ -243,18 +243,96 @@ docker exec master pip3 install onnxruntime
 
 ---
 
-## 七、遗留问题
+## 七、后续修复（S40b 补充）
 
-| # | 问题 | 影响 |
-|:--:|:---|:---|
-| 1 | slave 容器 healthcheck 显示 unhealthy | 健康检查脚本依赖 `nc` 探端口，RegionServer 是边缘服务时可失败。不影响功能 |
-| 2 | `entrypoint-fixed.sh` 未进镜像 | 依赖 compose override 挂载。重建镜像后需重新集成 |
-| 3 | Hive 未启动 | `s3` 建 Hive 外部表被跳过，SQL 存在 `/tmp/hlm_hive.sql` |
-| 4 | ZK 数据每轮崩溃会累积 | 长期运行需监控 `/data/zookeeper` 大小 |
+### 7.1 healthcheck 误报 unhealthy
+
+**现象**：slave1/slave2 一直显示 `unhealthy`，但服务实际正常。
+
+**根因**：healthcheck 要求四个端口全通：
+
+```
+:9864 DataNode       ✓
+:8042 NodeManager    ✓
+:16020 RegionServer  ✓（监听在 IPv6）
+:8081 Spark Worker   ✗ 未运行
+```
+
+RegionServer 和 Spark Worker 已降为**边缘服务**，不保证一直在线，
+所以健康检查必然失败。
+
+**修复**：
+
+```yaml
+# slave：只查真正必需的
+nc -z slave1 9864 && nc -z slave1 8042
+
+# master：去掉 7077（Spark Master 也是边缘服务）
+nc -z master 9000 && nc -z master 8088 && nc -z master 16000
+```
+
+### 7.2 HBase Thrift 不自动启动
+
+**现象**：每次容器重建后，所有检索返回 500：
+
+```
+TTransportException: TTransportException(type=1,
+  message="Could not connect to ('master', 9090)")
+```
+
+**根因**：HBase Thrift（9090）**不是 HBase Master 的子进程**。
+`hbase thrift start` 需要单独启动，容器重启不会自动带起。
+
+**修复**：在 `entrypoint-fixed.sh` 的 master 分支加后台守护：
+
+```bash
+(
+    while true; do
+        sleep 30
+        if ! nc -z localhost 9090 2>/dev/null; then
+            log "  Thrift 9090 未监听，自动拉起"
+            nohup hbase thrift start > /logs/hbase-thrift.log 2>&1 &
+            sleep 25
+        fi
+    done
+) &
+```
+
+实测日志：
+
+```
+[cluster] 11:33:04   HBase Thrift 守护已启动（30 秒检查一次）
+[cluster] 11:33:34   Thrift 9090 未监听，自动拉起
+→ 8 秒后就绪
+```
+
+### 7.3 dead servers 残留
+
+**现象**：`hbase shell` 的 `status` 显示 `2 dead servers`。
+
+**实际情况**：这是历史会话残留，容器重建后 HBase 自动清理了。当前为 `0 dead servers`。
+
+如果要手动清，可以用：
+
+```bash
+echo "status 'simple'"   # 先确认是哪些
+# HBase 2.x 会在 RegionServer 泄漏检测超时后自动清理
+```
 
 ---
 
-## 八、经验教训
+## 八、遗留问题
+
+| # | 问题 | 影响 |
+|:--:|:---|:---|
+| 1 | `entrypoint-fixed.sh` 未进镜像 | 依赖 compose override 挂载。重建镜像后需重新集成 |
+| 2 | Hive 未启动 | `s3` 建 Hive 外部表被跳过，SQL 存在 `/tmp/hlm_hive.sql` |
+| 3 | ZK 数据每轮崩溃会累积 | 长期运行需监控 `/data/zookeeper` 大小 |
+| 4 | Thrift 守护有 30 秒窗口 | 容器刚起时可能有 30~55 秒检索失败窗口 |
+
+---
+
+## 九、经验教训
 
 ### 8.1 `wait -n` 是容器化多服务的大坑
 
@@ -272,13 +350,18 @@ done
 
 ### 8.2 compose 卷名必须用 `docker inspect` 确认
 
+compose 会自动给卷加**项目名前缀**：`master-data` → `hadoop-lab_master-data`。
+
 ```bash
 # 错：假设卷名就是 compose 里写的
--v master-data:/data
+-v master-data:/data        # 会创建一个同名的空卷
 
 # 对：先看实际挂载
-docker inspect master --format '{{range .Mounts}}{{.Name}}{{end}}'
+docker inspect master --format '{{range .Mounts}}{{.Name}} -> {{.Destination}}{{println}}{{end}}'
 ```
+
+**这次排查最耗时的就是这个**：用错卷名清了 8 次 ZK 都是空操作，
+真实的 8 MB ZK 数据（含 HBase meta 的陈旧注册）从未被动过。
 
 ### 8.3 容器启动顺序要靠显式等待，不能靠 sleep
 
@@ -297,7 +380,25 @@ wait_for() {
 }
 ```
 
-### 8.4 HBase 的 meta 状态存在三处，必须同时清
+### 8.4 边缘服务不能进 healthcheck
+
+把某服务降为"边缘"（允许崩溃重拉）后，**必须同时把它从 healthcheck 里移除**，
+否则容器会一直显示 unhealthy。
+
+这是"服务分级"的配套动作，容易漏。
+
+### 8.5 非子进程的守护服务要单独保活
+
+HBase Thrift、HiveServer2 这类**不是主进程子进程**的服务，
+容器重启后不会自动起。需要在 entrypoint 里加轮询守护。
+
+判断方法：
+```bash
+# 看进程树，是否挂在主进程下
+docker exec <c> ps -ef --forest | grep -A2 hbase
+```
+
+### 8.6 HBase 的 meta 状态存在三处，必须同时清
 
 1. HDFS `/hbase/data/hbase/meta/`（表数据）
 2. HDFS `/hbase/MasterData/`（Master 状态）
