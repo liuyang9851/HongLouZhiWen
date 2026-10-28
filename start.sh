@@ -226,7 +226,7 @@ docker run -d \
     --restart unless-stopped \
     hlm-api >/dev/null
 
-info "等待后端就绪（加载 11,780 chunk + 11,957 向量）..."
+info "等待后端就绪（加载 11,932 chunk + 11,957 向量）..."
 for _ in $(seq 1 120); do
     if curl -sf http://127.0.0.1:8000/health >/dev/null 2>&1; then break; fi
     sleep 2; printf "."
@@ -237,8 +237,8 @@ HEALTH=$(curl -sf http://127.0.0.1:8000/health 2>/dev/null || echo "")
 [ -z "$HEALTH" ] && { error "后端启动失败"; echo "  查看: docker logs hlm-api"; exit 1; }
 
 NCHUNK=$(echo "$HEALTH" | grep -o '"n_chunks":[[:space:]]*[0-9-]*' | grep -o '[0-9-]*$')
-if [ "$NCHUNK" != "11780" ]; then
-    error "数据未正确加载（n_chunks=$NCHUNK，应为 11780）"
+if [ "$NCHUNK" != "11932" ]; then
+    error "数据未正确加载（n_chunks=$NCHUNK，应为 11932）"
     echo
     echo "  排查："
     echo "    1. docker logs hlm-api | head -30"

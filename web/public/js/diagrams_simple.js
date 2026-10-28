@@ -52,7 +52,7 @@ export function renderSequenceDiagram() {
   const heads = [
     { x: X[0], name: '用户 / 浏览器', sub: '原生 ES Module', c: C.front, bg: C.frontBg },
     { x: X[1], name: 'FastAPI 后端', sub: ':8000', c: C.api, bg: C.apiBg },
-    { x: X[2], name: 'HBase 索引', sub: '11,780 chunk', c: C.db, bg: C.dbBg },
+    { x: X[2], name: 'HBase 索引', sub: '11,932 chunk', c: C.db, bg: C.dbBg },
     { x: X[3], name: 'DeepSeek', sub: '大模型 API', c: C.llm, bg: C.llmBg },
   ];
 
@@ -218,7 +218,7 @@ export function renderBuildSequenceDiagram() {
   ${selfMsg(X[0], 756, '⑨ 一致性校验（s32）', C.warn, 'bsA')}
 
   <!-- 底部说明 -->
-  ${txt(LEFT, H - 18, '★ 产出：11,780 chunk · 11,780 向量（512 维）· 451,817 倒排词项 · HBase 合计 609,759 行', 16.5, C.muted, 600, 'start')}
+  ${txt(LEFT, H - 18, '★ 产出：11,932 chunk · 11,932 向量（512 维）· 451,817 倒排词项 · HBase 合计 609,759 行', 16.5, C.muted, 600, 'start')}
 </svg>`;
 }
 
@@ -254,7 +254,7 @@ export function renderQuestionDrivenDiagram() {
         ['想在原著里快速定位一段话'],
         ['按回切块 + 联合 bigram 倒排'],
         ['s2_1_chunk.py', 's2_2_index.py'],
-        ['11,780 个可检索块'],
+        ['11,932 个可检索块'],
       ],
     },
     {

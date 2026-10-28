@@ -589,7 +589,7 @@ def expand_aliases(text: str) -> List[str]:
 
 
 # 语料 chunk 总数（用于 IDF 归一；启动后由 health 校验）
-N_CHUNKS = int(os.getenv("HLM_N_CHUNKS", "11780"))
+N_CHUNKS = int(os.getenv("HLM_N_CHUNKS", "11932"))
 
 
 def search_keyword(query: str, topk: int = 30,

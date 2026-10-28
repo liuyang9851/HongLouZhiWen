@@ -205,16 +205,16 @@ docker exec master pip3 install onnxruntime
 
 | 表 | 行数 | 状态 |
 |:---|---:|:---|
-| hlm_chunks | 11,780 | ✅ |
-| hlm_vectors | 11,780 | ✅ |
+| hlm_chunks | 11,932 | ✅ |
+| hlm_vectors | 11,932 | ✅ |
 | hlm_terms | 369,939 | ✅ |
 | hlm_stats | 161 | ✅ |
 | hlm_wordfreq | 133,673 | ✅ |
 
 **数据说明**：
 - 正文 chunk 3,270（chenggao 1,689 / fuqinju 1,051 / guiyouben 530）
-- 脂批 chunk 8,510（fuqinju 3,221 / zhipi 5,219 / guiyouben 222）
-- 合计 11,780 —— 与损坏前**完全一致**
+- 脂批 chunk 8,662（fuqinju 3,221 / zhipi 5,219 / guiyouben 222）
+- 合计 11,932 —— 与损坏前**完全一致**
 
 检索验证 5/5 命中：
 
@@ -228,7 +228,102 @@ docker exec master pip3 install onnxruntime
 
 ---
 
-## 六、改动文件
+## 六、隐藏 bug：chunk_id 碰撞丢了 152 条脂批
+
+### 现象
+
+重建 HBase 后，`hlm_chunks` 只有 11,780 行，但源数据 `pizhu_3src.jsonl`
+明明有 8,662 条脂批 + 3,295 条正文 = 11,957。
+
+差 152 条。
+
+### 根因
+
+上游 `s10_1_unify_pizhu.py` 生成 chunk_id 用的是：
+
+```python
+cid = sha1(f"{ver}|{hui:03d}|{r['fp'][:24]}|{STRATEGY_REV}")[:16]
+```
+
+`fp` 是**文本指纹**。同一条批语可能同时出现在两个位置——实测有：
+
+```
+fuqinju|pizhu|008|f8e8494a124d25e8
+  [0] seg=991 ptype=侧批  又是李嬷，事有凑巧...
+  [1] seg=993 ptype=眉批  又是李嬷，事有凑巧...
+```
+
+**文本相同 → 指纹相同 → chunk_id 相同**，写入 HBase 时后写覆盖先写。
+
+统计：**129 个 chunk_id 冲突，导致 152 条脂批丢失**。
+（不是重复内容——129 组全部是文本不同、位置不同的真批语，
+其中还包括 1 条「回末总评」，属重要批语。）
+
+### 修复
+
+**数据层**：给冲突的 chunk_id 加 `seg` 后缀（只改冲突的 281 条，
+不影响其余 8,381 条）：
+
+```python
+for cid, items in by_cid.items():
+    if len(items) > 1:
+        for r in items:
+            r["chunk_id"] = f"{cid}_{r['seg']}"
+```
+
+修复后 `pizhu_3src.jsonl` 的 8,662 条全部唯一。
+
+**向量层**：向量文件没有 `seg` 字段，改用组内序号 `_{i}`。
+两边独立唯一即可，不要求后缀一致。
+
+**导入层**：`s40_import_pizhu.py` 里加同样的消解逻辑（幂等，
+对已修复的数据不会再改动）。
+
+### 验证
+
+```bash
+docker exec master python3 /tmp/check_hbase_tables.py
+```
+
+```
+hlm_chunks         11,932     11,932      ✓
+hlm_vectors        11,932     11,932      ✓
+hlm_terms         369,939    369,939      ✓
+hlm_stats             161        161      ✓
+hlm_wordfreq      133,673    133,673      ✓
+
+hlm_chunks 分布:
+  chenggao/text       1,689 /  1,689  ✓
+  fuqinju/pizhu       3,221 /  3,221  ✓
+  fuqinju/text        1,051 /  1,051  ✓
+  guiyouben/pizhu       222 /    222  ✓
+  guiyouben/text        530 /    530  ✓
+  zhipi/pizhu         5,219 /  5,219  ✓
+
+✅ 全部通过，数据完整
+```
+
+### 影响范围
+
+| 模式 | 修复前 | 修复后 |
+|:---|:---|:---|
+| HBase 模式 | 11,780（丢 152） | **11,932** |
+| 本地文件模式 | 11,780（丢 152） | **11,932** |
+| 单节点 HDFS | 11,780（丢 152） | **11,932** |
+
+**三种模式都已修复**，检索质量不受影响（5/5 命中保持）。
+
+### 上游要不要改
+
+`pipeline/s10_1_unify_pizhu.py` 的 chunk_id 生成逻辑**没有改**
+（它属于历史数据管道，改动会牵动全量重建）。
+
+当前策略：**在数据层修一次，固化成 `deploy/data/*.jsonl`**，
+后续部署直接用修复后的文件。如果将来重跑上游管道，需要记得再跑一次消解。
+
+---
+
+## 七、改动文件
 
 | 文件 | 类型 | 说明 |
 |:---|:---|:---|
@@ -243,9 +338,9 @@ docker exec master pip3 install onnxruntime
 
 ---
 
-## 七、后续修复（S40b 补充）
+## 八、后续修复（S40b 补充）
 
-### 7.1 healthcheck 误报 unhealthy
+### 8.1 healthcheck 误报 unhealthy
 
 **现象**：slave1/slave2 一直显示 `unhealthy`，但服务实际正常。
 
@@ -271,7 +366,7 @@ nc -z slave1 9864 && nc -z slave1 8042
 nc -z master 9000 && nc -z master 8088 && nc -z master 16000
 ```
 
-### 7.2 HBase Thrift 不自动启动
+### 8.2 HBase Thrift 不自动启动
 
 **现象**：每次容器重建后，所有检索返回 500：
 
@@ -306,7 +401,7 @@ TTransportException: TTransportException(type=1,
 → 8 秒后就绪
 ```
 
-### 7.3 dead servers 残留
+### 8.3 dead servers 残留
 
 **现象**：`hbase shell` 的 `status` 显示 `2 dead servers`。
 
@@ -321,7 +416,7 @@ echo "status 'simple'"   # 先确认是哪些
 
 ---
 
-## 八、遗留问题
+## 九、遗留问题
 
 | # | 问题 | 影响 |
 |:--:|:---|:---|
@@ -332,9 +427,9 @@ echo "status 'simple'"   # 先确认是哪些
 
 ---
 
-## 九、经验教训
+## 十、经验教训
 
-### 8.1 `wait -n` 是容器化多服务的大坑
+### 10.1 `wait -n` 是容器化多服务的大坑
 
 ```bash
 # 错误：任一服务死 → 整容器退出
@@ -348,7 +443,7 @@ while true; do
 done
 ```
 
-### 8.2 compose 卷名必须用 `docker inspect` 确认
+### 10.2 compose 卷名必须用 `docker inspect` 确认
 
 compose 会自动给卷加**项目名前缀**：`master-data` → `hadoop-lab_master-data`。
 
@@ -363,7 +458,7 @@ docker inspect master --format '{{range .Mounts}}{{.Name}} -> {{.Destination}}{{
 **这次排查最耗时的就是这个**：用错卷名清了 8 次 ZK 都是空操作，
 真实的 8 MB ZK 数据（含 HBase meta 的陈旧注册）从未被动过。
 
-### 8.3 容器启动顺序要靠显式等待，不能靠 sleep
+### 10.3 容器启动顺序要靠显式等待，不能靠 sleep
 
 ```bash
 # 错：sleep 10 然后祈祷 master 起来了
@@ -380,14 +475,14 @@ wait_for() {
 }
 ```
 
-### 8.4 边缘服务不能进 healthcheck
+### 10.4 边缘服务不能进 healthcheck
 
 把某服务降为"边缘"（允许崩溃重拉）后，**必须同时把它从 healthcheck 里移除**，
 否则容器会一直显示 unhealthy。
 
 这是"服务分级"的配套动作，容易漏。
 
-### 8.5 非子进程的守护服务要单独保活
+### 10.5 非子进程的守护服务要单独保活
 
 HBase Thrift、HiveServer2 这类**不是主进程子进程**的服务，
 容器重启后不会自动起。需要在 entrypoint 里加轮询守护。
@@ -398,7 +493,7 @@ HBase Thrift、HiveServer2 这类**不是主进程子进程**的服务，
 docker exec <c> ps -ef --forest | grep -A2 hbase
 ```
 
-### 8.6 HBase 的 meta 状态存在三处，必须同时清
+### 10.6 HBase 的 meta 状态存在三处，必须同时清
 
 1. HDFS `/hbase/data/hbase/meta/`（表数据）
 2. HDFS `/hbase/MasterData/`（Master 状态）

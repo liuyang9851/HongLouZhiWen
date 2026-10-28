@@ -147,7 +147,7 @@ export async function renderPrinciple(stage) {
             </li>
             <li>
               <b>ONNX 编码向量</b>
-              <span>11,780 个文本块 → 512 维向量 → hlm_vectors</span>
+              <span>11,932 个文本块 → 512 维向量 → hlm_vectors</span>
             </li>
             <li>
               <b>写入 HBase</b>
@@ -239,7 +239,7 @@ export async function renderPrinciple(stage) {
             <tr>
               <td><b>HBase</b><br><small>hlm_vectors</small></td>
               <td><span class="pr-badge on">在线·向量</span></td>
-              <td>整表加载 11,780 × 512 维矩阵，与问题向量做一次矩阵乘</td>
+              <td>整表加载 11,932 × 512 维矩阵，与问题向量做一次矩阵乘</td>
               <td>24.1 MB 内存矩阵</td>
               <td class="num">${fmtMs(tL2)}</td>
             </tr>
@@ -254,7 +254,7 @@ export async function renderPrinciple(stage) {
               <td><b>HBase</b><br><small>hlm_chunks</small></td>
               <td><span class="pr-badge on">在线·取正文</span></td>
               <td>按 5 个文本块编号取回正文</td>
-              <td>5 行 / 表内 11,780 行</td>
+              <td>5 行 / 表内 11,932 行</td>
               <td class="num">0.0 ms</td>
             </tr>
             <tr class="hl">
@@ -289,7 +289,7 @@ export async function renderPrinciple(stage) {
         <br>① <b>大模型占了 ${((tLLM / meta.total_ms) * 100).toFixed(0)}%</b> 的时间，
         这是 API 延迟，不是本地计算——换个更快的模型就能显著改善。
         <br>② <b>L3 图谱那 ${tL3.toFixed(0)} ms 其实是浪费的</b>：它为了找「同时提到两人的文本块」，
-        遍历了全部 11,780 条正文（O(N) 全扫描）。
+        遍历了全部 11,932 条正文（O(N) 全扫描）。
         如果离线再建一张「人物 → 文本块编号」的正排表，这一步能降到毫秒级。这是已知的待优化项。
       </div>
     </section>
@@ -334,7 +334,7 @@ export async function renderPrinciple(stage) {
         </div>
         <div class="pr-gi">
           <div class="pr-gi-h">召回</div>
-          <div class="pr-gi-b">从全库 11,780 个文本块里，先粗粗挑出一小批（30 个左右）可能相关的，交给后面精排。这里的三路召回分别靠：两字组合、向量、人物共现。</div>
+          <div class="pr-gi-b">从全库 11,932 个文本块里，先粗粗挑出一小批（30 个左右）可能相关的，交给后面精排。这里的三路召回分别靠：两字组合、向量、人物共现。</div>
         </div>
         <div class="pr-gi">
           <div class="pr-gi-h">RRF 融合</div>
@@ -349,13 +349,13 @@ export async function renderPrinciple(stage) {
       <div class="pr-why">
         <div class="pr-why-item">
           <div class="pr-why-h">① 数据量不适合塞进内存</div>
-          <p>倒排表 451,817 行、向量 11,780 × 512 维、正文 167.8 万字。
+          <p>倒排表 451,817 行、向量 11,932 × 512 维、正文 167.8 万字。
              这些必须落在<b>可横向扩展的分布式存储</b>上，
              而不是一个进程里的 Python 字典。</p>
         </div>
         <div class="pr-why-item">
           <div class="pr-why-h">② 建索引是典型的批处理</div>
-          <p>为 11,780 个文本块切两字组合、建索引表、统计词频与共现——
+          <p>为 11,932 个文本块切两字组合、建索引表、统计词频与共现——
              这是教科书式的 <b>MapReduce</b> 场景：
              切分、映射、按键归并、落盘。Spark/Hive 用于补充聚合统计。</p>
         </div>
@@ -573,7 +573,7 @@ const BUILD_IO = {
   4: (d) => ({
     input: [
       ['是什么', '全部三个版本的文本块集合文件 <code>chunks.jsonl</code>'],
-      ['规模', '<b>11,780 行</b>，每行 1 个文本块'],
+      ['规模', '<b>11,932 行</b>，每行 1 个文本块'],
       ['从哪来', '本地磁盘（三版本各自切分完成后合并）'],
     ],
     output: [
@@ -1100,7 +1100,7 @@ function renderStageDetail(s) {
   if (s.id === 3) {
     return `
       <div class="pr-data">
-        <div class="pr-data-h">问题 → 512 维向量 → 与 11,780 条比余弦</div>
+        <div class="pr-data-h">问题 → 512 维向量 → 与 11,932 条比余弦</div>
         <div class="pr-vec">
           <div class="pr-vec-box">
             <span class="pr-vec-lbl">问题向量前 8 维</span>

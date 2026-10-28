@@ -198,11 +198,11 @@ docker run -d --name hlm-api \
     --restart unless-stopped \
     hlm-rag-api:12.0 >/dev/null
 
-info "等待后端加载 11,780 chunk ..."
+info "等待后端加载 11,932 chunk ..."
 for i in $(seq 1 40); do
     N=$(curl -s --max-time 3 http://127.0.0.1:8000/health 2>/dev/null | grep -o '"n_chunks":[0-9-]*' | grep -o '[0-9-]*$')
-    if [ "$N" = "11780" ]; then
-        info "后端就绪（$((i*3)) 秒，11780 chunk）"
+    if [ "$N" = "11932" ]; then
+        info "后端就绪（$((i*3)) 秒，11932 chunk）"
         break
     fi
     [ "$i" -eq 40 ] && { error "后端超时（n_chunks=$N）"; docker logs hlm-api --tail 20; exit 1; }

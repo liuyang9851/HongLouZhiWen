@@ -116,13 +116,13 @@ export function renderArchDiagram() {
   <!-- 5 张表 -->
   ${box(44, 272, 160, 78, '#fff', C.hbase, 6)}
   ${txt(124, 290, 'hlm_chunks', 13, C.text, 700)}
-  ${mono(124, 306, '11,780 行', 12.5, C.hbase)}
+  ${mono(124, 306, '11,932 行', 12.5, C.hbase)}
   ${mono(124, 320, 'd:text  m:hui/version', 11)}
   ${mono(124, 334, 'chunk 正文 + 元数据', 11, C.muted)}
 
   ${box(216, 272, 160, 78, '#fff', C.hbase, 6)}
   ${txt(296, 290, 'hlm_vectors', 13, C.text, 700)}
-  ${mono(296, 306, '11,780 行', 12.5, C.hbase)}
+  ${mono(296, 306, '11,932 行', 12.5, C.hbase)}
   ${mono(296, 320, 'v:emb  2048 B', 11)}
   ${mono(296, 334, '512 维 float32', 11, C.muted)}
 

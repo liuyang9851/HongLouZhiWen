@@ -250,10 +250,10 @@ docker run -d --name hlm-api --network hlm-net \
 ```
 数据源: hdfs（环境变量强制）
 载入向量矩阵: (11957, 512)
-载入 chunk 元数据: 11,780 条（正文 3,295 / 脂批 8,662）
+载入 chunk 元数据: 11,932 条（正文 3,295 / 脂批 8,662）
 内存倒排: 232,278 个 bigram
 
-health: chunk=11780  data_source=hdfs
+health: chunk=11932  data_source=hdfs
 ```
 
 ### 6.4 检索质量

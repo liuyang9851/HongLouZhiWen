@@ -8,12 +8,12 @@
 HBase 元数据损坏后已清空重建，5 张表重新建好，
 s7_2 已导入正文 chunk/vector/term（3,270 条正文）。
 
-本脚本补导入**脂批**（8,510 条）：
+本脚本补导入**脂批**（8,662 条）：
     /hlm/warehouse/pizhu3src/pizhu_3src.jsonl          4.6 MB
     /hlm/derived/vectors3ver/.../pizhu_3src_vectors.jsonl  23.7 MB
 
 关键：**不重新向量化**，直接读 HDFS 上已有的向量快照。
-      原因：向量化 8,510 条要 4 分钟，而快照就在 HDFS 上（R-510 的设计红利）。
+      原因：向量化 8,662 条要 4 分钟，而快照就在 HDFS 上（R-510 的设计红利）。
 
 设计与 s7_2 一致：
     rowkey = <ver>|<source>|<hui:03d>|<cid>
@@ -89,6 +89,30 @@ def main():
                 recs.append(json.loads(line))
     log(f"  {len(recs):,} 条")
 
+    # ---- 消解 chunk_id 冲突 ----
+    #
+    # 问题：上游 s10_1_unify_pizhu.py 用
+    #   cid = sha1(f"{ver}|{hui}|{fp[:24]}|{STRATEGY_REV}")[:16]
+    # 其中 fp 是**文本指纹**。同一条批语可能同时出现在两个位置
+    # （实测：seg=991 侧批 / seg=993 眉批，文本相同），指纹相同 → cid 相同
+    # → 写入 HBase 时后写覆盖先写，8,662 条只剩 8,662 条（丢 152 条）。
+    #
+    # 修法：只在**真正冲突**时给 cid 加 seg 后缀，不影响不冲突的 8,533 条。
+    import collections as _col
+    _by_cid = _col.defaultdict(list)
+    for _r in recs:
+        _by_cid[_r.get("chunk_id")].append(_r)
+    _fixed = 0
+    for _cid, _items in _by_cid.items():
+        if len(_items) > 1:
+            for _r in _items:
+                _r["chunk_id"] = f"{_cid}_{_r.get('seg')}"
+                _fixed += 1
+    if _fixed:
+        log(f"  ⚠ 消解 {len([c for c,v in _by_cid.items() if len(v)>1])} 个 chunk_id 冲突（涉及 {_fixed} 条）")
+    else:
+        log("  无 chunk_id 冲突")
+
     # 统计分布
     dist = {}
     for r in recs:
@@ -148,6 +172,24 @@ def main():
                 vecs.append(json.loads(line))
     log(f"  {len(vecs):,} 条")
 
+    # 向量侧也要消解同样的 chunk_id 冲突，
+    # 否则 chunk 表 11,932 但 vector 表只有 11,932，两边对不上。
+    import collections as _col2
+    _vby = _col2.defaultdict(list)
+    for _r in vecs:
+        _vby[_r.get("chunk_id")].append(_r)
+    _vfixed = 0
+    for _cid, _items in _vby.items():
+        if len(_items) > 1:
+            # 注意：向量记录没有 seg/hui 字段（只有 chunk_id/dim/model_id/
+            #   source/vec_b64/version），所以用**组内序号**区分，
+            #   与 chunk 侧的 _{seg} 后缀不要求一致（两边独立唯一即可）。
+            for _i, _r in enumerate(_items):
+                _r["chunk_id"] = f"{_cid}_v{_i}"
+                _vfixed += 1
+    if _vfixed:
+        log(f"  ⚠ 向量侧消解冲突 {_vfixed} 条")
+
     log(f"写 {T_VECTORS} ...")
     batch = tbv.batch(batch_size=500)
     n = 0
@@ -157,6 +199,8 @@ def main():
             continue
         ver = r.get("version") or ""
         src = r.get("source") or "pizhu"
+        # 向量文件没有 hui 字段，用 000 占位。
+        #   这不会和 chunk 表冲突（不同表），只要求 vector 表内唯一。
         hui = int(r.get("hui") or 0)
         rowkey = f"{ver}|{src}|{hui:03d}|{cid}".encode()
 
