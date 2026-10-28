@@ -143,14 +143,20 @@ if [ "$ACTION" = "status" ]; then
     fi
     echo
     echo "=== 前端 ==="
-    if curl -sf --max-time 3 http://127.0.0.1:5173/api/health >/dev/null 2>&1; then
-        echo "  ✓ http://127.0.0.1:5173"
+    # 注意：WSL 访问不到 Windows 侧的 5173（反向 NAT 隔离），
+    #   curl 和 ps 都不可靠。用 tasklist 查 Windows 侧有没有
+    #   node 进程跑 server.js 更准。
+    WEB_PORT="${HLM_WEB_PORT:-5173}"
+    if curl -sf --max-time 3 "http://127.0.0.1:$WEB_PORT/api/health" >/dev/null 2>&1; then
+        echo "  ✓ http://127.0.0.1:$WEB_PORT"
     elif pgrep -f 'node server.js' >/dev/null 2>&1; then
-        # 进程在本环境里，但端口连不上 → 多半是 WSL/Windows NAT 隔离
-        echo "  ✓ node server.js 在跑（$5173 端口本机访问不到，用浏览器确认）"
+        echo "  ✓ node server.js 在跑（本环境内）"
+    elif grep -qi microsoft /proc/version 2>/dev/null && \
+         powershell.exe -NoProfile -Command "if (Get-CimInstance Win32_Process -Filter \"Name='node.exe'\" | Where-Object { \$_.CommandLine -like '*server.js*' }) { exit 0 } else { exit 1 }" >/dev/null 2>&1; then
+        echo "  ✓ http://127.0.0.1:$WEB_PORT （Windows 侧运行）"
     else
-        # WSL 里 ps 看不到 Windows 侧进程，只能靠端口判断
-        echo "  ✗ 未检测到（若在 Windows 侧启动，请用浏览器打开 http://127.0.0.1:5173 确认）"
+        echo "  ✗ 未检测到"
+        echo "     启动: powershell -ExecutionPolicy Bypass -File start-web.ps1"
     fi
     exit 0
 fi
