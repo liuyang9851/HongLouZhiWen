@@ -1,0 +1,121 @@
+{
+  "name": "hadoop-lab",
+  "services": {
+    "master": {
+      "image": "hadoop-lab:2026.10",
+      "hostname": "master",
+      "container_name": "master",
+      "init": false,
+      "environment": {
+        "SPARK_LOCAL_HOSTNAME": "master"
+      },
+      "volumes": [
+        "master-data:/data",
+        "master-logs:/logs",
+        "./workspace:/workspace"
+      ],
+      "networks": [
+        "cluster"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "nc -z master 9000 && nc -z master 8088 && nc -z master 16000"
+        ],
+        "interval": "20s",
+        "timeout": "5s",
+        "retries": 15,
+        "start_period": "90s"
+      },
+      "stop_grace_period": "45s",
+      "build": ".",
+      "ports": [
+        "127.0.0.1:9870:9870",
+        "127.0.0.1:18088:8088",
+        "127.0.0.1:19888:19888",
+        "127.0.0.1:16010:16010",
+        "127.0.0.1:18080:8080",
+        "127.0.0.1:9000:9000",
+        "127.0.0.1:17077:7077",
+        "127.0.0.1:12181:2181",
+        "127.0.0.1:10000:10000",
+        "127.0.0.1:18082:8082",
+        "127.0.0.1:8888:8888",
+        "127.0.0.1:18085:8085"
+      ]
+    },
+    "slave1": {
+      "image": "hadoop-lab:2026.10",
+      "hostname": "slave1",
+      "container_name": "slave1",
+      "init": false,
+      "environment": {
+        "SPARK_LOCAL_HOSTNAME": "slave1"
+      },
+      "volumes": [
+        "slave1-data:/data",
+        "slave1-logs:/logs",
+        "./workspace:/workspace"
+      ],
+      "networks": [
+        "cluster"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "nc -z slave1 9864 && nc -z slave1 8042"
+        ],
+        "interval": "20s",
+        "timeout": "5s",
+        "retries": 15,
+        "start_period": "90s"
+      },
+      "stop_grace_period": "45s",
+      "depends_on": [
+        "master"
+      ]
+    },
+    "slave2": {
+      "image": "hadoop-lab:2026.10",
+      "hostname": "slave2",
+      "container_name": "slave2",
+      "init": false,
+      "environment": {
+        "SPARK_LOCAL_HOSTNAME": "slave2"
+      },
+      "volumes": [
+        "slave2-data:/data",
+        "slave2-logs:/logs",
+        "./workspace:/workspace"
+      ],
+      "networks": [
+        "cluster"
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "nc -z slave2 9864 && nc -z slave2 8042"
+        ],
+        "interval": "20s",
+        "timeout": "5s",
+        "retries": 15,
+        "start_period": "90s"
+      },
+      "stop_grace_period": "45s",
+      "depends_on": [
+        "master"
+      ]
+    }
+  },
+  "networks": {
+    "cluster": {}
+  },
+  "volumes": {
+    "master-data": {},
+    "master-logs": {},
+    "slave1-data": {},
+    "slave1-logs": {},
+    "slave2-data": {},
+    "slave2-logs": {}
+  }
+}

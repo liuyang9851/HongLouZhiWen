@@ -1,0 +1,45 @@
+# =============================================================
+# compose override —— S40 修复（不重建 6.89GB 镜像）
+# =============================================================
+# 改动两处：
+#   1. entrypoint 换成 ./entrypoint-fixed.sh
+#      修掉原版 wait -n 的「任一服务死则整容器退出」缺陷
+#   2. hdfs-site.xml 换成副本数=1 的版本
+#      避免「HBase 要求 2 副本但只有 1 个 DataNode」导致的
+#      NoRouteToHostException → HMaster 崩溃 → 死循环
+#
+# 用法：
+#   docker compose -f compose.yaml -f compose.override.yaml up -d
+# =============================================================
+services:
+  master:
+    entrypoint: ["/usr/bin/tini", "--", "/workspace/cluster-entrypoint-fixed.sh"]
+    environment:
+      # HLM_NO_HBASE=1 → 只跑 NameNode，不启动 HBase（用于清理 /hbase）
+      - HLM_NO_HBASE=${HLM_NO_HBASE:-0}
+    volumes:
+      - ./workspace:/workspace
+      - master-data:/data
+      - master-logs:/logs
+      - ./hdfs-site-fixed.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
+
+  slave1:
+    entrypoint: ["/usr/bin/tini", "--", "/workspace/cluster-entrypoint-fixed.sh"]
+    environment:
+      # HLM_NO_REGIONSERVER=1 → 只跑 DataNode，不启动 RegionServer
+      - HLM_NO_REGIONSERVER=${HLM_NO_REGIONSERVER:-0}
+    volumes:
+      - ./workspace:/workspace
+      - slave1-data:/data
+      - slave1-logs:/logs
+      - ./hdfs-site-fixed.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
+
+  slave2:
+    entrypoint: ["/usr/bin/tini", "--", "/workspace/cluster-entrypoint-fixed.sh"]
+    environment:
+      - HLM_NO_REGIONSERVER=${HLM_NO_REGIONSERVER:-0}
+    volumes:
+      - ./workspace:/workspace
+      - slave2-data:/data
+      - slave2-logs:/logs
+      - ./hdfs-site-fixed.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml:ro
