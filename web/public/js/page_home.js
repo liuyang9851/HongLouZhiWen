@@ -95,7 +95,7 @@ export async function renderHome(stage) {
         <h1 class="hp-title">紅樓智問</h1>
         <div class="hp-sub">HongLouMeng-QA · 可追溯的 RAG 知识问答</div>
         <p class="hp-lead">
-          把《红楼梦》三版本正文 <b>167.8 万字</b>、三源脂批 <b>8,510 条</b>、
+          把《红楼梦》三版本正文 <b>166.5 万字</b>、三源脂批 <b>8,662 条</b>、
           人物关系图谱 <b>${nGNode} 人物 / ${nGEdge} 条关系</b>，
           做成一个<b>每句回答都能追溯到原文段落</b>的知识问答系统。
         </p>
@@ -115,9 +115,50 @@ export async function renderHome(stage) {
       </div>
     </section>
 
-    <!-- ============ 2. 《红楼梦》简介 ============ -->
+    <!-- ============ 2. 项目信息 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">1</span>关于《红楼梦》</h2>
+      <h2 class="hp-h2"><span class="hp-num">1</span>项目信息</h2>
+
+      <div class="hp-team">
+        <div class="hp-team-meta">
+          <div class="hp-fact"><span>指导教师</span><b>陈泽华</b></div>
+          <div class="hp-fact"><span>课程</span><b>大数据原理与应用</b></div>
+          <div class="hp-fact"><span>团队</span><b>5 人</b></div>
+        </div>
+
+        <div class="hp-team-grid">
+          <div class="hp-member">
+            <div class="hp-member-name">刘扬</div>
+            <div class="hp-member-role">Hadoop 与整体整合</div>
+            <div class="hp-member-desc">设计并完成 Hadoop 部分，整合各模块</div>
+          </div>
+          <div class="hp-member">
+            <div class="hp-member-name">李昕宇</div>
+            <div class="hp-member-role">语料搜集</div>
+            <div class="hp-member-desc">搜寻整理《红楼梦》相关文本数据，初步筛选</div>
+          </div>
+          <div class="hp-member">
+            <div class="hp-member-name">郑智文</div>
+            <div class="hp-member-role">功能设计与前端</div>
+            <div class="hp-member-desc">浏览网络并提出项目主要功能，前端设计</div>
+          </div>
+          <div class="hp-member">
+            <div class="hp-member-name">吴升辉</div>
+            <div class="hp-member-role">RAG 检索</div>
+            <div class="hp-member-desc">设计并完成 RAG 部分</div>
+          </div>
+          <div class="hp-member">
+            <div class="hp-member-name">丁如鑫</div>
+            <div class="hp-member-role">视频与其余功能</div>
+            <div class="hp-member-desc">视频制作和其余各功能</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. 《红楼梦》简介 ============ -->
+    <section class="hp-sec">
+      <h2 class="hp-h2"><span class="hp-num">2</span>关于《红楼梦》</h2>
       <div class="hp-book">
         <div class="hp-book-main">
           <p>
@@ -213,7 +254,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 1.5 程序架构图 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">2</span>问题驱动：为什么这么设计</h2>
+      <h2 class="hp-h2"><span class="hp-num">3</span>问题驱动：为什么这么设计</h2>
       <p class="hp-diagram-tip">
         先别急着看架构图。这个项目里<b>每一个技术选择，都是被一个具体问题逼出来的</b>：
         想快速定位原文 → 才要切块和倒排索引；换个说法就搜不到 → 才要向量和图谱；
@@ -226,7 +267,7 @@ export async function renderHome(stage) {
     </section>
 
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">3</span>程序架构</h2>
+      <h2 class="hp-h2"><span class="hp-num">4</span>程序架构</h2>
 
       <h3 class="hp-sub3">先看一次提问经历了什么（顺序图）</h3>
       <p class="hp-diagram-tip">
@@ -277,7 +318,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 3. 项目功能 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">4</span>项目功能</h2>
+      <h2 class="hp-h2"><span class="hp-num">5</span>项目功能</h2>
       <div class="hp-feats">
         <a class="hp-feat" href="#/chat">
           <div class="hp-feat-ico">💬</div>
@@ -322,7 +363,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 4. 技术栈 ============ -->
     <section class="hp-sec">
-      <h2 class="hp-h2"><span class="hp-num">5</span>技术栈</h2>
+      <h2 class="hp-h2"><span class="hp-num">6</span>技术栈</h2>
       <div class="hp-stack">
         <div class="hp-stack-row">
           <div class="hp-stack-k">Hadoop 生态</div>
@@ -395,7 +436,7 @@ export async function renderHome(stage) {
 
     <!-- ============ 5. 快速开始 ============ -->
     <section class="hp-sec hp-sec-last">
-      <h2 class="hp-h2"><span class="hp-num">6</span>试试这些问题</h2>
+      <h2 class="hp-h2"><span class="hp-num">7</span>试试这些问题</h2>
       <div class="hp-starters">
         ${STARTERS.map((s) => `
           <button class="hp-starter" data-q="${esc(s.q)}">
@@ -473,7 +514,7 @@ function openIntroVideo() {
 
   const close = () => {
     const v = mask.querySelector('video');
-    if (v) { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) {} }
+    if (v) { try { v.pause(); v.removeAttribute('src'); v.load(); } catch (e) { } }
     mask.remove();
     document.removeEventListener('keydown', onKey);
   };

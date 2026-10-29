@@ -134,6 +134,61 @@
 }
 
 /* ---------- 红楼简介 ---------- */
+/* ---- 项目信息 / 团队分工 ---- */
+.hp-team { display: grid; grid-template-columns: 230px 1fr; gap: 26px; align-items: start; }
+.hp-team-meta {
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.hp-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+.hp-member {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: border-color .18s, box-shadow .18s, transform .18s;
+}
+.hp-member:hover {
+  border-color: var(--cinnabar);
+  box-shadow: 0 4px 16px rgba(140, 30, 30, .08);
+  transform: translateY(-2px);
+}
+.hp-member-name {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: .04em;
+  margin-bottom: 6px;
+}
+.hp-member-role {
+  display: inline-block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--cinnabar);
+  background: rgba(140, 30, 30, .07);
+  border-radius: 5px;
+  padding: 2px 8px;
+  margin-bottom: 9px;
+}
+.hp-member-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+@media (max-width: 900px) {
+  .hp-team { grid-template-columns: 1fr; }
+  .hp-team-meta { flex-direction: row; flex-wrap: wrap; gap: 18px; }
+}
+
 .hp-book { display: grid; grid-template-columns: 1fr 290px; gap: 26px; }
 @media (max-width: 900px) { .hp-book { grid-template-columns: 1fr; } }
 .hp-book-main p {

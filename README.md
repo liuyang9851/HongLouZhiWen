@@ -1,62 +1,9 @@
-# 红楼智问 · HongLouMeng-QA
+# 红楼智问 · HongLouZhiWen
 
 > 基于 **Hadoop 生态** 的《红楼梦》可追溯 RAG 知识问答系统
 > 三版本正文 + 三源脂批 + 人物关系图谱，每句回答都能跳转到原文段落
 
----
-
-## 🚀 快速开始（10 分钟跑起来）
-
-```bash
-# 1. 配置 API Key
-cp backend/.env.example backend/.env
-#    编辑 backend/.env，填入 DEEPSEEK_API_KEY
-
-# 2. 启动（按你的环境选一个）
-./start.sh                # 自动探测（有 Hadoop 就用，没有就问你要不要起单节点 HDFS）
-./start.sh --with-hdfs    # 【只有 Docker】自动起一个单节点 HDFS，15 分钟
-./start.sh --local-only   # 最快，纯本地文件，不用任何 Hadoop
-
-# 3. 打开浏览器
-#    http://127.0.0.1:5173
-```
-
-**完整部署文档**（含版本兼容性、三条路线、常见问题）：
-👉 **[docs/38-部署指南.md](docs/38-部署指南.md)**
-
-### 一键启动（四种模式，同一入口）
-
-```bash
-./start.sh --cluster       # 完整 Hadoop 集群（HBase）
-./start.sh --with-hdfs     # 单节点 HDFS（只有 Docker）
-./start.sh --local-only    # 纯本地文件（最快）
-./start.sh                 # 自动探测
-
-./start.sh --status        # 只看状态
-./start.sh --stop          # 停止全部
-```
-
-| 模式 | 数据源 | 需要 Hadoop | 冷启动 |
-|:---|:---|:---:|:---:|
-| `--cluster` | HBase（完整集群） | ✅ 已有 | 11~20 秒 |
-| `--with-hdfs` | 单节点 HDFS | ✅ 自带 | 1~2 分钟 |
-| `--local-only` | 本地 JSONL | ❌ | 30 秒 |
-
-**四种模式检索结果完全相同**（实测 5/5 命中一致）。
-
-> Windows / WSL 用户：前端由 `start-web.ps1` 在 Windows 侧启动
-> （WSL2 的 localhost 转发单向，WSL 内起的服务 Windows 访问不到）。
-> 脚本会自动处理。
-
-
-### 版本兼容性（重要）
-
-| 组件 | 风险 | 说明 |
-|:---|:---:|:---|
-| **HDFS** | 低 | 文件格式 + WebHDFS REST API，2.x/3.x 通用 |
-| **HBase** | **极高** | 3.x 已移除 Thrift1，本项目不可用 |
-
-**所以项目主推 HDFS 作为数据源** —— 完全绕开 HBase 版本问题，也不需要装 HBase。
+**项目地址**：https://github.com/liuyang9851/HongLouZhiWen
 
 ---
 
@@ -68,11 +15,123 @@ cp backend/.env.example backend/.env
 
 ---
 
+## 🚀 快速开始
+
+### 前置条件
+
+| 依赖 | 版本 | 说明 |
+|:---|:---|:---|
+| Docker | 任意近期版本 | 跑集群和后端容器 |
+| Node.js | **≥ 20** | 跑前端（`start.sh` 会校验） |
+| DeepSeek API Key | — | 填进 `backend/.env` |
+
+### 三步跑起来
+
+```bash
+# 1. 配置 API Key
+cp backend/.env.example backend/.env
+#    编辑 backend/.env，填入 DEEPSEEK_API_KEY
+
+# 2. 一条命令启动（自动探测环境）
+./start.sh
+
+# 3. 打开浏览器
+#    http://127.0.0.1:5173
+```
+
+`start.sh` 会自动判断你的环境该走哪条路，不需要你提前决定。
+
+### 四种启动模式
+
+```bash
+./start.sh --cluster       # 完整 Hadoop 集群（HBase），需已有集群
+./start.sh --with-hdfs     # 单节点 HDFS（只有 Docker 时用这个）
+./start.sh --local-only    # 纯本地文件（最快，不体现 Hadoop）
+./start.sh                 # 自动探测：有集群用集群，没有就问你要不要起单节点 HDFS
+
+./start.sh --status        # 只看状态，不启动
+./start.sh --stop          # 停止全部服务
+./start.sh --help          # 查看用法
+```
+
+| 模式 | 数据源 | 需要 Hadoop | 冷启动耗时 |
+|:---|:---|:---:|:---:|
+| `--cluster` | HBase（完整集群） | ✅ 已有集群 | 11~20 秒 |
+| `--with-hdfs` | 单节点 HDFS | ✅ 脚本自带 | 1~2 分钟 |
+| `--local-only` | 本地 JSONL | ❌ | 30 秒 |
+
+**四种模式的检索结果完全相同**（实测 5/5 命中一致）。选哪个只影响启动开销，
+不影响效果。
+
+### 启动脚本做了什么
+
+`start.sh` 不是简单的 `docker compose up`，它按顺序处理这些事：
+
+1. 检查 Docker、Node.js 版本，以及 `backend/.env` 里的 Key 是否还是占位符
+2. **按模式准备数据源**
+   - 集群模式：起 compose、等 HDFS 退出 safemode、等 HMaster 就绪
+   - 单节点：构建/复用 `hlm-hdfs` 镜像，等数据导入完成
+   - 本地：确认 `deploy/data/` 完整
+3. **处理 HBase Thrift** —— 它不是 HMaster 的子进程，容器重启后不会自动起，
+   脚本会主动检测并拉起（这是最容易踩的坑之一）
+4. 构建/复用后端镜像，启动 `hlm-api` 容器
+5. **等后端加载到 11,932 chunk** —— 每 15 秒报一次实际值，加载不满会报错并给出定位命令
+6. 启动前端
+7. 打印所有服务的访问地址
+
+失败时的提示是具体的，不是一句「启动失败」。比如 chunk 数对不上会直接告诉你
+差多少条、最可能是 chunk_id 碰撞、以及该验证哪个文件。
+
+### Windows / WSL 用户注意
+
+前端的启动方式和别的服务不一样，这点值得单独说。
+
+**问题**：WSL2 的 localhost 转发只对 Windows → WSL 单向有效。在 WSL 里起 node，
+Windows 浏览器访问 `127.0.0.1:5173` 会失败 —— 即使 node 监听 `0.0.0.0` 也一样。
+
+**做法**：`start.sh` 检测到 WSL 环境后，会调用 `start-web.ps1` 在 **Windows 侧**启动前端。
+这个脚本用 `schtasks` 让进程完全脱离，父 shell 退出也不会带走前端。
+
+**验证方式**：不要用 `curl` 验前端。WSL 访问不到 Windows 侧的 5173（反向隔离），
+curl 必然失败但前端其实是好的。以 `start-web.ps1` 的退出码为准。
+`--status` 里用 `tasklist` 查 Windows 侧进程，也是这个原因。
+
+两个脚本里都有一处容易踩的 cmd 陷阱：`set VAR=value && next` 会把 `&&` 前的空格
+带进变量值，导致 `HLM_BACKEND="http://127.0.0.1:8000 "`，所有代理请求报
+`Failed to parse URL`。必须写 `set VAR=value&& next`。
+
+### 启动后能访问什么
+
+```
+前端界面   http://127.0.0.1:5173
+后端 API   http://127.0.0.1:8000/docs
+```
+
+集群模式下还有：
+
+```
+HDFS UI    http://127.0.0.1:9870
+HBase UI   http://127.0.0.1:16010
+YARN UI    http://127.0.0.1:18088
+JobHistory http://127.0.0.1:19888
+```
+
+### 排查
+
+```bash
+docker logs -f hlm-api          # 后端日志
+cat web/_srv.err                # 前端错误（Windows 侧）
+./start.sh --status             # 一览所有服务
+docker exec master python3 /tmp/check_hbase_tables.py   # 逐表校验 HBase
+```
+
+---
+
 ## 架构
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  浏览器前端（原生 ES Module，8 个视图）                        │
+│  浏览器前端（原生 ES Module，9 个视图）                        │
 └───────────────────────────┬─────────────────────────────────┘
                             │ HTTP / SSE
 ┌───────────────────────────▼─────────────────────────────────┐
@@ -86,13 +145,16 @@ cp backend/.env.example backend/.env
 ┌───────────────────────────▼─────────────────────────────────┐
 │  Hadoop 生态（Docker Compose 三节点：master/slave1/slave2）    │
 │                                                              │
-│  HDFS   /hlm/{warehouse,derived,mrout,manifest,logs}         │
+│  HDFS   /hlm/{warehouse,derived,mrin,mrout,manifest,logs}    │
 │  MapReduce  词频 / 共现 / 人物频次 / chunk 统计                │
 │  HBase  hlm_chunks / hlm_vectors / hlm_terms /               │
-│         hlm_wordfreq / hlm_stats        （60.6 万行）          │
-│  Hive 数仓 · Spark · Flink · Storm · ZooKeeper                │
+│         hlm_wordfreq / hlm_stats        （52.8 万行）          │
+│  Hive 数仓 · Spark · ZooKeeper                                │
 └──────────────────────────────────────────────────────────────┘
 ```
+
+> master 只做管理，不存数据块。实际 DataNode 只有 slave1 和 slave2 两个，
+> 所以副本数上限是 2 —— 这一条和下面的「已知问题」有关。
 
 ### 索引规模
 
@@ -102,7 +164,7 @@ cp backend/.env.example backend/.env
 | 脂批文本块 | 8,662 |
 | **索引总 chunk** | **11,932** |
 | 向量维度 | 512（bge-small-zh-v1.5，本地 ONNX）|
-| HBase 总行数 | 606,783 |
+| HBase 总行数 | 527,637 |
 | 人物关系图谱 | 350 节点 / 673 边 |
 
 ---
@@ -111,77 +173,39 @@ cp backend/.env.example backend/.env
 
 ```
 红楼智问/
+├── start.sh            一键启动（四种模式 + stop/status/help）
+├── start-web.ps1       Windows 侧前端启动器（WSL 环境专用）
 ├── backend/            FastAPI 后端
 │   ├── app.py              主应用（检索、问答、三档策略）
+│   ├── data_source.py      数据源抽象（hdfs / local / auto 三层降级）
+│   ├── storage_local.py    本地模式存储
 │   ├── sandbox.py          沙箱（AST 白名单 + prlimit + 网络守卫）
 │   ├── hadoop_api.py       HDFS / HBase 访问封装
 │   ├── query_api.py        语料读取
-│   └── Dockerfile
-├── web/                前端（零框架，原生 ES Module）
-│   ├── public/js/          app.js / chart.js / chart3d.js / md.js …
+│   ├── Dockerfile              集群模式（装 happybase 等）
+│   └── Dockerfile.standalone   本地/单节点模式
+├── web/                前端（零框架，原生 ES Module，9 个视图）
+│   ├── public/js/          app.js / page_*.js / chart*.js / md.js
 │   ├── public/css/         4 个样式表
-│   ├── data/               派生的展示数据（部分由 scripts 生成）
+│   ├── data/               派生的展示数据 + 360 个章节 JSON + 脂批
 │   └── server.js           静态服务 + API 反向代理
-├── pipeline/           数据管道（S2–S15）
-│   ├── s2_*.py             切分 / 建索引 / 检索 / 分区对比
+├── pipeline/           数据管道（27 个脚本）
 │   ├── s10_1_unify_pizhu.py    ★ 三源脂批统一入 HBase（当前版本）
-│   ├── s3_mapreduce.py      MapReduce 作业
-│   └── run_all.sh
-├── scripts/            构建与维护脚本
-│   ├── s28_1_build_graph_v2.py      四源合并建图谱
+│   ├── s7_2_index_versions.py  三版本正文切分 + 向量化 + 入表
+│   ├── s3_mapreduce.py         MapReduce 作业
+│   ├── s40_*.py                HBase 重建与脂批导入（故障修复用）
+│   └── job*_mapper.py / job*_reducer.py
+├── scripts/            构建与维护脚本（33 个）
+│   ├── s28_1_build_graph_v2.py       四源合并建图谱
 │   ├── s32_verify_diagram_numbers.py 数字一致性校验
-│   ├── s27_restore_after_reboot.py   一键恢复
-│   └── s29_*.py / s31_*.py           字号批量缩放
-├── docs/               34 份阶段文档 + 69 张截图
+│   └── s27_restore_after_reboot.py   一键恢复
+├── hadoop/             单节点 HDFS 镜像（Dockerfile.hdfs + 配置）
+├── tools/              运维工具
+│   ├── check_hbase_tables.py   逐表校验行数
+│   ├── import_to_hdfs.sh       把数据导入已有集群
+│   └── start_cluster.sh        启动 Hadoop 集群
+├── docs/               72 份阶段文档 + 95 张截图
 └── eval/               评测集与结果
-```
-
----
-
-## 快速开始
-
-### 1. 启动 Hadoop 集群
-
-```bash
-cd D:\Programming\hadoop\cluster
-docker compose -f compose.yaml up -d
-
-# HBase Thrift 需手动启动（容器重启后必做）
-docker exec -d master bash -lc "hbase thrift start > /logs/hbase-thrift.log 2>&1"
-```
-
-### 2. 配置密钥
-
-```bash
-cp backend/.env.example backend/.env
-# 编辑 backend/.env，填入 DEEPSEEK_API_KEY
-```
-
-### 3. 启动后端
-
-```bash
-docker build -t hlm-rag-api:6.1 backend
-docker run -d --name hlm-api --network hadoop-lab_cluster \
-  -p 127.0.0.1:8000:8000 --restart unless-stopped \
-  --env-file backend/.env \
-  -v "$PWD/pipeline/out:/workspace/pipeline/out" \
-  hlm-rag-api:6.1
-```
-
-### 4. 启动前端
-
-```bash
-cd web
-HLM_WEB_PORT=5173 node server.js
-# 打开 http://127.0.0.1:5173
-```
-
-> 端口用 5173 是因为 Windows 的 Hyper-V 可能保留 3000 段。
-
-### 一键恢复（重启电脑后）
-
-```bash
-python scripts/s27_restore_after_reboot.py
 ```
 
 ---
@@ -194,7 +218,7 @@ python scripts/s27_restore_after_reboot.py
 |:---|:---|:---|
 | L1 关键词 | HBase `hlm_terms`（联合 bigram 倒排）| 精确词命中 |
 | L2 向量 | HBase `hlm_vectors`（512 维）| 语义召回 |
-| L3 图谱 | `person_roles` + 共现 | 人物关系路径 |
+| L3 图谱 | `hlm_stats` 共现 + 人物关系 | 人物关系路径 |
 
 RRF 融合（k=60）后按「同回最多 2 正文 + 1 批语」去重，保证引用分散。
 
@@ -205,7 +229,7 @@ RRF 融合（k=60）后按「同回最多 2 正文 + 1 批语」去重，保证�
   ├─ 语料充分     → 基于片段回答 + 引用
   ├─ 元知识型     → 模型自身知识兜底 + 明确标注「非原文」
   ├─ 精确统计型   → 不猜数字，引导用 🔬 自定义查询
-  └─ 超出范围     → 软拒答
+  └─ 超出范围     → 软拒答（不调模型，0.1 ms）
 ```
 
 ### 沙箱自定义查询
@@ -223,16 +247,19 @@ LLM 生成代码 → AST 白名单检查 → 子进程（prlimit + timeout）
 
 ## 主要界面
 
-| 视图 | 说明 |
-|:---|:---|
-| 欢迎页 | 项目概览 + 程序架构图（SVG）|
-| 项目原理 | 一次问答的全链路真实数据 |
-| **AI 问答** | 核心：检索证据 + 引用 + 三档策略 |
-| 原文阅读 | 三版本切换 + 脂批侧栏 + 划选提问 + 引用跳转 |
-| 统计信息 | MapReduce 真实产出 + 每张图可「就此提问」|
-| 人物关系 | 350 节点力导向 / 3D / 和弦图 |
-| 癸酉本探究 | 后 28 回专题 |
-| 语料版本 | 三版本规模 + 质量规则 Q1–Q8 |
+9 个视图（`web/public/js/app.js` 的 `VIEWS` 数组）：
+
+| 路由 | 视图 | 说明 |
+|:---|:---|:---|
+| `#/home` | 欢迎页 | 项目概览 + 程序架构图（手写 SVG） |
+| `#/principle` | 项目原理 | 一次问答拆成 8 个阶段，展示真实中间数据 |
+| `#/chat` | **AI 问答** | 核心：三栏布局 + 检索证据面板 + `[n]` 引用 |
+| `#/reader` | 原文阅读 | 三版本切换 + 脂批侧栏 + 划选提问 + 引用跳转 |
+| `#/stats` | 统计信息 | MapReduce 真实产出 + 每张图可「就此提问」 |
+| `#/graph` | 人物关系 | 350 节点力导向 / 和弦图 / 头像子图 |
+| `#/guiyou` | 癸酉本探究 | 后 28 回专题，含方法错误复盘 |
+| `#/corpus` | 语料版本 | 三版本规模 + 质量规则 Q1–Q8 |
+| `#/ops` | 系统运维 | Hadoop 组件状态灯 + 存储规划 |
 
 ---
 
@@ -263,6 +290,27 @@ LLM 生成代码 → AST 白名单检查 → 子进程（prlimit + timeout）
 
 ---
 
+## 已知问题
+
+以下三条是当前系统实际的缺口，不是「以后再说」的优化：
+
+| # | 问题 | 影响 |
+|:--:|:---|:---|
+| 1 | **HDFS 副本数为 1**（S40 故障时临时改的，新旧文件不一致） | `chunks3ver` / `pizhu3src` / `vectors3ver` 三份新数据只有 1 副本，任一 DataNode 挂掉就读不回来；改回 2 只需改 `hdfs-site.xml` 再 `hdfs dfs -setrep -w 2` |
+| 2 | **8,662 条脂批向量读不出来** | 导入脚本写 `v:vec_b64`，检索代码读 `v:emb`，列名不一致。向量通道实际只覆盖正文 3,270 条 |
+| 3 | **`hlm_stats` 精度降级** | 重建后从 709 行降到 161 行，L3 图谱召回查的是摘要行而非完整共现矩阵 |
+
+此外：
+
+- L3 图谱召回是 O(N) 全扫描，511 ms 属于浪费，应该离线建「人物 → 块」正排表
+- 评测集只有 52 条，推理型 15 条没有人工评分，样本量撑不起强结论
+- 只在一个模型（deepseek-flash）上验证过
+
+首页架构图上有两处标注尚未同步：`hlm_terms` 写 451,817（实测 369,939）、
+`hlm_stats` 写 709（实测 161），以及图底「8 个视图」（实际 9 个）。
+
+---
+
 ## 开发约定
 
 ### 数据一致性
@@ -283,17 +331,25 @@ docker exec master bash -lc "cd /workspace/pipeline && python3 s10_1_unify_pizhu
 
 > ⚠️ 不要跑 `s5_4_add_pizhu.py`（旧版，写 `v2-pizhu`，会污染索引）。
 
+### chunk 数必须是 11,932
+
+这是 S40b 修复 129 组 chunk_id 碰撞后的正确值。历史上写 11,780 的文档
+都带着「丢过 152 条脂批」的伤 —— 不是「少了」，是「曾经丢过」。
+`start.sh` 会校验这个数，对不上就报错。
+
 ---
 
 ## 文档
 
-`docs/` 下按阶段编号：
+`docs/` 下按阶段编号，共 72 份：
 
 - `01-需求分析说明书.md` / `02-界面设计说明书.md`
 - `03`–`05`：S2 数据管道 / S3 MapReduce / S5 评测
 - `06-项目审阅文档.md` / `07-课堂演示文档.md`
-- `08`–`37`：各阶段问题修复记录
+- `08`–`42`：各阶段问题修复记录
+- `42-S40H-HBase元数据损坏修复.md`：一次真实故障的完整排查过程
+- `38-部署指南.md`：三条部署路线 + 版本兼容性 + 常见问题
 
 ---
 
-*课程项目 · 大数据原理与应用*
+*课程项目 · 大数据原理与应用 · 2026 年秋*
